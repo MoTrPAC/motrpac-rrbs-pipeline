@@ -1,0 +1,11 @@
+{
+  "Bismark_Index_Generation.humanGenome": "gs://sa-rrbs-pipeline/genomes/human/GRCh38.p12.genome.fa.gz",
+  "Bismark_Index_Generation.humanAnnotation": "gs://sa-rrbs-pipeline/genomes/human/gencode.v29.chr_patch_hapl_scaff.annotation.gtf.gz",
+  "Bismark_Index_Generation.ratGenome": "gs://sa-rrbs-pipeline/genomes/rat/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz",
+  "Bismark_Index_Generation.ratAnnotation": "gs://sa-rrbs-pipeline/genomes/rat/Rattus_norvegicus.Rnor_6.0.92.gtf.gz",
+  "Bismark_Index_Generation.lambdaGenome": "gs://sa-rrbs-pipeline/genomes/human/lambda.fasta",
+  "Bismark_Index_Generation.memory": "20",
+  "Bismark_Index_Generation.disk_space": "30",
+  "Bismark_Index_Generation.num_threads": "5",
+  "Bismark_Index_Generation.num_preempt": "25"
+}
