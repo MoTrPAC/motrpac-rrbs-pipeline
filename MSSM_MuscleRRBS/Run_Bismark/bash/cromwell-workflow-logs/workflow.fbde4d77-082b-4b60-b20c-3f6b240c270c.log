@@ -1,0 +1,7 @@
+2018-12-18 09:06:30,811 INFO  - MaterializeWorkflowDescriptorActor [UUID(fbde4d77)]: Parsing workflow as WDL draft-2
+2018-12-18 09:06:31,409 INFO  - MaterializeWorkflowDescriptorActor [UUID(fbde4d77)]: Call-to-Backend assignments: trim_diversity_adapters.trimDiversityAdapt -> JES
+2018-12-18 09:06:33,801 INFO  - WorkflowExecutionActor-fbde4d77-082b-4b60-b20c-3f6b240c270c [UUID(fbde4d77)]: Starting trim_diversity_adapters.trimDiversityAdapt
+2018-12-18 09:06:35,759 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(fbde4d77)trim_diversity_adapters.trimDiversityAdapt:NA:1]: `python /cromwell_root/sa-rrbs-pipeline/packages/NuMetRRBS/trimRRBSdiversityAdaptCustomers.py -1 /cromwell_root/sa-rrbs-pipeline/task-outputs/trimGalore/Muscle2_R1_val_1.fq.gz -2 /cromwell_root/sa-rrbs-pipeline/task-outputs/trimGalore/Muscle2_R2_val_2.fq.gz
+ls`
+2018-12-18 09:07:04,751 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(fbde4d77)trim_diversity_adapters.trimDiversityAdapt:NA:1]: job id: operations/EM-HpJL8LBiL6oLLzvnY844BIN2or9XICioPcHJvZHVjdGlvblF1ZXVl
+2018-12-18 09:07:37,574 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(fbde4d77)trim_diversity_adapters.trimDiversityAdapt:NA:1]: Status change from - to Running
