@@ -1,0 +1,9 @@
+{
+  "trim_diversity_adapters.memory": "10",
+  "trim_diversity_adapters.disk_space": "10",
+  "trim_diversity_adapters.num_preempt": "25",
+  "trim_diversity_adapters.num_threads": "5",
+  "trim_diversity_adapters.trimDiversityAdapt.script": "gs://sa-rrbs-pipeline/packages/NuMetRRBS/trimRRBSdiversityAdaptCustomers.py",
+  "trim_diversity_adapters.trimDiversityAdapt.r1_trimmed": "gs://sa-rrbs-pipeline/task-outputs/trimGalore/Muscle2_R1_val_1.fq.gz",
+  "trim_diversity_adapters.trimDiversityAdapt.r2_trimmed": "gs://sa-rrbs-pipeline/task-outputs/trimGalore/Muscle2_R2_val_2.fq.gz"
+}

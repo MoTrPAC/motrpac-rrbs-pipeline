@@ -6,5 +6,5 @@
   "rrbs_call_bismark.disk_space": "30",
   "rrbs_call_bismark.num_threads": "5",
   "rrbs_call_bismark.num_preempt": "25",
-  "rrbs_call_bismark.trimDiversityAdapt.script": "trimRRBSdiversityAdaptCustomers.py"
+  "rrbs_call_bismark.trimDiversityAdapt.script": "gs://sa-rrbs-pipeline/packages/trimRRBSdiversityAdaptCustomers.py"
 }
