@@ -1,0 +1,10 @@
+{
+  "rrbs_bismark_pipeline.trimGalore.r1": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/MSSM_MuscleRRBS/sampleData/Muscle2_sub_r1.fastq.gz",
+  "rrbs_bismark_pipeline.trimGalore.r2": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/MSSM_MuscleRRBS/sampleData/Muscle2_sub_r2.fastq.gz",
+  "rrbs_bismark_pipeline.trimGalore.SID": "Muscle2_sub",
+  "rrbs_bismark_pipeline.memory": "20",
+  "rrbs_bismark_pipeline.disk_space": "30",
+  "rrbs_bismark_pipeline.num_threads": "5",
+  "rrbs_bismark_pipeline.num_preempt": "25",
+  "rrbs_bismark_pipeline.trimDiversityAdapt.script": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/NuMetRRBS/trimRRBSdiversityAdaptCustomers.py"
+}

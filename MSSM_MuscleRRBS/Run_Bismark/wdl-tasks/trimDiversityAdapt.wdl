@@ -12,7 +12,7 @@ task trimDiversityAdapt {
     ls
   }
   output {
-    Array[File] outFiles = glob('./*')
+    Array[File] outFiles = glob('*')
   }
   runtime {
     # docker image # 99b03a41591c
@@ -26,6 +26,7 @@ task trimDiversityAdapt {
     author: "Samir Akre"
   }
 }
+
 
 workflow trim_diversity_adapters {  
   Int memory
