@@ -1,0 +1,9 @@
+{
+  "trim_diversity_adapters.memory": "10",
+  "trim_diversity_adapters.disk_space": "10",
+  "trim_diversity_adapters.num_preempt": "25",
+  "trim_diversity_adapters.num_threads": "5",
+  "trim_diversity_adapters.trimDiversityAdapt.script": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/NuMetRRBS/trimRRBSdiversityAdaptCustomers.py",
+  "trim_diversity_adapters.trimDiversityAdapt.r1_trimmed": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/MSSM_MuscleRRBS/sampleData/Muscle2_sub_R1_val_1.fq.gz",
+  "trim_diversity_adapters.trimDiversityAdapt.r2_trimmed": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/MSSM_MuscleRRBS/sampleData/Muscle2_sub_R2_val_2.fq.gz"
+}
