@@ -5,6 +5,6 @@
   "trim_diversity_adapters.num_threads": "5",
   "trim_diversity_adapters.SID": "Muscle2_sub",
   "trim_diversity_adapters.trimDiversityAdapt.script": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/external-scripts/trimRRBSdiversityAdaptCustomers_Custom_SA.py",
-  "trim_diversity_adapters.trimDiversityAdapt.r1_trimmed": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/MSSM_MuscleRRBS/sampleData/Muscle2_sub_R1_val_1.fq.gz",
-  "trim_diversity_adapters.trimDiversityAdapt.r2_trimmed": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/MSSM_MuscleRRBS/sampleData/Muscle2_sub_R2_val_2.fq.gz"
+  "trim_diversity_adapters.trimDiversityAdapt.r1_trimmed": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/sampleData/Muscle2_sub_R1_val_1.fq.gz",
+  "trim_diversity_adapters.trimDiversityAdapt.r2_trimmed": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/sampleData/Muscle2_sub_R2_val_2.fq.gz"
 }

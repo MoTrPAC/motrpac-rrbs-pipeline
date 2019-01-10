@@ -1,6 +1,6 @@
 {
-  "trim_reads.r1": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/MSSM_MuscleRRBS/sampleData/Muscle2_sub_R1.fastq.gz",
-  "trim_reads.r2": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/MSSM_MuscleRRBS/sampleData/Muscle2_sub_R2.fastq.gz",
+  "trim_reads.r1": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/sampleData/Muscle2_sub_R1.fastq.gz",
+  "trim_reads.r2": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/sampleData/Muscle2_sub_R2.fastq.gz",
   "trim_reads.SID": "Muscle2_sub",
   "trim_reads.memory": "20",
   "trim_reads.disk_space": "30",
