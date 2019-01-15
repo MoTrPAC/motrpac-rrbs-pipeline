@@ -1,9 +1,0 @@
-{
-  "Bismark_Index_Generation.indexGenome.humanGenome": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/genome_dir/human/GRCh38.p12.genome.fa",
-  "Bismark_Index_Generation.indexGenome.humanAnnotation": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/genome_dir/human/gencode.v29.chr_patch_hapl_scaff.annotation.gtf",
-  "Bismark_Index_Generation.indexGenome.lambdaGenome": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/genome_dir/human/lambda.fasta",
-  "Bismark_Index_Generation.indexGenome.memory": "20",
-  "Bismark_Index_Generation.indexGenome.disk_space": "30",
-  "Bismark_Index_Generation.indexGenome.num_threads": "5",
-  "Bismark_Index_Generation.indexGenome.num_preempt": "25"
-}
