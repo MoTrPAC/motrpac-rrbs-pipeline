@@ -1,9 +1,9 @@
 
 ## Run on cloud
-java -Dconfig.file=google.conf -jar ~/cromwell/cromwell-36.jar run Bismark_IndexGenomes.wdl -i IndexGenomes_inputs_GCloud.json
+#java -Dconfig.file=google.conf -jar ~/cromwell/cromwell-36.jar run Bismark_IndexGenomes.wdl -i IndexGenomes_inputs_GCloud.json
 
 ## Run locally (test)
-#java -jar ~/cromwell/cromwell-36.jar run Bismark_IndexGenomes.wdl -i IndexGenomes_inputs.json
+java -jar ~/cromwell/cromwell-36.jar run Bismark_IndexGenomes.wdl -i IndexGenomes_inputs_Local.json
 
 # Rat GTF File http://ftp.ensembl.org/pub/release-92/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.92.gtf.gz
 # Rat Genome File http://ftp.ensembl.org/pub/release-92/fasta/rattus_norvegicus/dna/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz
