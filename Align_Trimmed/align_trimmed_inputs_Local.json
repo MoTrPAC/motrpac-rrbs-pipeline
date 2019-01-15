@@ -1,0 +1,12 @@
+{
+  "align_trimmed.memory": "20",
+  "align_trimmed.alignTrimmed.r1_trimmed": "",
+  "align_trimmed.SID": "String",
+  "align_trimmed.alignTrimmed.genome_dir": "File",
+  "align_trimmed.num_preempt": "Int",
+  "align_trimmed.disk_space": "Int",
+  "align_trimmed.alignTrimmed.genome_dir_tar": "File",
+  "align_trimmed.num_threads": "Int",
+  "align_trimmed.alignTrimmed.r2_trimmed": "File"
+}
+
