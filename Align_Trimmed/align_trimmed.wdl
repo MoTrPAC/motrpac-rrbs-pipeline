@@ -2,7 +2,7 @@ task alignTrimmed{
   File r1_trimmed
   File r2_trimmed
   File genome_dir_tar
-  File genome_dir
+  String genome_dir # Name of the genome folder that has been tar balled 
   String SID
   Int memory
   Int disk_space
@@ -30,6 +30,8 @@ task alignTrimmed{
   }
   output {
     File bismarkAlignLog = '${SID}_bismarkAlign.log'
+    File sortedReads = '${SID}_sorted.bam'
+    File sortedReadsIndex = '${SID}_sorted.bam.bai'
     # TODO: Add output files of alignment
   }
   runtime {
