@@ -1,7 +1,7 @@
 {
-  "Bismark_Index_Generation.indexGenome.refGenome": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/rat_test_genome/Rattus_norvegicus.Rnor_6.0.dna.toplevel.sub.fa.gz",
-  "Bismark_Index_Generation.indexGenome.refAnnotation": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/rat_test_genome/Rattus_norvegicus.Rnor_6.0.92.sub.gtf.gz",
-  "Bismark_Index_Generation.indexGenome.lambdaGenome": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/rat_test_genome/lambda.fasta",
+  "Bismark_Index_Generation.indexGenome.refGenome": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/chr_X/chr_X_genome.fa.gz",
+  "Bismark_Index_Generation.indexGenome.refAnnotation": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/chr_X/chr_X_annotation.gtf.gz",
+  "Bismark_Index_Generation.indexGenome.lambdaGenome": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/lambda.fasta",
   "Bismark_Index_Generation.memory": "20",
   "Bismark_Index_Generation.disk_space": "30",
   "Bismark_Index_Generation.num_threads": "5",

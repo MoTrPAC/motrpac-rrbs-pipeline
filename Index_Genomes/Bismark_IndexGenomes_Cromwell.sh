@@ -1,3 +1,5 @@
+LOCALDIR=/Users/akre96/Documents/github/rrbs_bismark/Index_Genomes
+cd $LOCALDIR
 
 ## Run on cloud
 #java -Dconfig.file=google.conf -jar ~/cromwell/cromwell-36.jar run Bismark_IndexGenomes.wdl -i IndexGenomes_inputs_GCloud.json
