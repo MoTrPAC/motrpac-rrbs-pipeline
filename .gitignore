@@ -24,3 +24,6 @@ condaEnv.yml
 *.fq
 *.tar
 *.gz
+
+# Test Data
+sampleData

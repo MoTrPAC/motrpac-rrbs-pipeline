@@ -1,0 +1,3 @@
+[submodule "external-scripts/motrpac_rnaseq"]
+	path = external-scripts/motrpac_rnaseq
+	url = https://github.com/yongchao/motrpac_rnaseq.git
