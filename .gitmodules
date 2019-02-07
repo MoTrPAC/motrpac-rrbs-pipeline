@@ -1,3 +1,9 @@
 [submodule "external-scripts/motrpac_rnaseq"]
 	path = external-scripts/motrpac_rnaseq
 	url = https://github.com/yongchao/motrpac_rnaseq.git
+[submodule "external-scripts/NuMetRRBS"]
+	path = external-scripts/NuMetRRBS
+	url = https://github.com/nugentechnologies/NuMetRRBS.git
+[submodule "external-scripts/nudup"]
+	path = external-scripts/nudup
+	url = https://github.com/nugentechnologies/nudup.git
