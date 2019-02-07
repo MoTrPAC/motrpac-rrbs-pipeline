@@ -1,0 +1,8 @@
+{
+  "multiqc_report.num_threads": "5",
+  "multiqc_report.disk_space": "10",
+  "multiqc_report.memory": "10",
+  "multiqc_report.num_preempt": "5",
+  "multiqc_report.multiQC.fastQCReports": ["/Users/akre96/Documents/github/rrbs_bismark/sampleData/pre_fastqc_report.tar.gz","/Users/akre96/Documents/github/rrbs_bismark/sampleData/post_fastqc_report.tar.gz"]
+}
+
