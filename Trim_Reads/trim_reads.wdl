@@ -1,6 +1,7 @@
 import "wdl-tasks/trimGalore.wdl" as TG
 import "wdl-tasks/trimDiversityAdapt.wdl" as TDA
 import "wdl-tasks/fastQC.wdl" as FQC
+import "wdl-tasks/multiQC.wdl" as MQC
 
 workflow trim_reads{
   Int memory
@@ -56,7 +57,14 @@ workflow trim_reads{
     r1=trimDiversityAdapt.r1_diversity_trimmed,
     r2=trimDiversityAdapt.r2_diversity_trimmed
   }
-
+  call MQC.multiQC as multiQC {
+    input:
+    memory=memory,
+    disk_space=disk_space,
+    num_threads=num_threads,
+    num_preempt=num_preempt, 
+    fastQCReports=[preTrimFastQC.fastQC_report,postTrimFastQC.fastQC_report]
+  }
   output {
     trimGalore.trimLog
     trimGalore.trim_summary
@@ -64,5 +72,6 @@ workflow trim_reads{
     trimDiversityAdapt.r2_diversity_trimmed
     preTrimFastQC.fastQC_report
     postTrimFastQC.fastQC_report
+    multiQC.multiQC_report
   }
 }

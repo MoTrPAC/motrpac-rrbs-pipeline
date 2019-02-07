@@ -1,6 +1,5 @@
-task fastQC {
-  File r1
-  File r2
+task multiQC{
+  Array[File] fastQCReports
   
   Int memory
   Int disk_space
@@ -8,14 +7,25 @@ task fastQC {
   Int num_preempt
 
   command {
-    mkdir fastqc_report
-    fastqc -o fastqc_report ${r1}
-    fastqc -o fastqc_report ${r2}
+    mkdir reports
+    cd reports
+    for file in ${sep=' ' fastQCReports}  ; do
+        tar -zxvf $file
+        rm $file
+    done
 
-    tar -cvzf fastqc_report.tar.gz ./fastqc_report
+    cd ..
+
+    mkdir multiQC_report
+    multiqc \
+      -d \
+      -f \
+      -o multiQC_report \
+      reports/*
+    tar -czvf multiqc_report.tar.gz ./multiQC_report
   }
   output {
-    File fastQC_report = 'fastqc_report.tar.gz'  
+    File multiQC_report = 'multiqc_report.tar.gz'  
   }
   runtime {
     docker: "akre96/motrpac_rrbs:v0.1"
@@ -26,12 +36,12 @@ task fastQC {
   }
 }
 
-workflow fastqc_report{  
+workflow multiqc_report{  
   Int memory
   Int disk_space
   Int num_threads
   Int num_preempt
-  call fastQC{
+  call multiQC{
     input:
     memory=memory,
     disk_space=disk_space,
@@ -39,6 +49,6 @@ workflow fastqc_report{
     num_preempt=num_preempt,
   }
   output {
-    fastQC.fastQC_report
+    multiQC.multiQC_report
   }
 }

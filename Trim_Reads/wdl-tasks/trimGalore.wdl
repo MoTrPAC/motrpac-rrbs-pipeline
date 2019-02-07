@@ -24,8 +24,7 @@ task trimGalore {
     Array[File] trim_summary = glob("*trimming_report.txt")
   }
   runtime {
-    # docker image # 99b03a41591c
-    docker: "aryeelab/bismark"
+    docker: "akre96/motrpac_rrbs:v0.1"
     memory: "${memory}GB"
     disks: "local-disk ${disk_space} HDD"
     cpu: "${num_threads}"
