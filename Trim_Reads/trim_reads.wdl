@@ -24,6 +24,8 @@ workflow trim_reads{
     r2=r2
   }
 
+  # TODO: Attach UMI Information
+
   # Trim Galore removes regular adapters
   call TG.trimGalore as trimGalore {input:
     memory=memory,

@@ -6,8 +6,6 @@
 cromwell-executions
 
 # External packages used in analysis
-NuMetRRBS
-nudup
 
 # Some of my initial testing
 testGCloud
