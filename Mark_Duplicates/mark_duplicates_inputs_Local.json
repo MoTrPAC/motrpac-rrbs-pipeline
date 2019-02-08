@@ -1,12 +1,9 @@
 {
-  "mark_duplicates.markDuplicates.stripBismarkScript": "/Users/akre96/Documents/github/rrbs_bismark/external-scripts/NuMetRRBS/strip_bismark_sam.sh",
-  "mark_duplicates.markDuplicates.nudupScript": "/Users/akre96/Documents/github/rrbs_bismark/external-scripts/nudup/nudup.py",
   "mark_duplicates.memory": "20",
   "mark_duplicates.disk_space": "30",
   "mark_duplicates.num_preempt": "25",
   "mark_duplicates.num_threads": "5",
-  "mark_duplicates.SID": "Muscle2_sub",
-  "mark_duplicates.sortedReadsIndex": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_sub_sorted.bam.bai",
-  "mark_duplicates.sortedReads": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_sub_sorted.bam"
+  "mark_duplicates.markDuplicates.SID": "Muscle2_100ksub",
+  "mark_duplicates.markDuplicates.bismarkReads": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_100ksub_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam"
 }
 

@@ -1,5 +1,4 @@
 task trimDiversityAdapt {
-  File script # TODO: Create custom docker image with required scripts loaded
   File r1_trimmed
   File r2_trimmed
   String SID
@@ -8,11 +7,14 @@ task trimDiversityAdapt {
   Int num_threads
   Int num_preempt
   command {
-    python ${script} -1 ${r1_trimmed} -2 ${r2_trimmed} -d ./
+    python2 /src/trimRRBSdiversityAdaptCustomers.py -1 ${r1_trimmed} -2 ${r2_trimmed}
+    mv $(dirname "${r1_trimmed}")/${SID}_attached_R1_val_1.fq_trimmed.fq.gz ./
+    mv $(dirname "${r2_trimmed}")/${SID}_attached_R2_val_2.fq_trimmed.fq.gz ./
+    ls
   }
   output {
-    File r1_diversity_trimmed = '${SID}_R1_val_1.fq_trimmed.fq.gz'
-    File r2_diversity_trimmed = '${SID}_R2_val_2.fq_trimmed.fq.gz'
+    File r1_diversity_trimmed = '${SID}_attached_R1_val_1.fq_trimmed.fq.gz'
+    File r2_diversity_trimmed = '${SID}_attached_R2_val_2.fq_trimmed.fq.gz'
   }
   runtime {
     docker: "akre96/motrpac_rrbs:v0.1"

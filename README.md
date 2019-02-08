@@ -7,11 +7,13 @@
     - Issues with [NuGen Diersity Trimming Scripts](https://github.com/nugentechnologies/NuMetRRBS)
         - trimDiversityAdapters python script by NuGen running, but I can't find any output files, need to run outside of cromwell to check if it works and cromwell is just deleting the file
         - Update(1/10/19): After running outside cromwell, found out that the python script creates the output files in the same directory as the input files, regardless of where the script is run from. Created a custom version of NuGen's script that allows for the specification of an output directory.
+        - Update(2/07/19): Instead of using my custom version from before, just moved the output stored in the inputs folder to the execution folder
 
 
 # TODO Notes:
   - Right now the scripts in for trimming reads expect a file with .gz output, I will need to figure out how to best allow scripts to be more agnostic to the specific form of the input since the actual packages can run on zipped and unzipped files with no additional specifications required.
-  - Todo: Create master docker image
+  - Check if .gitmodules should be in repository
+  - add external scripts to docker image
 
 # Source files:
 [Rat Genome GTF File Release 92](http://ftp.ensembl.org/pub/release-92/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.92.gtf.gz)
