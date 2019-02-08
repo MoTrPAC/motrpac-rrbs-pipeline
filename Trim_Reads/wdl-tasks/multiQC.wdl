@@ -5,6 +5,7 @@ task multiQC{
   Int disk_space
   Int num_threads
   Int num_preempt
+  String docker
 
   command {
     mkdir reports
@@ -28,7 +29,7 @@ task multiQC{
     File multiQC_report = 'multiqc_report.tar.gz'  
   }
   runtime {
-    docker: "akre96/motrpac_rrbs:v0.1"
+    docker: "${docker}"
     memory: "${memory}GB"
     disks: "local-disk ${disk_space} HDD"
     cpu: "${num_threads}"

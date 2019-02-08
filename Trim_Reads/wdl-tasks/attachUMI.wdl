@@ -3,6 +3,7 @@ task attachUMI {
   File r2
   File i1
   String SID
+  String docker
 
   # Runtime Attributes
   Int memory
@@ -22,7 +23,7 @@ task attachUMI {
     File r2_umi_attached= "${SID}_attached_R2.fastq.gz"
   }
   runtime {
-    docker: "akre96/motrpac_rrbs:v0.1"
+    docker: "${docker}"
     memory: "${memory}GB"
     disks: "local-disk ${disk_space} HDD"
     cpu: "${num_threads}"

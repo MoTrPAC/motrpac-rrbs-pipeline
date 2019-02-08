@@ -20,7 +20,7 @@ SID=$1
 R1=${SID}_R1.fastq
 R2=${SID}_R2.fastq
 I1=${SID}_I1.fastq
-sampleSize=100000
+sampleSize=1000000
 let "sampleSizeName = sampleSize/1000"
 outFileLabel="${sampleSizeName}ksub"
 

@@ -1,0 +1,13 @@
+{
+  "rrbs_pipeline.r1": "gs://sa-rrbs-pipeline/sample-data/Muscle2_R1.fastq.gz",
+  "rrbs_pipeline.r2": "gs://sa-rrbs-pipeline/sample-data/Muscle2_R2.fastq.gz",
+  "rrbs_pipeline.i1": "gs://sa-rrbs-pipeline/sample-data/Muscle2_I1.fastq.gz",
+  "rrbs_pipeline.SID": "Muscle2",
+  "rrbs_pipeline.memory": "30",
+  "rrbs_pipeline.disk_space": "30",
+  "rrbs_pipeline.num_threads": "7",
+  "rrbs_pipeline.num_preempt": "25",
+  "rrbs_pipeline.docker": "akre96/motrpac_rrbs:v0.1",
+  "rrbs_pipeline.genome_dir_tar": "gs://sa-rrbs-pipeline/genomes/human/Bisulfite_Indexed_Genome.tar",
+  "rrbs_pipeline.genome_dir": "human"
+}
