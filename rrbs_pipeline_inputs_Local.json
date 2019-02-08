@@ -1,0 +1,13 @@
+{
+  "rrbs_pipeline.r1": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_100ksub_R1.fastq.gz",
+  "rrbs_pipeline.r2": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_100ksub_R2.fastq.gz",
+  "rrbs_pipeline.i1": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_100ksub_I1.fastq.gz",
+  "rrbs_pipeline.SID": "Muscle2_100ksub",
+  "rrbs_pipeline.memory": "20",
+  "rrbs_pipeline.disk_space": "30",
+  "rrbs_pipeline.num_threads": "4",
+  "rrbs_pipeline.num_preempt": "25",
+  "rrbs_pipeline.docker": "akre96/motrpac_rrbs:v0.1",
+  "rrbs_pipeline.genome_dir_tar": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/chr_X_bismark_genome.tar.gz",
+  "rrbs_pipeline.genome_dir": "chr_X"
+}

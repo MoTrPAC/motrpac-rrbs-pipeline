@@ -1,0 +1,18 @@
+2019-02-08 13:17:51,551 INFO  - MaterializeWorkflowDescriptorActor [UUID(3388344d)]: Parsing workflow as WDL draft-2
+2019-02-08 13:17:52,649 INFO  - MaterializeWorkflowDescriptorActor [UUID(3388344d)]: Call-to-Backend assignments: rrbs_pipeline.attachUMI -> JES, rrbs_pipeline.postTrimFastQC -> JES, rrbs_pipeline.trimDiversityAdapt -> JES, rrbs_pipeline.alignTrimmed -> JES, rrbs_pipeline.preTrimFastQC -> JES, rrbs_pipeline.markDuplicates -> JES, rrbs_pipeline.multiQC -> JES, rrbs_pipeline.trimGalore -> JES
+2019-02-08 13:17:55,117 INFO  - WorkflowExecutionActor-3388344d-52aa-49b9-b94e-ee45a995ac91 [UUID(3388344d)]: Starting rrbs_pipeline.attachUMI, rrbs_pipeline.preTrimFastQC
+2019-02-08 13:17:56,097 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(3388344d)rrbs_pipeline.attachUMI:NA:1]: `zcat /cromwell_root/sa-rrbs-pipeline/sample-data/Muscle2_R1.fastq.gz | UMI_attach.awk -v Ifq=/cromwell_root/sa-rrbs-pipeline/sample-data/Muscle2_I1.fastq.gz |
+gzip -c >  Muscle2_attached_R1.fastq.gz
+
+zcat /cromwell_root/sa-rrbs-pipeline/sample-data/Muscle2_R2.fastq.gz| UMI_attach.awk -v Ifq=/cromwell_root/sa-rrbs-pipeline/sample-data/Muscle2_I1.fastq.gz |
+gzip -c >  Muscle2_attached_R2.fastq.gz`
+2019-02-08 13:17:56,097 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(3388344d)rrbs_pipeline.preTrimFastQC:NA:1]: `mkdir fastqc_report
+fastqc -o fastqc_report /cromwell_root/sa-rrbs-pipeline/sample-data/Muscle2_R1.fastq.gz
+fastqc -o fastqc_report /cromwell_root/sa-rrbs-pipeline/sample-data/Muscle2_R2.fastq.gz
+
+tar -cvzf fastqc_report.tar.gz ./fastqc_report`
+2019-02-08 13:18:25,606 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(3388344d)rrbs_pipeline.attachUMI:NA:1]: job id: operations/EMui5_eMLRj01ri8naOAyMYBIN2or9XICioPcHJvZHVjdGlvblF1ZXVl
+2019-02-08 13:18:25,606 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(3388344d)rrbs_pipeline.preTrimFastQC:NA:1]: job id: operations/EL6i5_eMLRjQ1fOyroex6IUBIN2or9XICioPcHJvZHVjdGlvblF1ZXVl
+2019-02-08 13:18:58,431 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(3388344d)rrbs_pipeline.attachUMI:NA:1]: Status change from - to Running
+2019-02-08 13:18:58,435 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(3388344d)rrbs_pipeline.preTrimFastQC:NA:1]: Status change from - to Running
+2019-02-08 13:27:53,745 INFO  - PipelinesApiAsyncBackendJobExecutionActor [UUID(3388344d)rrbs_pipeline.preTrimFastQC:NA:1]: Status change from Running to Success
