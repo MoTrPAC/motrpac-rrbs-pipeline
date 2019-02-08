@@ -2,6 +2,7 @@ import "wdl-tasks/trimGalore.wdl" as TG
 import "wdl-tasks/trimDiversityAdapt.wdl" as TDA
 import "wdl-tasks/fastQC.wdl" as FQC
 import "wdl-tasks/multiQC.wdl" as MQC
+import "wdl-tasks/attachUMI.wdl" as AUMI
 
 workflow trim_reads{
   Int memory
@@ -10,7 +11,7 @@ workflow trim_reads{
   Int num_preempt
   File r1
   File r2
-  File trimDiversityScript
+  File i1
   String SID
 
   ## Runs FastQC pre-trimming 
@@ -24,7 +25,18 @@ workflow trim_reads{
     r2=r2
   }
 
-  # TODO: Attach UMI Information
+  # Attach UMI Information
+  call AUMI.attachUMI as attachUMI {
+    input: 
+    memory=memory,
+    disk_space=disk_space,
+    num_threads=num_threads,
+    num_preempt=num_preempt, 
+    SID=SID,
+    r1=r1,
+    r2=r2,
+    i1=i1
+  }
 
   # Trim Galore removes regular adapters
   call TG.trimGalore as trimGalore {input:
@@ -32,8 +44,8 @@ workflow trim_reads{
     disk_space=disk_space,
     num_threads=num_threads,
     num_preempt=num_preempt,
-    r1=r1,
-    r2=r2,
+    r1=attachUMI.r1_umi_attached,
+    r2=attachUMI.r2_umi_attached,
     SID=SID
     }
 
@@ -43,7 +55,6 @@ workflow trim_reads{
     disk_space=disk_space,
     num_threads=num_threads,
     num_preempt=num_preempt,
-    script=trimDiversityScript,
     r1_trimmed=trimGalore.r1_trimmed,
     r2_trimmed=trimGalore.r2_trimmed,
     SID=SID

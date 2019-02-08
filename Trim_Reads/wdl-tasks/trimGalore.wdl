@@ -19,8 +19,8 @@ task trimGalore {
   }
   output {
     File trimLog = "${SID}_trim.log"
-    File r1_trimmed = "${SID}_R1_val_1.fq.gz"
-    File r2_trimmed = "${SID}_R2_val_2.fq.gz"
+    File r1_trimmed = "${SID}_attached_R1_val_1.fq.gz"
+    File r2_trimmed = "${SID}_attached_R2_val_2.fq.gz"
     Array[File] trim_summary = glob("*trimming_report.txt")
   }
   runtime {

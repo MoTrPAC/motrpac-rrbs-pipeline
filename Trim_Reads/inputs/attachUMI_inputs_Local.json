@@ -1,0 +1,11 @@
+{
+  "attach_umi.num_threads": "5",
+  "attach_umi.disk_space": "10",
+  "attach_umi.memory": "10",
+  "attach_umi.num_preempt": "5",
+  "attach_umi.attachUMI.SID": "Muscle2_100ksub",
+  "attach_umi.attachUMI.r1": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_100ksub_R1.fastq.gz",
+  "attach_umi.attachUMI.r2": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_100ksub_R2.fastq.gz",
+  "attach_umi.attachUMI.i1": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_100ksub_I1.fastq.gz"
+}
+

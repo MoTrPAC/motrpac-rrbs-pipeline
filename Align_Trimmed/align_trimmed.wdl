@@ -15,28 +15,20 @@ task alignTrimmed{
     mkdir genome
     mkdir tmp
     tar -zxvf ${genome_dir_tar} -C ./genome
-    bismark genome/${genome_dir} --multicore ${num_threads}\
-      -1 ${r1_trimmed} \
-      -2 ${r2_trimmed} \
-      >& ${SID}_bismarkAlign.log
-    
-    samtools sort *.bam \
-    -m 2G \
-    -T tmp \
-    -o ${SID}_sorted.bam
-    -@ ${num_threads}
 
-    samtools index ${SID}_sorted.bam
+    echo "Running: bismark"
+    bismark genome/${genome_dir} --multicore ${num_threads} \
+    -1 ${r1_trimmed} \
+    -2 ${r2_trimmed} \
+    >& ${SID}_bismarkAlign.log
   }
   output {
     File bismarkAlignLog = '${SID}_bismarkAlign.log'
-    File sortedReads = '${SID}_sorted.bam'
-    File sortedReadsIndex = '${SID}_sorted.bam.bai'
-    # TODO: Add output files of alignment
+    File bismarkReport = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt'
+    File bismarkReads = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam'
   }
   runtime {
-    # docker image # 99b03a41591c
-    docker: "aryeelab/bismark"
+    docker: "akre96/motrpac_rrbs:v0.1"
     memory: "${memory}GB"
     disks: "local-disk ${disk_space} HDD"
     cpu: "${num_threads}"
@@ -65,5 +57,7 @@ workflow align_trimmed{
   output {
     #TODO: Add bismark alignment and samtools ouput to outputs
     alignTrimmed.bismarkAlignLog
+    alignTrimmed.bismarkReport
+    alignTrimmed.bismarkReads
   }
 }
