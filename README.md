@@ -1,5 +1,5 @@
 # Current RRBS Pipeline Implementation [UNDER PRELIMINARY DEVELOPMENT]
-  - dockerBuild folder for building docker image hosted at akre96/bismark on dockerhub. Bismark v0.20.0 (not currently being used)
+  - dockerBuild folder for building docker image hosted at akre96/motrpac_rrbs:v0.1 on dockerhub. Bismark v0.20.0 
   - *_Cromwell.sh files used to run wdl scripts in cromwell
   - Most folders holds individual tasks being tested on data held in sampleData folder
 

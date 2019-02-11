@@ -4,6 +4,7 @@
 
 # Cromwell execution logs and such
 cromwell-executions
+cromwell-workflow-logs
 
 # External packages used in analysis
 
