@@ -39,10 +39,10 @@ task indexGenome {
     echo "($FAIL) Jobs Failed"
     fi
 
-    tar -cvf Bisulfite_Indexed_Genome.tar ./${genome_dir}
+    tar -czvf Bisulfite_Indexed_Genome.tar ./${genome_dir}
   }
   output {
-    File bsGenome = "Bisulfite_Indexed_Genome.tar"
+    File bsGenome = "Bisulfite_Indexed_Genome.tar.gz"
   }
   
   runtime {
