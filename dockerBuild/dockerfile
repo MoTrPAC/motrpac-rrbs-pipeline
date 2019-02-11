@@ -70,7 +70,7 @@ RUN rm -rf tmp
 
 # Install motrpac UMI_attach script
 RUN cd /src && \
-    wget https://raw.githubusercontent.com/yongchao/motrpac_rnaseq/master/bin/UMI_attach.awk && \
+    wget https://raw.githubusercontent.com/yongchao/motrpac_rnaseq/0071959641549d093c1ce669c903372ecd7c9d0d/bin/UMI_attach.awk && \
     chmod 755 UMI_attach.awk && \
     ln -s /src/UMI_attach.awk /usr/local/bin
 
