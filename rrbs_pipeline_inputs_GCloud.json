@@ -6,7 +6,7 @@
   "rrbs_pipeline.memory": "30",
   "rrbs_pipeline.disk_space": "30",
   "rrbs_pipeline.num_threads": "7",
-  "rrbs_pipeline.num_preempt": "25",
+  "rrbs_pipeline.num_preempt": "5",
   "rrbs_pipeline.docker": "akre96/motrpac_rrbs:v0.1",
   "rrbs_pipeline.genome_dir_tar": "gs://sa-rrbs-pipeline/genomes/human/Bisulfite_Indexed_Genome.tar.gz",
   "rrbs_pipeline.genome_dir": "human"

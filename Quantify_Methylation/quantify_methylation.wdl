@@ -8,10 +8,16 @@ task quantifyMethylation{
   String docker
 
   command {
+    echo "Running: bismark_methylation_extractor"
     bismark_methylation_extractor ${bismarkDeduplicatedReads} \
     --multicore ${num_threads}\
     --comprehensive \
     --bedgraph 
+    echo "Finished: bismark_methylation_extractor"
+
+    echo "Running: ls"
+    ls
+    echo "Finished: ls"
 
   }
   output {

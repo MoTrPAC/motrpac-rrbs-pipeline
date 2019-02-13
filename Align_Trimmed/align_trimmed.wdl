@@ -17,12 +17,18 @@ task alignTrimmed{
     mkdir genome
     mkdir tmp
     tar -zxvf ${genome_dir_tar} -C ./genome
-
+    echo "Running: ls"
+    ls
+    echo "--- End ls ---"
     echo "Running: bismark"
     bismark genome/${genome_dir} --multicore ${num_threads} \
     -1 ${r1_trimmed} \
     -2 ${r2_trimmed} \
     >& ${SID}_bismarkAlign.log
+    echo "--- End bismark ---"
+    echo "Running: ls"
+    ls
+    echo "--- End ls ---"
   }
   output {
     File bismarkAlignLog = '${SID}_bismarkAlign.log'

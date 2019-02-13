@@ -5,6 +5,7 @@ import "Trim_Reads/wdl-tasks/multiQC.wdl" as MQC
 import "Trim_Reads/wdl-tasks/attachUMI.wdl" as AUMI
 import "Align_Trimmed/align_trimmed.wdl" as AT
 import "Mark_Duplicates/mark_duplicates.wdl" as MD
+import "Quantify_Methylation/quantify_methylation.wdl" as QM
 
 workflow rrbs_pipeline{
   Int memory
@@ -26,7 +27,7 @@ workflow rrbs_pipeline{
     input: 
     memory=memory,
     disk_space=disk_space,
-    num_threads=num_threads,
+    num_threads=1,
     num_preempt=num_preempt, 
     docker=docker,
     r1=r1,
@@ -36,9 +37,9 @@ workflow rrbs_pipeline{
   # Attach UMI Information
   call AUMI.attachUMI as attachUMI {
     input: 
-    memory=memory,
+    memory=40,
     disk_space=disk_space,
-    num_threads=num_threads,
+    num_threads=1,
     num_preempt=num_preempt, 
     docker=docker,
     SID=SID,
@@ -49,9 +50,9 @@ workflow rrbs_pipeline{
 
   # Trim Galore removes regular adapters
   call TG.trimGalore as trimGalore {input:
-    memory=memory,
+    memory=50,
     disk_space=disk_space,
-    num_threads=num_threads,
+    num_threads=1,
     num_preempt=num_preempt,
     docker=docker,
     r1=attachUMI.r1_umi_attached,
@@ -63,7 +64,7 @@ workflow rrbs_pipeline{
   call TDA.trimDiversityAdapt as trimDiversityAdapt {input:
     memory=memory,
     disk_space=disk_space,
-    num_threads=num_threads,
+    num_threads=1,
     num_preempt=num_preempt,
     docker=docker,
     r1_trimmed=trimGalore.r1_trimmed,
@@ -76,17 +77,19 @@ workflow rrbs_pipeline{
     input:
     memory=memory,
     disk_space=disk_space,
-    num_threads=num_threads,
+    num_threads=1,
     num_preempt=num_preempt, 
     docker=docker,
     r1=trimDiversityAdapt.r1_diversity_trimmed,
     r2=trimDiversityAdapt.r2_diversity_trimmed
   }
+
+  # MultiQC on all FastQCs
   call MQC.multiQC as multiQC {
     input:
     memory=memory,
     disk_space=disk_space,
-    num_threads=num_threads,
+    num_threads=1,
     num_preempt=num_preempt, 
     docker=docker,
     fastQCReports=[preTrimFastQC.fastQC_report,postTrimFastQC.fastQC_report]
@@ -95,9 +98,9 @@ workflow rrbs_pipeline{
   # Align trimmed reads
   call AT.alignTrimmed as alignTrimmed{
     input:
-    memory=memory,
-    disk_space=disk_space,
-    num_threads=num_threads,
+    memory=50,
+    disk_space=100,
+    num_threads=10,
     num_preempt=num_preempt,
     docker=docker,
     SID=SID,
@@ -108,16 +111,27 @@ workflow rrbs_pipeline{
   }
 
   # Remove PCR Duplicates
-   call MD.markDuplicates as markDuplicates {
+  call MD.markDuplicates as markDuplicates {
     input:
     memory=memory,
     disk_space=disk_space,
-    num_threads=num_threads,
+    num_threads=1,
     num_preempt=num_preempt,
     docker=docker,
     SID=SID,
     bismarkReads=alignTrimmed.bismarkReads
     } 
+
+  # Quantify Methylation
+  call QM.quantifyMethylation as quantifyMethylation {
+    input:
+    memory=memory,
+    disk_space=disk_space,
+    num_threads=10,
+    num_preempt=num_preempt,
+    docker=docker,
+    bismarkDeduplicatedReads=markDuplicates.deduped
+    }
 
   output {
     trimGalore.trimLog
@@ -131,5 +145,8 @@ workflow rrbs_pipeline{
     alignTrimmed.bismarkReport
     alignTrimmed.bismarkReads
     markDuplicates.deduped
+    quantifyMethylation.CpG_context
+    quantifyMethylation.CHG_context
+    quantifyMethylation.CHH_context
   }
 }
