@@ -3,7 +3,7 @@
     - Mop Authors: Yongchao Ge, Venugopalan Nair and Stuart Sealfon @ Mount Sinai
   - dockerBuild folder for building docker image hosted at akre96/motrpac_rrbs:v0.1 on dockerhub. Bismark v0.20.0 
   - *_Cromwell.sh files used to run wdl scripts in cromwell
-  - Most folders holds individual tasks being tested on data held in sampleData folder
+  - Most folders hold individual tasks being tested on data held in sampleData folder
 
 ## Requirements (included in Docker image):
   - openjdk/8.0.152
@@ -34,6 +34,8 @@
 ## TODO Notes:
   - Right now the scripts in for trimming reads expect a file with .gz output, I will need to figure out how to best allow scripts to be more agnostic to the specific form of the input since the actual packages can run on zipped and unzipped files with no additional specifications required.
   - Check if .gitmodules should be in repository
+  - Implement alignment and genome indexing s.t they are not preemptible instances
+  - Change default num_threads to increments of 8 to match GClouds vCPUs
 
 # Source files:
 [Rat Genome GTF File Release 92](http://ftp.ensembl.org/pub/release-92/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.92.gtf.gz)

@@ -8,6 +8,7 @@ import "Mark_Duplicates/mark_duplicates.wdl" as MD
 import "Quantify_Methylation/quantify_methylation.wdl" as QM
 
 workflow rrbs_pipeline{
+  # Default values for runtime, changed in individual calls according to requirements
   Int memory
   Int disk_space
   Int num_threads
@@ -97,13 +98,15 @@ workflow rrbs_pipeline{
 
   # Align trimmed reads
   call AT.alignTrimmed as alignTrimmed{
+    # NOT PREEMPTIBLE INSTANCE
     input:
     memory=50,
     disk_space=100,
-    num_threads=10,
-    num_preempt=num_preempt,
+    num_threads=16,
+    num_preempt=0,
     docker=docker,
     SID=SID,
+    bismarkMultiCore=4,
     r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
     r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
     genome_dir=genome_dir,
@@ -125,12 +128,13 @@ workflow rrbs_pipeline{
   # Quantify Methylation
   call QM.quantifyMethylation as quantifyMethylation {
     input:
-    memory=memory,
-    disk_space=disk_space,
-    num_threads=10,
+    memory=60,
+    disk_space=60,
+    num_threads=16,
     num_preempt=num_preempt,
     docker=docker,
-    bismarkDeduplicatedReads=markDuplicates.deduped
+    bismarkDeduplicatedReads=markDuplicates.deduped,
+    SID=SID
     }
 
   output {
@@ -148,5 +152,9 @@ workflow rrbs_pipeline{
     quantifyMethylation.CpG_context
     quantifyMethylation.CHG_context
     quantifyMethylation.CHH_context
+    quantifyMethylation.MBias
+    quantifyMethylation.bedGraph
+    quantifyMethylation.bismarkCov
+    quantifyMethylation.splittingReport
   }
 }

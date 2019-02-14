@@ -4,6 +4,7 @@ task alignTrimmed{
   File genome_dir_tar
   String genome_dir # Name of the genome folder that has been tar balled 
   String SID
+  Int bismarkMultiCore
 
   Int memory
   Int disk_space
@@ -21,7 +22,7 @@ task alignTrimmed{
     ls
     echo "--- End ls ---"
     echo "Running: bismark"
-    bismark genome/${genome_dir} --multicore ${num_threads} \
+    bismark genome/${genome_dir} --multicore ${bismarkMultiCore} \
     -1 ${r1_trimmed} \
     -2 ${r2_trimmed} \
     >& ${SID}_bismarkAlign.log
