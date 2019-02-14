@@ -4,7 +4,7 @@ task alignTrimmed{
   File genome_dir_tar
   String genome_dir # Name of the genome folder that has been tar balled 
   String SID
-  Int bismarkMultiCore
+  Int bismark_multicore
 
   Int memory
   Int disk_space
@@ -22,7 +22,7 @@ task alignTrimmed{
     ls
     echo "--- End ls ---"
     echo "Running: bismark"
-    bismark genome/${genome_dir} --multicore ${bismarkMultiCore} \
+    bismark genome/${genome_dir} --multicore ${bismark_multicore} \
     -1 ${r1_trimmed} \
     -2 ${r2_trimmed} \
     >& ${SID}_bismarkAlign.log
@@ -32,9 +32,9 @@ task alignTrimmed{
     echo "--- End ls ---"
   }
   output {
-    File bismarkAlignLog = '${SID}_bismarkAlign.log'
-    File bismarkReport = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt'
-    File bismarkReads = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam'
+    File bismark_align_log = '${SID}_bismarkAlign.log'
+    File bismark_report = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt'
+    File bismark_reads = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam'
   }
   runtime {
     docker: "${docker}"
@@ -68,8 +68,8 @@ workflow align_trimmed{
   }
   output {
     #TODO: Add bismark alignment and samtools ouput to outputs
-    alignTrimmed.bismarkAlignLog
-    alignTrimmed.bismarkReport
-    alignTrimmed.bismarkReads
+    alignTrimmed.bismark_align_log
+    alignTrimmed.bismark_report
+    alignTrimmed.bismark_reads
   }
 }
