@@ -1,5 +1,5 @@
 task quantifyMethylation{
-  File bismarkDeduplicatedReads 
+  File bismark_deduplicated_reads 
   String SID
 
   Int memory
@@ -10,7 +10,7 @@ task quantifyMethylation{
 
   command {
     echo "--- Running: bismark_methylation_extractor ---"
-    bismark_methylation_extractor ${bismarkDeduplicatedReads} \
+    bismark_methylation_extractor ${bismark_deduplicated_reads} \
     --multicore ${num_threads} \
     --comprehensive \
     --bedgraph 
@@ -25,10 +25,10 @@ task quantifyMethylation{
     File CpG_context="CpG_context_${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.txt"
     File CHG_context="CHG_context_${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.txt"
     File CHH_context="CHH_context_${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.txt"
-    File MBias="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.M-bias.txt"
-    File bedGraph="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bedGraph.gz"
-    File bismarkCov="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bismark.cov.gz"
-    File splittingReport="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe_splitting_report.txt"
+    File M_Bias="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.M-bias.txt"
+    File bedgraph="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bedGraph.gz"
+    File bismark_cov="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bismark.cov.gz"
+    File splitting_report="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe_splitting_report.txt"
   }
   runtime {
     docker: "${docker}"
@@ -63,9 +63,9 @@ workflow quantify_methylation{
     quantifyMethylation.CpG_context
     quantifyMethylation.CHG_context
     quantifyMethylation.CHH_context
-    quantifyMethylation.MBias
-    quantifyMethylation.bedGraph
-    quantifyMethylation.bismarkCov
-    quantifyMethylation.splittingReport
+    quantifyMethylation.M_Bias
+    quantifyMethylation.bedgraph
+    quantifyMethylation.bismark_cov
+    quantifyMethylation.splitting_report
   }
 }

@@ -50,7 +50,8 @@ workflow rrbs_pipeline{
   }
 
   # Trim Galore removes regular adapters
-  call TG.trimGalore as trimGalore {input:
+  call TG.trimGalore as trimGalore {
+    input:
     memory=50,
     disk_space=disk_space,
     num_threads=1,
@@ -62,7 +63,8 @@ workflow rrbs_pipeline{
     }
 
   # NuGen specific diversity adapaters trimmed
-  call TDA.trimDiversityAdapt as trimDiversityAdapt {input:
+  call TDA.trimDiversityAdapt as trimDiversityAdapt {
+    input:
     memory=memory,
     disk_space=disk_space,
     num_threads=1,
@@ -106,7 +108,7 @@ workflow rrbs_pipeline{
     num_preempt=0,
     docker=docker,
     SID=SID,
-    bismarkMultiCore=4,
+    bismark_multicore=4,
     r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
     r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
     genome_dir=genome_dir,
@@ -122,7 +124,7 @@ workflow rrbs_pipeline{
     num_preempt=num_preempt,
     docker=docker,
     SID=SID,
-    bismarkReads=alignTrimmed.bismarkReads
+    bismarkReads=alignTrimmed.bismark_reads
     } 
 
   # Quantify Methylation
@@ -133,7 +135,7 @@ workflow rrbs_pipeline{
     num_threads=16,
     num_preempt=num_preempt,
     docker=docker,
-    bismarkDeduplicatedReads=markDuplicates.deduped,
+    bismark_deduplicated_reads=markDuplicates.deduped,
     SID=SID
     }
 
@@ -145,16 +147,16 @@ workflow rrbs_pipeline{
     preTrimFastQC.fastQC_report
     postTrimFastQC.fastQC_report
     multiQC.multiQC_report
-    alignTrimmed.bismarkAlignLog
-    alignTrimmed.bismarkReport
-    alignTrimmed.bismarkReads
+    alignTrimmed.bismark_align_log
+    alignTrimmed.bismark_report
+    alignTrimmed.bismark_reads
     markDuplicates.deduped
     quantifyMethylation.CpG_context
     quantifyMethylation.CHG_context
     quantifyMethylation.CHH_context
-    quantifyMethylation.MBias
-    quantifyMethylation.bedGraph
-    quantifyMethylation.bismarkCov
-    quantifyMethylation.splittingReport
+    quantifyMethylation.M_Bias
+    quantifyMethylation.bedgraph
+    quantifyMethylation.bismark_cov
+    quantifyMethylation.splitting_report
   }
 }
