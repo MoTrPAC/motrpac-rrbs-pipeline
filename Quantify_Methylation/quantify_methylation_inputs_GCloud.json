@@ -1,0 +1,10 @@
+{
+  "quantify_methylation.quantifyMethylation.bismarkDeduplicatedReads": "gs://sa-rrbs-pipeline/cromwell-execution/align_trimmed/d1d8b8c8-8516-4071-b35d-225c92682254/call-alignTrimmed/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam",
+  "quantify_methylation.memory": "60",
+  "quantify_methylation.docker": "akre96/motrpac_rrbs:v0.1",
+  "quantify_methylation.SID": "Muscle2",
+  "quantify_methylation.num_preempt": "25",
+  "quantify_methylation.disk_space": "100",
+  "quantify_methylation.num_threads": "16"
+}
+
