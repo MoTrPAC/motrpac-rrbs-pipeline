@@ -7,3 +7,6 @@
 [submodule "external-scripts/nudup"]
 	path = external-scripts/nudup
 	url = https://github.com/nugentechnologies/nudup.git
+[submodule "external-scripts/motrpac_rrbs"]
+	path = external-scripts/motrpac_rrbs
+	url = https://github.com/yongchao/motrpac_rrbs.git

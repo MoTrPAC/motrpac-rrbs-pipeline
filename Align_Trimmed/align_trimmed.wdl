@@ -4,7 +4,7 @@ task alignTrimmed{
   File genome_dir_tar
   String genome_dir # Name of the genome folder that has been tar balled 
   String SID
-  Int bismark_multicore
+  Int bismark_multicore = 1 # Multiply by ~4 to get number of cores required
 
   Int memory
   Int disk_space
@@ -18,15 +18,26 @@ task alignTrimmed{
     mkdir genome
     mkdir tmp
     tar -zxvf ${genome_dir_tar} -C ./genome
+
     echo "Running: ls"
     ls
     echo "--- End ls ---"
+
     echo "Running: bismark"
     bismark genome/${genome_dir} --multicore ${bismark_multicore} \
     -1 ${r1_trimmed} \
     -2 ${r2_trimmed} \
     >& ${SID}_bismarkAlign.log
     echo "--- End bismark ---"
+
+    echo "Running: ls"
+    ls
+    echo "--- End ls ---"
+
+    echo "--- Running: bismark2summary"
+    bismark2summary
+    echo "--- End bismark2summary"
+
     echo "Running: ls"
     ls
     echo "--- End ls ---"
@@ -35,6 +46,7 @@ task alignTrimmed{
     File bismark_align_log = '${SID}_bismarkAlign.log'
     File bismark_report = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt'
     File bismark_reads = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam'
+    File bismark_summary = 'bismark_summary_report.txt'
   }
   runtime {
     docker: "${docker}"
@@ -71,5 +83,6 @@ workflow align_trimmed{
     alignTrimmed.bismark_align_log
     alignTrimmed.bismark_report
     alignTrimmed.bismark_reads
+    alignTrimmed.bismark_summary
   }
 }

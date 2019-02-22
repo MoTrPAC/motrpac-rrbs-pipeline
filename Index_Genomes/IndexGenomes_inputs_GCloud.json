@@ -1,9 +1,8 @@
 {
   "Bismark_Index_Generation.indexGenome.refGenome": "gs://sa-rrbs-pipeline/genomes/human/GRCh38.primary_assembly.genome.fa.gz",
   "Bismark_Index_Generation.indexGenome.refAnnotation": "gs://sa-rrbs-pipeline/genomes/human/gencode.v29.primary_assembly.annotation.gtf.gz",
-  "Bismark_Index_Generation.indexGenome.lambdaGenome": "gs://sa-rrbs-pipeline/genomes/human/lambda.fasta",
   "Bismark_Index_Generation.indexGenome.genome_dir": "human",
-  "Bismark_Index_Generation.memory": "30",
+  "Bismark_Index_Generation.memory": "20",
   "Bismark_Index_Generation.docker": "akre96/motrpac_rrbs:v0.1",
   "Bismark_Index_Generation.disk_space": "30",
   "Bismark_Index_Generation.num_threads": "5",
