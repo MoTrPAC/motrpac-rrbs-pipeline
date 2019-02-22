@@ -1,7 +1,7 @@
 {
   "Bismark_Index_Generation.indexGenome.refGenome": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/chr_X/chr_X_genome.fa.gz",
   "Bismark_Index_Generation.indexGenome.refAnnotation": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/chr_X/chr_X_annotation.gtf.gz",
-  "Bismark_Index_Generation.indexGenome.lambdaGenome": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/lambda.fasta",
+  "Bismark_Index_Generation.indexGenome.genome_dir": "chr_x",
   "Bismark_Index_Generation.memory": "20",
   "Bismark_Index_Generation.docker": "akre96/motrpac_rrbs:v0.1",
   "Bismark_Index_Generation.disk_space": "30",

@@ -23,6 +23,8 @@ workflow rrbs_pipeline{
   File genome_dir_tar
   String genome_dir # Name of the genome folder that has been tar balled 
 
+  File lambda_genome
+
   ## Runs FastQC pre-trimming 
   call FQC.fastQC as preTrimFastQC {
     input: 
@@ -98,8 +100,8 @@ workflow rrbs_pipeline{
     fastQCReports=[preTrimFastQC.fastQC_report,postTrimFastQC.fastQC_report]
   }
 
-  # Align trimmed reads
-  call AT.alignTrimmed as alignTrimmed{
+  # Align trimmed reads to species of interest
+  call AT.alignTrimmed as alignTrimmedSpecies{
     # NOT PREEMPTIBLE INSTANCE
     input:
     memory=50,
@@ -113,6 +115,23 @@ workflow rrbs_pipeline{
     r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
     genome_dir=genome_dir,
     genome_dir_tar=genome_dir_tar
+  }
+
+  # Align trimmed reads to lambda for controll
+  call AT.alignTrimmed as alignTrimmedControl{
+    # NOT PREEMPTIBLE INSTANCE
+    input:
+    memory=50,
+    disk_space=100,
+    num_threads=16,
+    num_preempt=0,
+    docker=docker,
+    SID=SID,
+    bismark_multicore=4,
+    r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
+    r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
+    genome_dir='lambda',
+    genome_dir_tar=lambda_genome
   }
 
   # Remove PCR Duplicates
@@ -147,9 +166,14 @@ workflow rrbs_pipeline{
     preTrimFastQC.fastQC_report
     postTrimFastQC.fastQC_report
     multiQC.multiQC_report
-    alignTrimmed.bismark_align_log
-    alignTrimmed.bismark_report
-    alignTrimmed.bismark_reads
+    alignTrimmedSpecies.bismark_align_log
+    alignTrimmedSpecies.bismark_report
+    alignTrimmedSpecies.bismark_reads
+    alignTrimmedSpecies.bismark_summary
+    alignTrimmedControl.bismark_align_log
+    alignTrimmedControl.bismark_report
+    alignTrimmedControl.bismark_reads
+    alignTrimmedControl.bismark_summary
     markDuplicates.deduped
     quantifyMethylation.CpG_context
     quantifyMethylation.CHG_context

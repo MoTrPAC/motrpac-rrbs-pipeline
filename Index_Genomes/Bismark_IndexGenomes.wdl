@@ -1,8 +1,7 @@
 task indexGenome {
 
-  File refAnnotation
+  File? refAnnotation
   File refGenome
-  File lambdaGenome
   String genome_dir # Name of folder in which to place bisulfite genome
   Int memory
   Int disk_space
@@ -18,8 +17,15 @@ task indexGenome {
     mkdir ${genome_dir}
     cd ${genome_dir}
     cp ${refGenome} ./
+
+    if [${refAnnotation} == '']
+    then
+    echo "No Annotation File"
+    else
+    echo "Annotation File Found"
     cp ${refAnnotation} ./
-    cp ${lambdaGenome} ./
+    fi
+
     bismark_genome_preparation .
     cd ..
 
@@ -39,10 +45,11 @@ task indexGenome {
     echo "($FAIL) Jobs Failed"
     fi
 
-    tar -czvf Bisulfite_Indexed_Genome.tar.gz ./${genome_dir}
+    tar -czvf ${genome_dir}_Bisulfite_Genome.tar.gz ${genome_dir}
+    ls
   }
   output {
-    File bsGenome = "Bisulfite_Indexed_Genome.tar.gz"
+    File bsGenome = "${genome_dir}_Bisulfite_Genome.tar.gz"
   }
   
   runtime {
