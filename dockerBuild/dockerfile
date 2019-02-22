@@ -99,3 +99,5 @@ RUN cd /src && \
     wget https://raw.githubusercontent.com/yongchao/motrpac_rrbs/746e41231509700a0399b93ee19c9530b523a9c0/bin/bismark_bam_UMI_format.sh && \
     chmod 755 bismark_bam_UMI_format.sh && \
     ln -s /src/bismark_bam_UMI_format.sh /usr/local/bin
+
+RUN pip install pandas==0.24.1

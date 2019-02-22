@@ -9,5 +9,7 @@
   "rrbs_pipeline.num_preempt": "25",
   "rrbs_pipeline.docker": "akre96/motrpac_rrbs:v0.1",
   "rrbs_pipeline.genome_dir_tar": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/chr_X_bismark_genome.tar.gz",
-  "rrbs_pipeline.genome_dir": "chr_X"
+  "rrbs_pipeline.genome_dir": "chr_X",
+  "rrbs_pipeline.spike_in_genome_tar": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/lambda_Bisulfite_Genome.tar.gz",
+  "rrbs_pipeline.spike_in_genome_dir": "lambda"
 }
