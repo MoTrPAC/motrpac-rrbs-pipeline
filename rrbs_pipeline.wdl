@@ -6,6 +6,7 @@ import "Trim_Reads/wdl-tasks/attachUMI.wdl" as AUMI
 import "Align_Trimmed/align_trimmed.wdl" as AT
 import "Mark_Duplicates/mark_duplicates.wdl" as MD
 import "Quantify_Methylation/quantify_methylation.wdl" as QM
+import "Collect_QC_Metrics/collect_qc_metrics.wdl" as CQCM
 
 workflow rrbs_pipeline{
   # Default values for runtime, changed in individual calls according to requirements
@@ -183,6 +184,22 @@ workflow rrbs_pipeline{
     SID=SID
     }
 
+  # Collect required QC Metrics from reports
+  call CQCM.collectQCMetrics as collectQCMetrics {
+    input:
+    memory=10,
+    disk_space=10,
+    num_threads=1,
+    num_preempt=0,
+    docker=docker,
+    SID=SID,
+    species_bismark_summary_report=alignTrimmedSample.bismark_summary,
+    bismark_bt2_pe_report=alignTrimmedSample.bismark_report,
+    deduplication_report=markDuplicatesSample.dedupLog,
+    multiQC_report=multiQC.multiQC_report,
+    lambda_bismark_summary_report=alignTrimmedSpikeIn.bismark_summary,
+  }
+
   output {
     trimGalore.trimLog
     trimGalore.trim_summary
@@ -217,5 +234,6 @@ workflow rrbs_pipeline{
     quantifyMethylationSpikeIn.bedgraph
     quantifyMethylationSpikeIn.bismark_cov
     quantifyMethylationSpikeIn.splitting_report
+    collectQCMetrics.qc_metrics
   }
 }
