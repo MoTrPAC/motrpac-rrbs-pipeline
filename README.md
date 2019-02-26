@@ -64,7 +64,7 @@ Done once on lambda and species being analysed (Human or Rat)
 
 ## Source files:
 ### Rat
-[Rat Genome File Release 95](ftp.ensembl.org/pub/release-95/fasta/rattus_norvegicus/dna/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz)
+[Rat Genome File Release 95](http://ftp.ensembl.org/pub/release-95/fasta/rattus_norvegicus/dna/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz)
 
 [Rat Genome GTF File Release 95](ftp://ftp.ensembl.org/pub/release-95/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.95.gtf.gz)
 
