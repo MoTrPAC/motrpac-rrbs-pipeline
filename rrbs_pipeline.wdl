@@ -144,7 +144,7 @@ workflow rrbs_pipeline{
     num_preempt=num_preempt,
     docker=docker,
     SID=SID,
-    bismarkReads=alignTrimmedSample.bismark_reads
+    bismark_reads=alignTrimmedSample.bismark_reads
     } 
 
   # Remove PCR Duplicates from Lambda phage spike in
@@ -156,7 +156,7 @@ workflow rrbs_pipeline{
     num_preempt=num_preempt,
     docker=docker,
     SID=SID,
-    bismarkReads=alignTrimmedSpikeIn.bismark_reads
+    bismark_reads=alignTrimmedSpikeIn.bismark_reads
     } 
 
   # Quantify Methylation for sample
@@ -200,7 +200,9 @@ workflow rrbs_pipeline{
     alignTrimmedSpikeIn.bismark_reads
     alignTrimmedSpikeIn.bismark_summary
     markDuplicatesSample.deduped
+    markDuplicatesSample.dedupLog
     markDuplicatesSpikeIn.deduped
+    markDuplicatesSpikeIn.dedupLog
     quantifyMethylationSample.CpG_context
     quantifyMethylationSample.CHG_context
     quantifyMethylationSample.CHH_context

@@ -8,7 +8,9 @@
   "rrbs_pipeline.num_threads": "8",
   "rrbs_pipeline.num_preempt": "15",
   "rrbs_pipeline.docker": "akre96/motrpac_rrbs:v0.1",
-  "rrbs_pipeline.genome_dir_tar": "gs://sa-rrbs-pipeline/genomes/human/Bisulfite_Indexed_Genome.tar.gz",
-  "rrbs_pipeline.spike_in_genome": "gs://sa-rrbs-pipeline/genomes/lambda_Bisulfite_Indexed_Genome.tar.gz",
-  "rrbs_pipeline.genome_dir": "human"
+  "rrbs_pipeline.genome_dir_tar": "gs://sa-rrbs-pipeline/genomes/human_Bisulfite_Genome.tar.gz",
+  "rrbs_pipeline.genome_dir": "human",
+  "rrbs_pipeline.spike_in_genome_tar": "gs://sa-rrbs-pipeline/genomes/lambda_Bisulfite_Genome.tar.gz",
+  "rrbs_pipeline.spike_in_genome_dir": "lambda"
+
 }
