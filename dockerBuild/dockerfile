@@ -102,4 +102,7 @@ RUN cd /src && \
 
 RUN pip install pandas==0.24.1
 
+## Adding items from context to docker image
+
+# Script for collecting QC metrics from logs created during pipeline execution
 COPY collect_qc_metrics.py /src/
