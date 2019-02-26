@@ -1,11 +1,17 @@
+# Author: Samir Akre
+# Purpose: 
+#   The goal of this script is to agregate QC metrics for the motrpac RRBS initial processing pipeline. Read the usage() function for details on usage.
+# Output:
+#   writes csv file: '${SID}_qcmetrics.csv' where ${SID} is based on the sample ID sent as input with -u or --sid
+
 import sys
 import getopt
 import csv
 import re
-import numpy as np
 import pandas as pd
 
 
+# Print usage instructions to stdout
 def usage():
     print('')
     print('Collect QC Metrics Script Usage')
@@ -30,6 +36,8 @@ def usage():
     ''')
 
 
+# Parse bismark_summary_report.txt file for RRBS QC metrics
+# input String {bismarkSummary} path to file containing output from bismark2summary ran on alignment
 def parseBismarkSummary(bismarkSummary):
     report_table = pd.read_csv(bismarkSummary, delimiter='\t')
     # for col in report_table.columns:
@@ -47,7 +55,8 @@ def parseBismarkSummary(bismarkSummary):
     data['%eff'] = [100*eff.values[0]]
     return pd.DataFrame(data=data)
 
-
+# Parse information related to the 4 types of strands in RRBS data.
+# input String {bismarkReport} path to file containing bismark_bt2_PE_report.txt style output 
 def get4StrandMapData(bismarkReport):
     data = {}
     with open(bismarkReport, 'r') as report:
@@ -71,6 +80,8 @@ def get4StrandMapData(bismarkReport):
     return pd.DataFrame(data=data)
 
 
+# Parses deduplication report from deduplicate_bismark command
+# input String {dedupReport} path to deduplication report
 def parseDedupReport(dedupReport):
     data = {}
     with open(dedupReport, 'r') as report:
@@ -82,6 +93,9 @@ def parseDedupReport(dedupReport):
     return pd.DataFrame(data=data)
 
 
+# Parses the multiqc_general_stats file from multiQC done on raw and trimmed reads.
+# expects rows 1-2 to be for raw reads, and rows 3-4 to be for trimmed reads
+# input String {multiqc_general_stats} path to multiqc output multiqc_general_stats.txt
 def parseMultiQCReport(multiqc_general_stats):
     data = {}
     stat_table = pd.read_csv(multiqc_general_stats, delimiter='\t')
@@ -101,6 +115,8 @@ def main(argv):
     multiqc_general_stats = ''
     dedup_report = ''
     SID = ''
+
+    # Check input arguments
     try:
         opts, args = getopt.getopt(argv, "hs:l:m:d:b:u:", ["sample=", "multiqc=", "lambda=","dedup=", "bt2=", "sid="])
     except getopt.GetoptError as err:
@@ -124,6 +140,7 @@ def main(argv):
         elif opt in ("-u", "--sid"):
             SID = arg
 
+    # Print to std out the variables and their filenames for verifying inputs
     print('SID: ', SID)
     print('sample bismark_summary_report: ', sample_bismark_summary_report)
     print('sample bt2_pe_report: ', sample_BT2_pe_report)
@@ -131,16 +148,20 @@ def main(argv):
     print('multiqc_general_stats: ', multiqc_general_stats)
     print('deduplication_report: ', dedup_report)
 
+    # Check all required arguments input
     if not (len(SID) and len(sample_bismark_summary_report) and len(lambda_bismark_summary_report) and len(multiqc_general_stats) and len(dedup_report) and len(sample_BT2_pe_report)):
         print('Error: Missing input files')
         usage()
         sys.exit(2)
 
+    # Parse files using above functions
     sampleSummary = parseBismarkSummary(sample_bismark_summary_report)
     fourStrandData = get4StrandMapData(sample_BT2_pe_report)
     spikeInSummary = parseBismarkSummary(lambda_bismark_summary_report)
     dedupReport = parseDedupReport(dedup_report)
     multiQCData = parseMultiQCReport(multiqc_general_stats)
+
+    # Dictionary of RRBS QC Metrics
     qcData = {
         'SID': [SID],
         'reads_raw': multiQCData['reads_raw'],
@@ -160,16 +181,11 @@ def main(argv):
         '%eff': spikeInSummary['%eff'],  # Efficiency at converting unmethylated C's during bisulfite conversion
         '%lambda': 100*spikeInSummary['Aligned Reads'] / (spikeInSummary['Aligned Reads'] + sampleSummary['Aligned Reads']),
     }
+
+    # Save qc metrics to ${SID}_qcmetrics.csv file
     qcDataFrame = pd.DataFrame(qcData)
     print(qcDataFrame)
     qcDataFrame.to_csv(SID+'_qcmetrics.csv', index=False)
 
 if __name__ == "__main__":
-    # bismarkReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt'
-    # bismarkSummary = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/bismark_summary_report.txt'
-    # spikeInBismarkSummary = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/spikeIn/bismark_summary_report.txt'
-    # sampleDupReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt'
-    # multiQCReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/multiQC_report/multiqc_data/multiqc_general_stats.txt'
-    # args = ['-u', 'Muscle2', '-s', bismarkSummary, '-b', bismarkReport, '-l', spikeInBismarkSummary, '-m', multiQCReport, '-d', sampleDupReport]
-    # main(args)
     main(sys.argv[1:])
