@@ -5,6 +5,9 @@
   - *_Cromwell.sh files used to run wdl scripts in cromwell
   - Most folders hold individual tasks being tested on data held in sampleData folder
 
+## Building Docker image:
+  - `docker build custom_scripts/ -f dockerBuild/Dockerfile -t akre96/motrpack_rrbs:v0.1`
+
 ## Requirements (included in Docker image):
   - openjdk/8.0.152
   - python/3.6.6

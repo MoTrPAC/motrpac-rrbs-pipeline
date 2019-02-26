@@ -1,7 +1,10 @@
 task collectQCMetrics {
-  File lambda_bismark_summary
-  File species_bismark_summary
+  File lambda_bismark_summary_report
+  File species_bismark_summary_report
+  File deduplication_report
+  File bismark_bt2_pe_report
   File multiQC_report
+  String SID
 
 
   # Runtime Attributes
@@ -12,24 +15,22 @@ task collectQCMetrics {
   String docker
 
   command {
-    cd lambda
-    set +e #not escaping due to the divison of zero
-    bismark2summary
-    set -e
-    bismark_4strand.sh >bismark_4strand.txt
-    
-    cd ../bismark
-    set +e
-    bismark2summary
-    set -e
-    bismark_4strand.sh >bismark_4strand.txt
-
-
-    cd ..
-    Rscript --vanilla {root}/bin/qc.R
+    tar -xzvf ${multiQC_report}
+    ls
+    python /src/collect_qc_metrics.py \
+      -u ${SID} \
+      -s ${species_bismark_summary_report} \
+      -b ${bismark_bt2_pe_report} \
+      -l ${lambda_bismark_summary_report} \
+      -m multiQC_report/multiqc_data/multiqc_general_stats.txt \
+      -d ${deduplication_report}
+    ls
   }
+
   output {
+    File qc_metrics = '${SID}_qcmetrics.csv'
   }
+
   runtime {
     docker: "${docker}"
     memory: "${memory}GB"
@@ -53,7 +54,5 @@ workflow collect_qc_metrics{
     disk_space=disk_space,
     num_threads=num_threads,
     num_preempt=num_preempt
-  }
-  output {
   }
 }

@@ -21,7 +21,7 @@ def usage():
     print('Example Command: ')
     print('''
     python collect_qc_metrics.py \\
-        -u SID
+        -u SID \\
         -s sample/bismark_summary_report.txt \\
         -bt2 sample/SID_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt \\
         -l spikeIn/bismark_summary_report.txt \\
@@ -123,17 +123,18 @@ def main(argv):
             dedup_report = arg
         elif opt in ("-u", "--sid"):
             SID = arg
+
+    print('SID: ', SID)
+    print('sample bismark_summary_report: ', sample_bismark_summary_report)
+    print('sample bt2_pe_report: ', sample_BT2_pe_report)
+    print('lambda bismark_summary_report: ', lambda_bismark_summary_report)
+    print('multiqc_general_stats: ', multiqc_general_stats)
+    print('deduplication_report: ', dedup_report)
+
     if not (len(SID) and len(sample_bismark_summary_report) and len(lambda_bismark_summary_report) and len(multiqc_general_stats) and len(dedup_report) and len(sample_BT2_pe_report)):
         print('Error: Missing input files')
         usage()
         sys.exit(2)
-
-    print('SID: ', SID)
-    print('sample bismark_summary_report: ', sample_bismark_summary_report)
-    print('sample bt2_pe_report: ', sample_bismark_summary_report)
-    print('lambda bismark_summary_report: ', lambda_bismark_summary_report)
-    print('multiqc_general_stats: ', multiqc_general_stats)
-    print('deduplication_report: ', dedup_report)
 
     sampleSummary = parseBismarkSummary(sample_bismark_summary_report)
     fourStrandData = get4StrandMapData(sample_BT2_pe_report)
@@ -164,11 +165,11 @@ def main(argv):
     qcDataFrame.to_csv(SID+'_qcmetrics.csv', index=False)
 
 if __name__ == "__main__":
-    bismarkReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt'
-    bismarkSummary = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/bismark_summary_report.txt'
-    spikeInBismarkSummary = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/spikeIn/bismark_summary_report.txt'
-    sampleDupReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt'
-    multiQCReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/multiQC_report/multiqc_data/multiqc_general_stats.txt'
-    args = ['-u', 'Muscle2', '-s', bismarkSummary, '-b', bismarkReport, '-l', spikeInBismarkSummary, '-m', multiQCReport, '-d', sampleDupReport]
-    main(args)
-    #main(sys.argv[1:])
+    # bismarkReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt'
+    # bismarkSummary = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/bismark_summary_report.txt'
+    # spikeInBismarkSummary = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/spikeIn/bismark_summary_report.txt'
+    # sampleDupReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt'
+    # multiQCReport = '/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/multiQC_report/multiqc_data/multiqc_general_stats.txt'
+    # args = ['-u', 'Muscle2', '-s', bismarkSummary, '-b', bismarkReport, '-l', spikeInBismarkSummary, '-m', multiQCReport, '-d', sampleDupReport]
+    # main(args)
+    main(sys.argv[1:])

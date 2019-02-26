@@ -101,3 +101,5 @@ RUN cd /src && \
     ln -s /src/bismark_bam_UMI_format.sh /usr/local/bin
 
 RUN pip install pandas==0.24.1
+
+COPY collect_qc_metrics.py /src/
