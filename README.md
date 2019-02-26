@@ -1,4 +1,4 @@
-# Current RRBS Pipeline Implementation [UNDER PRELIMINARY DEVELOPMENT]
+# Current RRBS Pipeline Implementation
   - Currently modelled after: [MoTrPAC GET Assay and Data Mop](https://docs.google.com/document/d/1xlFiax4MTSzNZS3SpG6i3Z3XwuGkMPgONV1QPTObjcA/edit)
     - Mop Authors: Yongchao Ge, Venugopalan Nair and Stuart Sealfon @ Mount Sinai
   - dockerBuild folder for building docker image hosted at akre96/motrpac_rrbs:v0.1 on dockerhub. Bismark v0.20.0 
@@ -25,24 +25,59 @@
 
 
 ## Organization:
-  - Index_Genomes: Bisulfite indexing of a given genome
-  - Trim_Reads: Fastqc, multiqc, attaching UMI information, and trimming of RRBS data
-  - Align_Trimmed: Align RRBS reads to bisulfite indexed genome using bismark and bowtie2
-  - Mark_Duplicates: removal of PCR duplicates based on UMI
-  - Quantify_Methylation: Use bismark to quantify methylation
-  - rrbs_pipeline.wdl: End to end pipeline for single paired end RRBS sample
-  - external-scripts: scripts written to generate some sample data, also includes submodules to packages that contain scripts included in the docker image.
+  - __Index_Genomes__: Bisulfite indexing of a given genome
+  - __Trim_Reads__: Fastqc, multiqc, attaching UMI information, and trimming of RRBS data
+  - __Align_Trimmed__: Align RRBS reads to bisulfite indexed genome using bismark and bowtie2
+  - __Mark_Duplicates__: removal of PCR duplicates based on UMI
+  - __Quantify_Methylation__: Use bismark to quantify methylation
+  - __rrbs_pipeline.wdl__: End to end pipeline for single paired end RRBS sample
+  - __custom_scripts__: scripts for data collection used in context for building docker image
+  - __external-scripts__: Includes submodules to packages that contain scripts included in the docker image. [Will be removed soon]
 
+In general the following also holds true:
+  - __*\_Cromwell.sh__: files used to run wdl scripts on cromwell engine in the cloud or locally
+  - __*\_inputs_Local.json__: inputs to wdl scripts for local usage
+  - __*\_inputs_GCloud.json__: inputs to wdl scripts for usage on GCP
+
+## Broad Overview Of Steps For Processing:
+### Generating Bisulfite Indexed Genome
+Done once on lambda and species being analysed (Human or Rat)
+1. Run bismark_genome_perparation on required genomes
+
+### Processing Samples (A broad overview of the steps)
+1. Run FastQC on raw reads
+2. Attach UMI barcodes (I1) to R1 and R2
+3. Trim for both quality and using nugen diversity adapters
+    - uses trimGalore and Nugens NuMetRRBS package
+4. Run FastQC on processed reads
+5. Run MultiQC on raw and processed fastqc outputs
+6. Align trimmed reads to lambda genome and species of interest genome
+    - Genomes must have been bisulfite converted and indexed
+7. Remove PCR duplicates using UMIs for reads aligned to lambda and species genome
+8. Quantify methylation based on alignment
+    - Lambda genome alignment quantification is used to find bisulfite conversion efficiency
+9. Collect QC metrics using logs and reports generated in previous steps
 
 ## TODO Notes:
   - Right now the scripts in for trimming reads expect a file with .gz output, I will need to figure out how to best allow scripts to be more agnostic to the specific form of the input since the actual packages can run on zipped and unzipped files with no additional specifications required.
   - Check if .gitmodules should be in repository
-  - Implement alignment and genome indexing s.t they are not preemptible instances
-  - Change default num_threads to increments of 8 to match GClouds vCPUs
 
-# Source files:
-[Rat Genome GTF File Release 92](http://ftp.ensembl.org/pub/release-92/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.92.gtf.gz)
+## Source files:
+### Rat
+[Rat Genome File Release 95](ftp://ftp.ensembl.org/pub/release-95/fasta/rattus_norvegicus/dna/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz)
 
-[Rat Genome File Release 92](http://ftp.ensembl.org/pub/release-92/fasta/rattus_norvegicus/dna/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz)
+[Rat Genome GTF File Release 95](ftp://ftp.ensembl.org/pub/release-95/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.95.gtf.gz)
 
-[Human GTF Files Release 29](https://www.gencodegenes.org/human/)
+
+### Human
+[Human Genome File GRCh38 (PRI)](ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/GRCh38.primary_assembly.genome.fa.gz)
+
+[Human GTF File](ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/gencode.v29.primary_assembly.annotation.gtf.gz)
+
+## Lambda
+[Lambda Genome](https://www.ncbi.nlm.nih.gov/nuccore/J02459.1)
+
+---
+Sincerely,  
+Samir Akre  
+February 26th, 2019
