@@ -1,5 +1,7 @@
 # Creates subsample of input data for RRBS
 # ex: bash createTestDataSample.sh Muscle2
+# NOTE THE CONDA ENVIRONMENT ONLY NEEDS SEQTK, GZIP, and GUNZIP
+#   PLEASE REPLACE bioinfo OR REMOVE CONDA ENVIRONMENT LINE IF IT DOESN'T WORK
 set -ueo pipefail
 
 if [[ $# -eq 0 ]] ; then

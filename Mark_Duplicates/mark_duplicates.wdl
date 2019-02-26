@@ -1,5 +1,5 @@
 task markDuplicates{
-  File bismarkReads 
+  File bismark_reads 
   String SID
 
   Int memory
@@ -9,14 +9,15 @@ task markDuplicates{
   String docker
 
   command {
-    bash /src/bismark_bam_UMI_format.sh ${bismarkReads}
-    deduplicate_bismark -p --barcode --bam ${bismarkReads}
+    bash /src/bismark_bam_UMI_format.sh ${bismark_reads}
+    deduplicate_bismark -p --barcode --bam ${bismark_reads}
     echo "LS"
     ls
 
   }
   output {
-    File deduped = '${bismarkReads}'
+    File deduped = '${bismark_reads}'
+    File dedupLog= '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt'
   }
   runtime {
     docker: "${docker}"
