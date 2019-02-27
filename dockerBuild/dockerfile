@@ -7,7 +7,7 @@ RUN apt-get clean && \
   apt-get clean && \
   apt-get update
 
-RUN apt-get install  -y build-essential zlib1g-dev libncurses5-dev libncursesw5-dev git wget unzip python-pip python-dev
+RUN apt-get install -y build-essential zlib1g-dev libncurses5-dev libncursesw5-dev git wget unzip python3-pip python3-dev libbz2-dev liblzma-dev
 
 # Install gawk to make awk scripts able to use gensub command
 RUN apt-get -y install gawk
@@ -24,25 +24,25 @@ RUN apt-get install -y libtbb-dev && \
   rm bowtie2.zip && \
 	ln -s /src/bowtie2-2.3.4.3-linux-x86_64/bowtie2* /usr/local/bin
 
-# Install Bismark-0.20.0
+# Install Bismark-0.20.1
 RUN cd /src && \
-	wget https://github.com/FelixKrueger/Bismark/archive/0.20.0.tar.gz && \
-	tar zxf 0.20.0.tar.gz && \
-  rm 0.20.0.tar.gz && \
-	ln -s /src/Bismark-0.20.0/bismark* /usr/local/bin/ && \
-	ln -s /src/Bismark-0.20.0/dedup* /usr/local/bin/
+	wget https://github.com/FelixKrueger/Bismark/archive/0.20.1.tar.gz && \
+	tar zxf 0.20.1.tar.gz && \
+  rm 0.20.1.tar.gz && \
+	ln -s /src/Bismark-0.20.1/bismark* /usr/local/bin/ && \
+	ln -s /src/Bismark-0.20.1/dedup* /usr/local/bin/
 
-# Install samtools-1.3.1
+# Install samtools-1.9
 RUN cd /src && \
-    wget https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 && \
-    tar -vxjf samtools-1.3.1.tar.bz2 && \
-    rm samtools-1.3.1.tar.bz2 && \
-    cd samtools-1.3.1 && \
+    wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2 && \
+    tar -vxjf samtools-1.9.tar.bz2 && \
+    rm samtools-1.9.tar.bz2 && \
+    cd samtools-1.9 && \
     make && \
-    ln -s /src/samtools-1.3.1/samtools /usr/local/bin
+    ln -s /src/samtools-1.9/samtools /usr/local/bin
 
 # Install cutadapt-1.18 (for Trimgalore)
-RUN pip install cutadapt==1.18
+RUN pip3 install cutadapt==1.18
 
 # Install openjdk-8
 RUN apt-get -y install openjdk-8-jre
@@ -62,8 +62,8 @@ RUN cd /tmp && \
     cp TrimGalore-0.5.0/trim_galore /usr/local/bin && \
     chmod 755 /usr/local/bin/trim_galore
 
-# Install multiQC-1.6
-RUN pip install multiQC==1.6
+# Install multiQC-1.7
+RUN pip3 install multiQC==1.7
 
 # Clean up TMP
 RUN rm -rf tmp
@@ -100,7 +100,7 @@ RUN cd /src && \
     chmod 755 bismark_bam_UMI_format.sh && \
     ln -s /src/bismark_bam_UMI_format.sh /usr/local/bin
 
-RUN pip install pandas==0.24.1
+RUN pip3 install pandas==0.24.1
 
 ## Adding items from context to docker image
 

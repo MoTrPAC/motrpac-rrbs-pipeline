@@ -8,16 +8,20 @@
 ## Building Docker image:
   - `docker build custom_scripts/ -f dockerBuild/Dockerfile -t akre96/motrpack_rrbs:v0.1`
 
-## Requirements (included in Docker image):
+## Requirements:
+Docker Image: [akre96/motrpac_rrbs:v0.2](https://cloud.docker.com/repository/docker/akre96/motrpac_rrbs/general)  
+This docker image is based on ubuntu:18.04
+
   - openjdk/8.0.152
-  - python/3.6.6
+  - python/3.6.7
   - fastqc/0.11.8
   - cutadapt/1.18
   - trim_galore/0.5.0
-  - samtools/1.3.1
+  - samtools/1.9
   - bowtie2/2.3.4.3
-  - multiqc/1.6
-  - bismark/0.20.0
+  - multiqc/1.7
+  - bismark/0.20.1
+  - pandas/0.24.1
   - [trimRRBSDiversityAdaptCustomers.py/1.11](https://github.com/nugentechnologies/NuMetRRBS/blob/master/trimRRBSdiversityAdaptCustomers.py)
   - [UMI_attach.awk](https://github.com/yongchao/motrpac_rnaseq/blob/master/bin/UMI_attach.awk)
   - [bismark_bam_UMI_format.awk](https://github.com/yongchao/motrpac_rrbs/blob/master/bin/bismark_bam_UMI_format.awk)
@@ -67,7 +71,6 @@ Done once on lambda and species being analysed (Human or Rat)
 [Rat Genome File Release 95](http://ftp.ensembl.org/pub/release-95/fasta/rattus_norvegicus/dna/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz)
 
 [Rat Genome GTF File Release 95](http://ftp.ensembl.org/pub/release-95/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.95.gtf.gz)
-
 
 ### Human
 [Human Genome File GRCh38 (PRI)](http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/GRCh38.primary_assembly.genome.fa.gz)

@@ -17,7 +17,7 @@ task collectQCMetrics {
   command {
     tar -xzvf ${multiQC_report}
     ls
-    python /src/collect_qc_metrics.py \
+    python3 /src/collect_qc_metrics.py \
       -u ${SID} \
       -s ${species_bismark_summary_report} \
       -b ${bismark_bt2_pe_report} \
