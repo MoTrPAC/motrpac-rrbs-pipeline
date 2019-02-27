@@ -66,13 +66,13 @@ Done once on lambda and species being analysed (Human or Rat)
 ### Rat
 [Rat Genome File Release 95](http://ftp.ensembl.org/pub/release-95/fasta/rattus_norvegicus/dna/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz)
 
-[Rat Genome GTF File Release 95](ftp://ftp.ensembl.org/pub/release-95/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.95.gtf.gz)
+[Rat Genome GTF File Release 95](http://ftp.ensembl.org/pub/release-95/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.95.gtf.gz)
 
 
 ### Human
-[Human Genome File GRCh38 (PRI)](ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/GRCh38.primary_assembly.genome.fa.gz)
+[Human Genome File GRCh38 (PRI)](http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/GRCh38.primary_assembly.genome.fa.gz)
 
-[Human GTF File](ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/gencode.v29.primary_assembly.annotation.gtf.gz)
+[Human GTF File](http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/gencode.v29.primary_assembly.annotation.gtf.gz)
 
 ## Lambda
 [Lambda Genome](https://www.ncbi.nlm.nih.gov/nuccore/J02459.1)
