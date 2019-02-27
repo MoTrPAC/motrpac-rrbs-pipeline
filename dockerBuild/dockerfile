@@ -7,7 +7,7 @@ RUN apt-get clean && \
   apt-get clean && \
   apt-get update
 
-RUN apt-get install -y build-essential zlib1g-dev libncurses5-dev libncursesw5-dev git wget unzip python3-pip python3-dev libbz2-dev liblzma-dev
+RUN apt-get install -y build-essential zlib1g-dev libncurses5-dev libncursesw5-dev git wget unzip python3-pip python3-dev libbz2-dev liblzma-dev python-dev
 
 # Install gawk to make awk scripts able to use gensub command
 RUN apt-get -y install gawk
@@ -79,15 +79,11 @@ RUN cd /src && \
   wget https://raw.githubusercontent.com/nugentechnologies/NuMetRRBS/5410957f3b3be62bc8e3cce1127153d2b7adad0b/strip_bismark_sam.sh && \
   ln -s /src/strip_bismark_sam.sh /usr/local/bin
 
-# Download nudup.py from January 2018
-RUN cd /src && \
-wget https://raw.githubusercontent.com/nugentechnologies/nudup/555756bbbdc5c83c4d4b00cda9f51758393583ca/nudup.py && \
-ln -s /src/nudup.py /usr/local/bin
-
 # Download trimRRBSdiversityAdaptCustomers.py from July 2018
 RUN cd /src && \
 wget https://raw.githubusercontent.com/nugentechnologies/NuMetRRBS/5410957f3b3be62bc8e3cce1127153d2b7adad0b/trimRRBSdiversityAdaptCustomers.py && \
-ln -s /src/trimRRBSdiversityAdaptCustomers /usr/local/bin
+ln -s /src/trimRRBSdiversityAdaptCustomers.py /usr/local/bin
+
 
 # Download Bismark_bam_UMI_format files from end of January 2019
 RUN cd /src && \
@@ -101,6 +97,7 @@ RUN cd /src && \
     ln -s /src/bismark_bam_UMI_format.sh /usr/local/bin
 
 RUN pip3 install pandas==0.24.1
+
 
 ## Adding items from context to docker image
 

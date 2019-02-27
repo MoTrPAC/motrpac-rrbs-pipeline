@@ -6,7 +6,7 @@
   - Most folders hold individual tasks being tested on data held in sampleData folder
 
 ## Building Docker image:
-  - `docker build custom_scripts/ -f dockerBuild/Dockerfile -t akre96/motrpack_rrbs:v0.1`
+  - `docker build custom_scripts/ -f dockerBuild/Dockerfile -t akre96/motrpack_rrbs:v0.2`
 
 ## Requirements:
 Docker Image: [akre96/motrpac_rrbs:v0.2](https://cloud.docker.com/repository/docker/akre96/motrpac_rrbs/general)  
@@ -14,6 +14,7 @@ This docker image is based on ubuntu:18.04
 
   - openjdk/8.0.152
   - python/3.6.7
+  - python/2.7.15c
   - fastqc/0.11.8
   - cutadapt/1.18
   - trim_galore/0.5.0
@@ -23,6 +24,7 @@ This docker image is based on ubuntu:18.04
   - bismark/0.20.1
   - pandas/0.24.1
   - [trimRRBSDiversityAdaptCustomers.py/1.11](https://github.com/nugentechnologies/NuMetRRBS/blob/master/trimRRBSdiversityAdaptCustomers.py)
+      - Requires python 2
   - [UMI_attach.awk](https://github.com/yongchao/motrpac_rnaseq/blob/master/bin/UMI_attach.awk)
   - [bismark_bam_UMI_format.awk](https://github.com/yongchao/motrpac_rrbs/blob/master/bin/bismark_bam_UMI_format.awk)
   - [bismark_bam_UMI_format.sh](https://github.com/yongchao/motrpac_rrbs/blob/master/bin/bismark_bam_UMI_format.sh)
