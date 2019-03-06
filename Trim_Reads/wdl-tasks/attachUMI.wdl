@@ -11,6 +11,7 @@ task attachUMI {
   Int num_threads
   Int num_preempt
   command {
+    set -ueo pipefail
     zcat ${r1} | UMI_attach.awk -v Ifq=${i1} |
     gzip -c >  ${SID}_attached_R1.fastq.gz
 

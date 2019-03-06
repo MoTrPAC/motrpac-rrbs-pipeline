@@ -10,6 +10,7 @@ task trimDiversityAdapt {
   String docker
 
   command {
+    set -ueo pipefail
     python2 /src/trimRRBSdiversityAdaptCustomers.py -1 ${r1_trimmed} -2 ${r2_trimmed}
     mv $(dirname "${r1_trimmed}")/${SID}_attached_R1_val_1.fq_trimmed.fq.gz ./
     mv $(dirname "${r2_trimmed}")/${SID}_attached_R2_val_2.fq_trimmed.fq.gz ./

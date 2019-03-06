@@ -77,7 +77,8 @@ def get4StrandMapData(bismarkReport):
             if ob:
                 # print('%OB: ', ob.group(1))
                 data['%OB'] = [ob.group(1)]
-    return pd.DataFrame(data=data)
+    totalAligned = data['%OT'][0] + data['%CTOT'][0] + data['%CTOB'][0] + data['%OB'][0]
+    return 100 * pd.DataFrame(data=data) / totalAligned
 
 
 # Parses deduplication report from deduplicate_bismark command

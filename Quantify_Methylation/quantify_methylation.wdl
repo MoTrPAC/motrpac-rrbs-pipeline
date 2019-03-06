@@ -9,6 +9,8 @@ task quantifyMethylation{
   String docker
 
   command {
+    set -ueo pipefail 
+
     echo "--- Running: bismark_methylation_extractor ---"
     bismark_methylation_extractor ${bismark_deduplicated_reads} \
     --multicore ${num_threads} \

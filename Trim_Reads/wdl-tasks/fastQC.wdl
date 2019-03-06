@@ -9,6 +9,7 @@ task fastQC {
   String docker
 
   command {
+    set -ueo pipefail
     mkdir fastqc_report
     fastqc -o fastqc_report ${r1}
     fastqc -o fastqc_report ${r2}

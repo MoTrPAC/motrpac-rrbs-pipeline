@@ -14,6 +14,8 @@ task indexGenome {
   # Waits for all subprocesses to complete
   # Tars output genome directory with bisulfite conversions
   command {
+    set -ueo pipefail
+
     mkdir ${genome_dir}
     cd ${genome_dir}
     cp ${refGenome} ./

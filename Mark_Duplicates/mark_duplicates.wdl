@@ -9,6 +9,8 @@ task markDuplicates{
   String docker
 
   command {
+    set -ueo pipefail
+
     bash /src/bismark_bam_UMI_format.sh ${bismark_reads}
     deduplicate_bismark -p --barcode --bam ${bismark_reads}
     echo "LS"

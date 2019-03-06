@@ -11,6 +11,7 @@ task trimGalore {
   String docker
 
   command {
+    set -ueo pipefail
     trim_galore --paired \
       --adapter AGATCGGAAGAGC \
       --adapter2 AAATCAAAAAAAC \
