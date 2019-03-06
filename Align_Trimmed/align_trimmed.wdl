@@ -15,6 +15,7 @@ task alignTrimmed{
   # Assumes reference genome with bisulfite conversion reference is a tar file,
   #  genome_dir is the name of the directory that was tar balled
   command {
+    set -ueo pipefail
     mkdir genome
     mkdir tmp
     tar -zxvf ${genome_dir_tar} -C ./genome

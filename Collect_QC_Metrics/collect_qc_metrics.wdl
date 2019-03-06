@@ -15,6 +15,7 @@ task collectQCMetrics {
   String docker
 
   command {
+    set -ueo pipefail
     tar -xzvf ${multiQC_report}
     ls
     python3 /src/collect_qc_metrics.py \

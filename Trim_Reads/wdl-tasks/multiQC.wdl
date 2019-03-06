@@ -8,6 +8,7 @@ task multiQC{
   String docker
 
   command {
+    set -ueo pipefail
     mkdir reports
     cd reports
     for file in ${sep=' ' fastQCReports}  ; do
