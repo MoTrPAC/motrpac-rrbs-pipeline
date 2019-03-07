@@ -5,5 +5,6 @@
   "trim_galore.memory": "20",
   "trim_galore.disk_space": "30",
   "trim_galore.num_threads": "5",
-  "trim_galore.num_preempt": "25"
+  "trim_galore.num_preempt": "25",
+  "trim_galore.docker": "gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_04_07_2019"
 }
