@@ -49,9 +49,9 @@ def parseBismarkSummary(bismarkSummary):
     data['%Aligned'] = [100*(report_table['Aligned Reads'] / report_table['Total Reads']).values[0]]
     data['%Unaligned'] = [100*(report_table['Unaligned Reads'] / report_table['Total Reads']).values[0]]
     data['%Ambi'] = [100*(report_table['Ambiguously Aligned Reads'] / report_table['Total Reads']).values[0]]
-    data['%CpG'] = [(report_table['Methylated CpGs'] / report_table['Total Cs']).values[0]]
-    data['%CHG'] = [(report_table['Methylated chgs'] / report_table['Total Cs']).values[0]]
-    data['%CHH'] = [(report_table['Methylated CHHs'] / report_table['Total Cs']).values[0]]
+    data['%CpG'] = [100*(report_table['Methylated CpGs'] / (report_table['Unmethylated CpGs'] + report_table['Methylated CpGs'])).values[0]]
+    data['%CHG'] = [100*(report_table['Methylated chgs'] / (report_table['Unmethylated chgs'] + report_table['Methylated chgs'])).values[0]]
+    data['%CHH'] = [100*(report_table['Methylated CHHs'] / (report_table['Unmethylated CHHs'] + report_table['Methylated CHHs'])).values[0]]
     data['%eff'] = [100*eff.values[0]]
     return pd.DataFrame(data=data)
 
@@ -63,20 +63,20 @@ def get4StrandMapData(bismarkReport):
         for line in report:
             ot = re.search(r"CT\/GA\/CT:\s(\d+)\s", line)
             if ot:
-                # print('%OT: ', ot.group(1))
-                data['%OT'] = [ot.group(1)]
+                # print('num OT: ', ot.group(1))
+                data['%OT'] = [float(ot.group(1))]
             ctot = re.search(r"GA\/CT\/CT:\s(\d+)\s", line)
             if ctot:
-                # print('%CTOT: ', ctot.group(1))
-                data['%CTOT'] = [ctot.group(1)]
+                # print('num CTOT: ', ctot.group(1))
+                data['%CTOT'] = [float(ctot.group(1))]
             ctob = re.search(r"GA\/CT\/GA:\s(\d+)\s", line)
             if ctob:
-                # print('%CTOB: ', ctob.group(1))
-                data['%CTOB'] = [ctob.group(1)]
+                # print('num CTOB: ', ctob.group(1))
+                data['%CTOB'] = [float(ctob.group(1))]
             ob = re.search(r"CT\/GA\/GA:\s(\d+)\s", line)
             if ob:
-                # print('%OB: ', ob.group(1))
-                data['%OB'] = [ob.group(1)]
+                # print('num OB: ', ob.group(1))
+                data['%OB'] = [float(ob.group(1))]
     totalAligned = data['%OT'][0] + data['%CTOT'][0] + data['%CTOB'][0] + data['%OB'][0]
     return 100 * pd.DataFrame(data=data) / totalAligned
 
@@ -103,10 +103,15 @@ def parseMultiQCReport(multiqc_general_stats):
     # for col in stat_table.columns:
         # print(col, ': ', stat_table[col].values[0])
     seqCount = stat_table['FastQC_mqc-generalstats-fastqc-total_sequences']
-    data['reads_raw'] = [seqCount[0]]
-    data['%trimmed'] = [100 * (1 - seqCount[2] / seqCount[0])]
+    data['reads_raw_R1'] = [seqCount[0]]
+    data['reads_raw_R2'] = [seqCount[1]]
+    data['%trimmed_R1'] = [100 * (1 - seqCount[2] / seqCount[0])]
+    data['%trimmed_R2'] = [100 * (1 - seqCount[3] / seqCount[1])]
+    data['reads_R1'] = [seqCount[2]]
+    data['reads_R2'] = [seqCount[3]]
     avgLength = stat_table['FastQC_mqc-generalstats-fastqc-avg_sequence_length']
-    data['%trimmed_bases'] = [100 * (1 - avgLength[2] / avgLength[0])]
+    data['%trimmed_bases_R1'] = [100 * (1 - avgLength[2] / avgLength[0])]
+    data['%trimmed_bases_R2'] = [100 * (1 - avgLength[3] / avgLength[1])]
     return pd.DataFrame(data)
 
 def main(argv):
@@ -165,9 +170,14 @@ def main(argv):
     # Dictionary of RRBS QC Metrics
     qcData = {
         'SID': [SID],
-        'reads_raw': multiQCData['reads_raw'],
-        '%trimmed': multiQCData['%trimmed'],
-        '%trimmed_bases': multiQCData['%trimmed_bases'],
+        'reads_raw_R1': multiQCData['reads_raw_R1'],
+        'reads_raw_R2': multiQCData['reads_raw_R2'],
+        '%trimmed_R1': multiQCData['%trimmed_R1'],
+        '%trimmed_R2': multiQCData['%trimmed_R2'],
+        'reads_R1': multiQCData['reads_R1'],
+        'reads_R2': multiQCData['reads_R2'],
+        '%trimmed_bases_R1': multiQCData['%trimmed_bases_R1'],
+        '%trimmed_bases_R2': multiQCData['%trimmed_bases_R2'],
         '%Aligned': sampleSummary['%Aligned'],
         '%Unaligned': sampleSummary['%Unaligned'],
         '%Ambi': sampleSummary['%Ambi'],
