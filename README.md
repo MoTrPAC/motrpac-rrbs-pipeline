@@ -9,7 +9,7 @@
   - `docker build custom_scripts/ -f dockerBuild/Dockerfile -t akre96/motrpack_rrbs:v0.2`
 
 ## Requirements:
-Docker Image: [akre96/motrpac_rrbs:v0.2](https://cloud.docker.com/repository/docker/akre96/motrpac_rrbs/general)  
+Docker Image: [gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_04_07_2019](gcr.io/***REMOVED***-dev/motrpac_rrbs)  
 This docker image is based on ubuntu:18.04
 
   - openjdk/8.0.152
