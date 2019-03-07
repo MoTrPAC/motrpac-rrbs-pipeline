@@ -1,0 +1,27 @@
+# Hidden files
+.*
+
+# Cromwell execution logs and such
+cromwell-executions
+cromwell-workflow-logs
+*/cromwell-executions
+*/cromwell-workflow-logs
+*/*/cromwell-executions
+*/*/cromwell-workflow-logs
+
+
+# Rat and human genomes
+genome_dir
+
+# Test conda environment setup, not needed
+condaEnv.yml
+
+# Any large or zipped files
+*.fastq
+*.fq
+*.tar
+*.gz
+
+# Test Data
+sampleData
+sampleOutput
