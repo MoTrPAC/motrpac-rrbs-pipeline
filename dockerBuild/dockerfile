@@ -7,7 +7,8 @@ RUN apt-get clean && \
   apt-get clean && \
   apt-get update
 
-RUN apt-get install -y build-essential zlib1g-dev libncurses5-dev libncursesw5-dev git wget unzip python3-pip python3-dev libbz2-dev liblzma-dev python-dev
+RUN apt-get update --fix-missing && \
+    apt-get install -y build-essential zlib1g-dev libncurses5-dev libncursesw5-dev git wget unzip python3-pip python3-dev libbz2-dev liblzma-dev python-dev python-pip
 
 # Install gawk to make awk scripts able to use gensub command
 RUN apt-get -y install gawk
@@ -63,7 +64,7 @@ RUN cd /tmp && \
     chmod 755 /usr/local/bin/trim_galore
 
 # Install multiQC-1.7
-RUN pip3 install multiQC==1.7
+RUN pip install multiQC==1.7
 
 # Clean up TMP
 RUN rm -rf tmp
