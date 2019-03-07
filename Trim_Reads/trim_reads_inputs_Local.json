@@ -4,7 +4,7 @@
   "trim_reads.i1": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_100ksub_I1.fastq.gz",
   "trim_reads.SID": "Muscle2_100ksub",
   "trim_reads.memory": "20",
-  "trim_reads.docker": "akre96/motrpac_rrbs:v0.1",
+  "trim_reads.docker": "gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_04_07_2019",
   "trim_reads.disk_space": "30",
   "trim_reads.num_threads": "4",
   "trim_reads.num_preempt": "25"
