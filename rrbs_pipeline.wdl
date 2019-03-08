@@ -1,12 +1,12 @@
-import "Trim_Reads/wdl-tasks/trimGalore.wdl" as TG
-import "Trim_Reads/wdl-tasks/trimDiversityAdapt.wdl" as TDA
-import "Trim_Reads/wdl-tasks/fastQC.wdl" as FQC
-import "Trim_Reads/wdl-tasks/multiQC.wdl" as MQC
-import "Trim_Reads/wdl-tasks/attachUMI.wdl" as AUMI
-import "Align_Trimmed/align_trimmed.wdl" as AT
-import "Mark_Duplicates/mark_duplicates.wdl" as MD
-import "Quantify_Methylation/quantify_methylation.wdl" as QM
-import "Collect_QC_Metrics/collect_qc_metrics.wdl" as CQCM
+import "trim_reads/wdl-tasks/trimGalore.wdl" as TG
+import "trim_reads/wdl-tasks/trimDiversityAdapt.wdl" as TDA
+import "trim_reads/wdl-tasks/fastQC.wdl" as FQC
+import "trim_reads/wdl-tasks/multiQC.wdl" as MQC
+import "trim_reads/wdl-tasks/attachUMI.wdl" as AUMI
+import "align_trimmed/align_trimmed.wdl" as AT
+import "mark_duplicates/mark_duplicates.wdl" as MD
+import "quantify_methylation/quantify_methylation.wdl" as QM
+import "collect_qc_metrics/collect_qc_metrics.wdl" as CQCM
 
 workflow rrbs_pipeline{
   # Default values for runtime, changed in individual calls according to requirements

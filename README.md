@@ -67,6 +67,8 @@ Done once on lambda and species being analysed (Human or Rat)
 ## TODO Notes:
   - Right now the scripts in for trimming reads expect a file with .gz output, I will need to figure out how to best allow scripts to be more agnostic to the specific form of the input since the actual packages can run on zipped and unzipped files with no additional specifications required.
   - Check if .gitmodules should be in repository
+  - Currently pipeline requries input files to be named ${Sample_name}_I1.fastq.gz, ${Sample_name}_R1.fastq.gz, ${Sample_name}_R2.fastq.gz
+    - May need to change this to allow for flexibility of inputs and such. 
 
 ## Source files:
 ### Rat

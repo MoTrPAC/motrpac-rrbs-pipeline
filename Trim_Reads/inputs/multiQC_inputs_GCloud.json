@@ -1,0 +1,9 @@
+{
+  "multiqc_report.num_threads": "1",
+  "multiqc_report.disk_space": "10",
+  "multiqc_report.memory": "10",
+  "multiqc_report.num_preempt": "5",
+  "multiqc_report.docker": "gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_03_08_2019",
+  "multiqc_report.multiQC.fastQCReports": ["gs://archanaraja/rnaseq/test/pilot/cromwell-execution/rnaseq_pipeline/e0fc6dfe-e30b-4005-bab9-e378d3d5ab1b/call-preTrimFastQC/fastqc_report.tar.gz","gs://archanaraja/rnaseq/test/pilot/cromwell-execution/fastqc_report/19205ac5-c669-40bc-9381-a1309260f4af/call-fastQC/fastqc_report_post_trim.tar.gz"]
+}
+
