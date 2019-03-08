@@ -8,6 +8,9 @@
 ## Building Docker image:
   - `docker build . -t gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_03_08_2019`
   - Replace SA_03_08_2019 with whatever tag you would like for the image. I used initials_date since we have yet to decide on a unified versioning schema for docker containers/images
+  - Run this command at the root of the github repository (`.` represents that for me)
+  - to push run:
+    - `docker push gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_03_08_2019` where the tag (everything after the color) should match the tag you built using. 
 
 ## Requirements:
 Docker Image: [gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_03_08_2019](gcr.io/motrpac-portal-dev/motrpac_rrbs)  
@@ -40,6 +43,8 @@ This docker image is based on ubuntu:18.04
   - __rrbs_pipeline.wdl__: End to end pipeline for one paired end RRBS sample
   - __custom_scripts__: scripts for data collection used in context for building docker image
   - __external-scripts__: Includes submodules to packages that contain scripts included in the docker image.
+  - __.Dockerfile__: Dockerfile to build the motrpac_rrbs image
+  - __.dockerignore__: files to ignore when sending context to the docker daemon during the docker build process
 
 In general the following also holds true:
   - __*\_Cromwell.sh__: files used to run wdl scripts on cromwell engine in the cloud or locally
