@@ -43,7 +43,7 @@ This docker image is based on ubuntu:18.04
   - __rrbs_pipeline.wdl__: End to end pipeline for one paired end RRBS sample
   - __custom_scripts__: scripts for data collection used in context for building docker image
   - __external-scripts__: Includes submodules to packages that contain scripts included in the docker image.
-  - __.Dockerfile__: Dockerfile to build the motrpac_rrbs image
+  - __Dockerfile__: Dockerfile to build the motrpac_rrbs image
   - __.dockerignore__: files to ignore when sending context to the docker daemon during the docker build process
 
 In general the following also holds true:
