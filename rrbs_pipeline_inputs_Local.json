@@ -7,7 +7,7 @@
   "rrbs_pipeline.disk_space": "30",
   "rrbs_pipeline.num_threads": "4",
   "rrbs_pipeline.num_preempt": "25",
-  "rrbs_pipeline.docker": "gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_04_07_2019",
+  "rrbs_pipeline.docker": "gcr.io/motrpac-portal-dev/motrpac_rrbs:test_external_scripts",
   "rrbs_pipeline.genome_dir_tar": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/human/chr_X_bismark_genome.tar.gz",
   "rrbs_pipeline.genome_dir": "chr_X",
   "rrbs_pipeline.spike_in_genome_tar": "/Users/akre96/Documents/github/rrbs_bismark/genome_dir/lambda_Bisulfite_Genome.tar.gz",
