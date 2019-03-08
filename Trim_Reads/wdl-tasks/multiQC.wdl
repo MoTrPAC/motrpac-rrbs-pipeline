@@ -7,13 +7,19 @@ task multiQC{
   Int num_preempt
   String docker
 
+  String basedir="fastqc_report"
+
   command {
     set -ueo pipefail
     mkdir reports
     cd reports
+    id=1
     for file in ${sep=' ' fastQCReports}  ; do
-        tar -zxvf $file
-        rm $file
+      mkdir ${basedir}_$id
+      tar -zxvf $file -C ${basedir}_$id --strip-components=1
+      rm $file
+      ((++id))
+
     done
 
     cd ..
@@ -43,12 +49,14 @@ workflow multiqc_report{
   Int disk_space
   Int num_threads
   Int num_preempt
+  String docker
   call multiQC{
     input:
     memory=memory,
     disk_space=disk_space,
     num_threads=num_threads,
     num_preempt=num_preempt,
+    docker=docker
   }
   output {
     multiQC.multiQC_report
