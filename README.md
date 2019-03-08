@@ -31,14 +31,14 @@ This docker image is based on ubuntu:18.04
 
 
 ## Organization:
-  - __Index_Genomes__: Bisulfite indexing of a given genome
-  - __Trim_Reads__: Fastqc, multiqc, attaching UMI information, and trimming of RRBS data
-  - __Align_Trimmed__: Align RRBS reads to bisulfite indexed genome using bismark and bowtie2
-  - __Mark_Duplicates__: removal of PCR duplicates based on UMI
-  - __Quantify_Methylation__: Use bismark to quantify methylation
-  - __rrbs_pipeline.wdl__: End to end pipeline for single paired end RRBS sample
+  - __index_genomes__: Bisulfite indexing of a given genome
+  - __trim_reads__: Fastqc, multiqc, attaching UMI information, and trimming of RRBS data
+  - __align_trimmed__: Align RRBS reads to bisulfite indexed genome using bismark and bowtie2
+  - __mark_duplicates__: removal of PCR duplicates based on UMI
+  - __quantify_methylation__: Use bismark to quantify methylation
+  - __rrbs_pipeline.wdl__: End to end pipeline for one paired end RRBS sample
   - __custom_scripts__: scripts for data collection used in context for building docker image
-  - __external-scripts__: Includes submodules to packages that contain scripts included in the docker image. [Will be removed soon]
+  - __external-scripts__: Includes submodules to packages that contain scripts included in the docker image.
 
 In general the following also holds true:
   - __*\_Cromwell.sh__: files used to run wdl scripts on cromwell engine in the cloud or locally
@@ -69,6 +69,11 @@ Done once on lambda and species being analysed (Human or Rat)
   - Check if .gitmodules should be in repository
   - Currently pipeline requries input files to be named ${Sample_name}_I1.fastq.gz, ${Sample_name}_R1.fastq.gz, ${Sample_name}_R2.fastq.gz
     - May need to change this to allow for flexibility of inputs and such. 
+  - I've run the pipeline using data from Mt. Sinai available at `gs://data-tarnsfer-sinai/rrbs_rn/fastq_raw/` . The files are Rat_Muscle_R1.fastq.gz Rat_Muscle_R2.fastq.gz and Rat_Muscle_I1.fastq.gz
+    - I don't generate the EXACT same types of outputs as Mt. Sinai, particularly for the qc metrics file, but the values are comporable.
+    - Biggest discrepency in outputs is that the %bases_trimmed ( average read length after trimming divided by average read length before trimming) is different between my run and mt. sinai's. This may be due to my use of upgraded software like samtools 1.9 vs 1.3.1. 
+  - collect_qc_metrics.py currently outputs a csv file with the metrics. It may be more useful to output as a JSON. This isn't a big change since the data is formatted in a one row pandas DF. Editing the end of the python script should enable quick conversion to JSON.
+    - this script also assumes the second pair of entries from multiQC_general_stats.txt are the trimmed reads, and the first pair are the raw reads. This may not hold true IF any changes are made to the order of fastqc inputs to the multiqc task.
 
 ## Source files:
 ### Rat
