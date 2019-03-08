@@ -6,10 +6,11 @@
   - Most folders hold individual tasks being tested on data held in sampleData folder
 
 ## Building Docker image:
-  - `docker build custom_scripts/ -f dockerBuild/Dockerfile -t akre96/motrpack_rrbs:v0.2`
+  - `docker build . -t gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_03_08_2019`
+  - Replace SA_03_08_2019 with whatever tag you would like for the image. I used initials_date since we have yet to decide on a unified versioning schema for docker containers/images
 
 ## Requirements:
-Docker Image: [gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_04_07_2019](gcr.io/***REMOVED***-dev/motrpac_rrbs)  
+Docker Image: [gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_03_08_2019](gcr.io/***REMOVED***-dev/motrpac_rrbs)  
 This docker image is based on ubuntu:18.04
 
   - openjdk/8.0.152
@@ -92,4 +93,4 @@ Done once on lambda and species being analysed (Human or Rat)
 ---
 Sincerely,  
 Samir Akre  
-February 26th, 2019
+March 8th, 2019
