@@ -107,12 +107,12 @@ workflow rrbs_pipeline{
     # NOT PREEMPTIBLE INSTANCE
     input:
     memory=50,
-    disk_space=100,
-    num_threads=16,
+    disk_space=200,
+    num_threads=24,
     num_preempt=0,
     docker=docker,
     SID=SID,
-    bismark_multicore=4,
+    bismark_multicore=6,
     r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
     r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
     genome_dir=genome_dir,
@@ -124,12 +124,12 @@ workflow rrbs_pipeline{
     # NOT PREEMPTIBLE INSTANCE
     input:
     memory=50,
-    disk_space=100,
-    num_threads=16,
+    disk_space=200,
+    num_threads=24,
     num_preempt=0,
     docker=docker,
     SID=SID,
-    bismark_multicore=4,
+    bismark_multicore=6,
     r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
     r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
     genome_dir=spike_in_genome_dir,
@@ -139,8 +139,8 @@ workflow rrbs_pipeline{
   # Remove PCR Duplicates from sample
   call MD.markDuplicates as markDuplicatesSample {
     input:
-    memory=memory,
-    disk_space=disk_space,
+    memory=30,
+    disk_space=200,
     num_threads=1,
     num_preempt=num_preempt,
     docker=docker,
@@ -164,7 +164,7 @@ workflow rrbs_pipeline{
   call QM.quantifyMethylation as quantifyMethylationSample {
     input:
     memory=60,
-    disk_space=60,
+    disk_space=200,
     num_threads=16,
     num_preempt=num_preempt,
     docker=docker,
@@ -176,7 +176,7 @@ workflow rrbs_pipeline{
   call QM.quantifyMethylation as quantifyMethylationSpikeIn{
     input:
     memory=60,
-    disk_space=60,
+    disk_space=200,
     num_threads=16,
     num_preempt=num_preempt,
     docker=docker,
@@ -187,8 +187,8 @@ workflow rrbs_pipeline{
   # Collect required QC Metrics from reports
   call CQCM.collectQCMetrics as collectQCMetrics {
     input:
-    memory=10,
-    disk_space=10,
+    memory=20,
+    disk_space=50,
     num_threads=1,
     num_preempt=0,
     docker=docker,

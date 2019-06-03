@@ -34,14 +34,14 @@ RUN cd /src && \
 	ln -s /src/Bismark-0.20.1/bismark* /usr/local/bin/ && \
 	ln -s /src/Bismark-0.20.1/dedup* /usr/local/bin/
 
-# Install samtools-1.9
+# Install samtools-1.3.1
 RUN cd /src && \
-    wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2 && \
-    tar -vxjf samtools-1.9.tar.bz2 && \
-    rm samtools-1.9.tar.bz2 && \
-    cd samtools-1.9 && \
+    wget https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 && \
+    tar -vxjf samtools-1.3.1.tar.bz2 && \
+    rm samtools-1.3.1.tar.bz2 && \
+    cd samtools-1.3.1 && \
     make && \
-    ln -s /src/samtools-1.9/samtools /usr/local/bin
+    ln -s /src/samtools-1.3.1/samtools /usr/local/bin
 
 # Install cutadapt-1.18 (for Trimgalore)
 RUN pip3 install cutadapt==1.18
@@ -64,8 +64,8 @@ RUN cd /tmp && \
     cp TrimGalore-0.5.0/trim_galore /usr/local/bin && \
     chmod 755 /usr/local/bin/trim_galore
 
-# Install multiQC-1.7
-RUN pip install multiQC==1.7
+# Install multiQC-1.6
+RUN pip install multiQC==1.6
 
 # Clean up TMP
 RUN rm -rf tmp
