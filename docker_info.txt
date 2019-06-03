@@ -1,0 +1,12 @@
+only the bismark version used was 0.20.1 , rest matches the MOP i believe we should use 0.22.1 , but needs clarification from Yongchao
+
+docker build . -t gcr.io/***REMOVED***-dev/motrpac_rrbs:araja_05_20_2019
+docker push gcr.io/***REMOVED***-dev/motrpac_rrbs:araja_05_20_2019
+
+#Pushing the image to the production environment
+
+docker build . -t gcr.io/***REMOVED***/motrpac_rrbs:araja_05_20_2019
+docker push gcr.io/***REMOVED***/motrpac_rrbs:araja_05_20_2019
+
+Fixed a typo in the Docker file
+Latest docker image : gcr.io/***REMOVED***/motrpac_rrbs:araja_05_24_2019

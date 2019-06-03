@@ -17,10 +17,12 @@ task quantifyMethylation{
     --comprehensive \
     --bedgraph 
     echo "--- Finished: bismark_methylation_extractor ---"
-
-    echo "--- Running: ls ---"
-    ls
-    echo "--- Finished: ls ---"
+#    echo "------ Running : bismark2summary-------"
+#    bismark2summary
+#    echo "---- Finished running bismark2summary------"
+#    echo "--- Running: bismark2report ---"
+#    bismark2report -o ${SID}.html
+#    echo "--- Finished: bismark2report ---"
 
   }
   output {
@@ -31,6 +33,8 @@ task quantifyMethylation{
     File bedgraph="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bedGraph.gz"
     File bismark_cov="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bismark.cov.gz"
     File splitting_report="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe_splitting_report.txt"
+#    File summary_report='${SID}_bismark_summary_report.txt'
+#    File html_report = '${SID}_bismark_summary_report.html'
   }
   runtime {
     docker: "${docker}"
@@ -69,5 +73,6 @@ workflow quantify_methylation{
     quantifyMethylation.bedgraph
     quantifyMethylation.bismark_cov
     quantifyMethylation.splitting_report
+    quantifyMethylation.html_report
   }
 }
