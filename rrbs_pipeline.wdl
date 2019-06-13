@@ -99,7 +99,8 @@ workflow rrbs_pipeline{
     num_threads=1,
     num_preempt=num_preempt, 
     docker=docker,
-    fastQCReports=[preTrimFastQC.fastQC_report,postTrimFastQC.fastQC_report]
+    fastQCReports=[preTrimFastQC.fastQC_report,postTrimFastQC.fastQC_report],
+    trimGalore_report=trimGalore.trimLog
   }
 
   # Align trimmed reads to species of interest
