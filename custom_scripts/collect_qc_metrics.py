@@ -4,14 +4,14 @@
 # Output:
 #   writes csv file: '${SID}_qcmetrics.csv' where ${SID} is based on the sample ID sent as input with -u or --sid
 
-#Usage : python3 collect_qc_metrics.py --summary bismark_summary_report.txt --bt2 90044015503_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt --lambda spikeIn/bismark_summary_report.txt --multiqc multiqc_pass1a_test/multiqc_data/multiqc_general_stats.txt --dedup 90044015503_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt --dedup_lambda spikeIn/90044015503_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt  --tg 90044015503_trim.log --td trimDiversityAdapt.log
+#Usage : python3 collect_qc_metrics.py --summary bismark_summary_report.txt --bt2 Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt --lambda_summary spikeIn/bismark_summary_report.txt --multiqc multiqc/multiqc_data/multiqc_general_stats.txt --dedup Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt --dedup_lambda spikeIn/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt --tg Rat_Muscle_trim.log --td trimDiversityAdapt.log --phix_report Rat_Muscle_phix_report.txt --mapped_report Rat_Muscle_mapped_report.txt
 
 import argparse
 import csv
 import re
 import pandas as pd
 from statistics import mean
-
+import os
 
 def parseTrimGaloreLog(tglog):
      l=[]
@@ -148,6 +148,8 @@ if __name__ == "__main__":
     parser.add_argument('--dedup_lambda',help='path to deduplicate_bismark report (umi mode) for lambda')
     parser.add_argument('--tg',help='path to trim galore trimming report')
     parser.add_argument('--td',help='path to Trim Diversity Adapter trimming report')
+    parser.add_argument('--phix_report',help='phix alignment report')
+    parser.add_argument('--mapped_report',help='chr info report')
     args = parser.parse_args()
 
     sampleSummary = parseBismarkSummary(args.summary)
@@ -158,25 +160,41 @@ if __name__ == "__main__":
     multiQCData = parseMultiQCReport(args.multiqc)
     trimData = parseTrimGaloreLog(args.tg)
     mspiData = parseTrimDiversityLog(args.td)[0]
-    SID = (args.tg).split("_")[0]   
+    name=os.path.basename(args.tg)
+    SID = (name).split("_")[0]   
     print (SID)
     print ("Parsed all arguments successfully")
     total = parseTrimDiversityLog(args.td)[1]
+    #Compute pct_trimmed
     pct_trimmed = 100-((total/multiQCData['reads_raw'])*100)
+
+    # Compute % mapped to various chromosomes
+    df_mapped=pd.read_csv(args.mapped_report,sep="\t",header=0)
+    
+    # %phix
+    df_phix=pd.read_csv(args.phix_report,sep="\t",header=0)
+    df_phix["pct_phix"]=df_phix["pct_phix"].str.replace("%",'')
+    pct_phix=df_phix["pct_phix"][0]
+    
 
     # Dictionary of RRBS QC Metrics
     qcData = {
 	'SID': [SID],
 	'reads_raw': multiQCData['reads_raw'],
         'pct_adapter_detected': trimData['pct_adapter_detected'],
-        'pct_trimmed' : pct_trimmed,
+        'pct_trimmed' : round(pct_trimmed,2),
         'pct_no_MSPI' : mspiData['pct_no_MSPI'],
         'pct_trimmed_bases': multiQCData['pct_trimmed_bases'],
         'pct_removed' : multiQCData['pct_removed'],
-#	'pct_trimmed': multiQCData['pct_trimmed'],
 	'reads': multiQCData['reads'],
         'pct_GC': multiQCData['pct_GC'],
         'pct_dup_sequence': multiQCData['pct_dup_sequence'],
+        'pct_phix': pct_phix,
+        'pct_chrX': round(df_mapped['pct_chrX'],2),
+        'pct_chrY': round(df_mapped['pct_chrY'],2),
+        'pct_chrM': round(df_mapped['pct_chrM'],2),
+        'pct_chrAuto': round(df_mapped['pct_chrAuto'],2),
+        'pct_contig': round(df_mapped['pct_contig'],2),
         'pct_Uniq': round(sampleSummary['pct_Uniq'],2),
 	'pct_Unaligned': round(sampleSummary['pct_Unaligned'],2),
 	'pct_Ambi': round(sampleSummary['pct_Ambi'],2),
@@ -199,5 +217,6 @@ if __name__ == "__main__":
    # Save qc metrics to ${SID}_qcmetrics.csv file
     qcDataFrame = pd.DataFrame(qcData)
     print(qcDataFrame)
+    print(SID+"_qcmetrics.csv")
     qcDataFrame.to_csv(SID+'_qcmetrics.csv', index=False)
    

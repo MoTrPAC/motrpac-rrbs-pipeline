@@ -1,8 +1,8 @@
 {
-  "rrbs_pipeline.r1": "gs://***REMOVED***-transfer-sinai/RRBS-seq/PASS1A/batch1_2019_05_28/fastq_raw/90044015503_R1.fastq.gz",
-  "rrbs_pipeline.r2": "gs://***REMOVED***-transfer-sinai/RRBS-seq/PASS1A/batch1_2019_05_28/fastq_raw/90044015503_R2.fastq.gz",
-  "rrbs_pipeline.i1": "gs://***REMOVED***-transfer-sinai/RRBS-seq/PASS1A/batch1_2019_05_28/fastq_raw/90044015503_I1.fastq.gz",
-  "rrbs_pipeline.SID": "90044015503",
+  "rrbs_pipeline.r1": "gs://***REMOVED***-transfer-sinai/RRBS-seq/PASS1A/batch1_2019_05_28/fastq_raw/90008015503_R1.fastq.gz",
+  "rrbs_pipeline.r2": "gs://***REMOVED***-transfer-sinai/RRBS-seq/PASS1A/batch1_2019_05_28/fastq_raw/90008015503_R2.fastq.gz",
+  "rrbs_pipeline.i1": "gs://***REMOVED***-transfer-sinai/RRBS-seq/PASS1A/batch1_2019_05_28/fastq_raw/90008015503_I1.fastq.gz",
+  "rrbs_pipeline.SID": "90008015503",
   "rrbs_pipeline.memory": "40",
   "rrbs_pipeline.disk_space": "30",
   "rrbs_pipeline.num_threads": "10",
