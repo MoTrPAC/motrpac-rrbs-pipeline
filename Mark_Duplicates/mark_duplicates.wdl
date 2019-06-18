@@ -15,10 +15,11 @@ task markDuplicates{
     deduplicate_bismark -p --barcode --bam ${bismark_reads}
     echo "LS"
     ls
-
+    touch ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bam
+    touch ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt
   }
   output {
-    File deduped = '${bismark_reads}'
+    File deduped = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bam'
     File dedupLog= '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt'
   }
   runtime {

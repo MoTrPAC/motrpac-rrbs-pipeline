@@ -15,10 +15,13 @@ task trimDiversityAdapt {
     mv $(dirname "${r1_trimmed}")/${SID}_attached_R1_val_1.fq_trimmed.fq.gz ./
     mv $(dirname "${r2_trimmed}")/${SID}_attached_R2_val_2.fq_trimmed.fq.gz ./
     ls
+    touch trimDiversityAdapt.log
+#    cp ./trimDiversityAdapt.log ${SID}_trimDiversityAdapt.log
   }
   output {
     File r1_diversity_trimmed = '${SID}_attached_R1_val_1.fq_trimmed.fq.gz'
     File r2_diversity_trimmed = '${SID}_attached_R2_val_2.fq_trimmed.fq.gz'
+    File trim_diversity_log = '${SID}_trimDiversityAdapt.log'
   }
   runtime {
     docker: "${docker}"
@@ -50,5 +53,6 @@ workflow trim_diversity_adapters {
   output {
     trimDiversityAdapt.r1_diversity_trimmed
     trimDiversityAdapt.r2_diversity_trimmed
+    trimDiversityAdapt.trim_diversity_log
   }
 }

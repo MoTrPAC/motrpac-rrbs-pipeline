@@ -42,6 +42,12 @@ task alignTrimmed{
     echo "Running: bismark2report"
     bismark2report -o ${SID}.html -a ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt
     echo "--- End Running:  bismark2report ---"
+    echo `readlink -f ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam`
+    touch ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam
+    touch ${SID}_bismarkAlign.log
+    touch ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt
+    touch bismark_summary_report.txt
+    touch ${SID}.html
   }
   output {
     File bismark_align_log = '${SID}_bismarkAlign.log'

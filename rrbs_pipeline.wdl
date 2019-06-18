@@ -6,6 +6,8 @@ import "trim_reads/wdl-tasks/attachUMI.wdl" as AUMI
 import "align_trimmed/align_trimmed.wdl" as AT
 import "mark_duplicates/mark_duplicates.wdl" as MD
 import "quantify_methylation/quantify_methylation.wdl" as QM
+import "bowtie2_align/bowtie2_align.wdl" as BA
+import "compute_mapped/chr_info.wdl" as SM
 import "collect_qc_metrics/collect_qc_metrics.wdl" as CQCM
 
 workflow rrbs_pipeline{
@@ -185,6 +187,31 @@ workflow rrbs_pipeline{
     SID=SID
     }
 
+  # Align trimGalore trimmed reads to phix genome using bowtie
+  call BA.bowtie2_align as bowtie2_phix {
+    input :
+    memory=40,
+    disk_space=200,
+    num_threads=10,
+    num_preempt=0,
+    docker=docker,
+    SID=SID,
+    fastqr1=trimGalore.r1_trimmed,
+    fastqr2=trimGalore.r2_trimmed
+    }
+
+  # Compute % mapped to chromosomes and contigs
+  call SM.samtools_mapped as chrinfo {
+    input:
+    num_threads=8,
+    memory=30,
+    disk_space=200,
+    num_preempt=0,
+    docker=docker,
+    SID=SID,
+    input_bam=markDuplicatesSample.deduped
+  }
+   
   # Collect required QC Metrics from reports
   call CQCM.collectQCMetrics as collectQCMetrics {
     input:
@@ -199,6 +226,11 @@ workflow rrbs_pipeline{
     deduplication_report=markDuplicatesSample.dedupLog,
     multiQC_report=multiQC.multiQC_report,
     lambda_bismark_summary_report=alignTrimmedSpikeIn.bismark_summary,
+    dedup_report_lambda=markDuplicatesSpikeIn.dedupLog,
+    trim_galore_report=trimGalore.trimLog,
+    trim_diversity_report=trimDiversityAdapt.trim_diversity_log,
+    phix_report=bowtie2_phix.bowtie2_report,
+    mapping_report=chrinfo.report
   }
 
   output {
@@ -206,6 +238,7 @@ workflow rrbs_pipeline{
     trimGalore.trim_summary
     trimDiversityAdapt.r1_diversity_trimmed
     trimDiversityAdapt.r2_diversity_trimmed
+    trimDiversityAdapt.trim_diversity_log
     preTrimFastQC.fastQC_report
     postTrimFastQC.fastQC_report
     multiQC.multiQC_report

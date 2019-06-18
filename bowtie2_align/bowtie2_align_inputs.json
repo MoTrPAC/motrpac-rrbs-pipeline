@@ -1,0 +1,12 @@
+{
+  "bowtie2_align_workflow.bowtie2_align.disk_space": "50",
+  "bowtie2_align_workflow.bowtie2_align.SID": "Rat_Muscle",
+  "bowtie2_align_workflow.bowtie2_align.num_threads": "10",
+  "bowtie2_align_workflow.bowtie2_align.fastqr1": "gs://rna-seq_araja/rrbs/pipeline_test/rrbs_pipeline/7e9293eb-d5da-4bbd-92b8-5290adceb0b9/call-trimGalore/Rat_Muscle_attached_R1_val_1.fq.gz",
+  "bowtie2_align_workflow.bowtie2_align.memory": "40",
+  "bowtie2_align_workflow.bowtie2_align.num_preempt": "0",
+  "bowtie2_align_workflow.bowtie2_align.fastqr2": "gs://rna-seq_araja/rrbs/pipeline_test/rrbs_pipeline/7e9293eb-d5da-4bbd-92b8-5290adceb0b9/call-trimGalore/Rat_Muscle_attached_R2_val_2.fq.gz",
+  "bowtie2_align_workflow.bowtie2_align.docker": "gcr.io/motrpac-portal/motrpac_rrbs:araja_05_24_2019",
+  "bowtie2_align_workflow.bowtie2_align.genome_dir_tar": "gs://rna-seq_araja/references/rn/bowtie2_index/phix.tar.gz",
+  "bowtie2_align_workflow.bowtie2_align.genome_dir": "phix"
+}
