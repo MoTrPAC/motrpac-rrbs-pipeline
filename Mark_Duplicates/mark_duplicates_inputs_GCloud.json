@@ -1,10 +1,10 @@
 {
   "mark_duplicates.memory": "30",
-  "mark_duplicates.disk_space": "30",
-  "mark_duplicates.num_preempt": "25",
+  "mark_duplicates.disk_space": "50",
+  "mark_duplicates.num_preempt": "0",
   "mark_duplicates.num_threads": "1",
-  "mark_duplicates.docker": "gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_04_07_2019",
-  "mark_duplicates.markDuplicates.SID": "Muscle2",
-  "mark_duplicates.markDuplicates.bismark_reads": "gs://sa-rrbs-pipeline/cromwell-execution/align_trimmed/d1d8b8c8-8516-4071-b35d-225c92682254/call-alignTrimmed/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam"
+  "mark_duplicates.docker": "gcr.io/***REMOVED***/bismark:0.20.0",
+  "mark_duplicates.markDuplicates.SID": "Rat_Muscle",
+  "mark_duplicates.markDuplicates.bismark_reads": "gs://***REMOVED***/rrbs/pipeline_test/pilot/mark_duplicates/090a4c20-ca61-4586-b60a-51dd41cb97eb/call-markDuplicates/mark_udup/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam"
 }
 
