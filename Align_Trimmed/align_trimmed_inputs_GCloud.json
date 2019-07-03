@@ -7,7 +7,7 @@
   "align_trimmed.SID": "Muscle2",
   "align_trimmed.memory": "60",
   "align_trimmed.docker": "gcr.io/motrpac-portal-dev/bismark:0.20.0",
-  "align_trimmed.num_preempt": "25",
+  "align_trimmed.num_preempt": "0",
   "align_trimmed.disk_space": "100",
   "align_trimmed.num_threads": "16"
 }

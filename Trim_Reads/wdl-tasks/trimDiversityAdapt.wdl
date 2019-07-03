@@ -21,7 +21,7 @@ task trimDiversityAdapt {
   output {
     File r1_diversity_trimmed = '${SID}_attached_R1_val_1.fq_trimmed.fq.gz'
     File r2_diversity_trimmed = '${SID}_attached_R2_val_2.fq_trimmed.fq.gz'
-    File trim_diversity_log = '${SID}_trimDiversityAdapt.log'
+    File trim_diversity_log = 'trimDiversityAdapt.log'
   }
   runtime {
     docker: "${docker}"

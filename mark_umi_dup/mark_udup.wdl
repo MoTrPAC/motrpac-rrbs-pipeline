@@ -1,4 +1,4 @@
-task markDuplicates{
+task tag_udup{
   File bismark_reads 
   String SID
 
@@ -7,19 +7,18 @@ task markDuplicates{
   Int num_threads
   Int num_preempt
   String docker
+
   command {
     set -ueo pipefail
-    mkdir -p dedup/
-    cd dedup/
+    mkdir -p mark_udup/
+    cd mark_udup/
     cp ${bismark_reads} .
-    deduplicate_bismark -p --barcode --bam ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam
+    bash /src/bismark_bam_UMI_format.sh ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam
     echo "LS"
     ls
   }
   output {
-    File umi_tagged_bam = 'dedup/${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam'
-    File deduped_bam = 'dedup/${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bam'
-    File dedupLog= 'dedup/${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt'
+    File umi_dup_marked = 'mark_udup/${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam'
   }
   runtime {
     docker: "${docker}"
@@ -33,14 +32,14 @@ task markDuplicates{
   }
 }
 
-workflow mark_duplicates{
+workflow mark_udup{
   Int memory
   Int disk_space
   Int num_threads
   Int num_preempt
   String docker
 
-  call markDuplicates{
+  call tag_udup{
     input:
     memory=memory,
     disk_space=disk_space,

@@ -5,6 +5,7 @@ import "trim_reads/wdl-tasks/multiQC.wdl" as MQC
 import "trim_reads/wdl-tasks/attachUMI.wdl" as AUMI
 import "align_trimmed/align_trimmed.wdl" as AT
 import "mark_duplicates/mark_duplicates.wdl" as MD
+import "mark_umi_dup/mark_udup.wdl" as MU
 import "quantify_methylation/quantify_methylation.wdl" as QM
 import "bowtie2_align/bowtie2_align.wdl" as BA
 import "compute_mapped/chr_info.wdl" as SM
@@ -17,7 +18,7 @@ workflow rrbs_pipeline{
   Int num_threads
   Int num_preempt
   String docker
-
+  String bismark_docker
   File r1
   File r2
   File i1
@@ -113,7 +114,7 @@ workflow rrbs_pipeline{
     disk_space=200,
     num_threads=24,
     num_preempt=0,
-    docker=docker,
+    docker=bismark_docker,
     SID=SID,
     bismark_multicore=6,
     r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
@@ -130,13 +131,37 @@ workflow rrbs_pipeline{
     disk_space=200,
     num_threads=24,
     num_preempt=0,
-    docker=docker,
+    docker=bismark_docker,
     SID=SID,
     bismark_multicore=6,
     r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
     r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
     genome_dir=spike_in_genome_dir,
     genome_dir_tar=spike_in_genome_tar
+  }
+
+  #Tag UMI duplications in sample
+   call MU.tag_udup as tagUMIdupSample{
+     input:
+     memory=memory,
+     disk_space=disk_space,
+     num_threads=6,
+     num_preempt=num_preempt,
+     docker=docker,
+     SID=SID,
+     bismark_reads=alignTrimmedSample.bismark_reads
+  }
+
+  #Tag UMI duplications in spike-in
+  call MU.tag_udup as tagUMIdupSpikeIn{
+    input:
+    memory=memory,
+    disk_space=disk_space,
+    num_threads=6,
+    num_preempt=num_preempt,
+    docker=docker,
+    SID=SID,
+    bismark_reads=alignTrimmedSpikeIn.bismark_reads
   }
 
   # Remove PCR Duplicates from sample
@@ -146,9 +171,9 @@ workflow rrbs_pipeline{
     disk_space=200,
     num_threads=1,
     num_preempt=num_preempt,
-    docker=docker,
+    docker=bismark_docker,
     SID=SID,
-    bismark_reads=alignTrimmedSample.bismark_reads
+    bismark_reads=tagUMIdupSample.umi_dup_marked
     } 
 
   # Remove PCR Duplicates from Lambda phage spike in
@@ -158,11 +183,11 @@ workflow rrbs_pipeline{
     disk_space=disk_space,
     num_threads=1,
     num_preempt=num_preempt,
-    docker=docker,
+    docker=bismark_docker,
     SID=SID,
-    bismark_reads=alignTrimmedSpikeIn.bismark_reads
+    bismark_reads=tagUMIdupSpikeIn.umi_dup_marked
     } 
-
+  
   # Quantify Methylation for sample
   call QM.quantifyMethylation as quantifyMethylationSample {
     input:
@@ -170,8 +195,11 @@ workflow rrbs_pipeline{
     disk_space=200,
     num_threads=16,
     num_preempt=num_preempt,
-    docker=docker,
-    bismark_deduplicated_reads=markDuplicatesSample.deduped,
+    docker=bismark_docker,
+    bismark_umi_marked_reads=tagUMIdupSample.umi_dup_marked,
+    bismark_deduplicated_reads=markDuplicatesSample.deduped_bam,
+    bismark_dedup_report=markDuplicatesSample.dedupLog,
+    bismark_alignment_report=alignTrimmedSample.bismark_report,
     SID=SID
     }
 
@@ -182,9 +210,12 @@ workflow rrbs_pipeline{
     disk_space=200,
     num_threads=16,
     num_preempt=num_preempt,
-    docker=docker,
-    bismark_deduplicated_reads=markDuplicatesSpikeIn.deduped,
-    SID=SID
+    docker=bismark_docker,
+    bismark_deduplicated_reads=markDuplicatesSpikeIn.deduped_bam,
+    SID=SID,
+    bismark_umi_marked_reads=tagUMIdupSpikeIn.umi_dup_marked,
+    bismark_dedup_report=markDuplicatesSpikeIn.dedupLog,
+    bismark_alignment_report=alignTrimmedSpikeIn.bismark_report
     }
 
   # Align trimGalore trimmed reads to phix genome using bowtie
@@ -209,7 +240,7 @@ workflow rrbs_pipeline{
     num_preempt=0,
     docker=docker,
     SID=SID,
-    input_bam=markDuplicatesSample.deduped
+    input_bam=markDuplicatesSample.deduped_bam
   }
    
   # Collect required QC Metrics from reports
@@ -221,18 +252,18 @@ workflow rrbs_pipeline{
     num_preempt=0,
     docker=docker,
     SID=SID,
-    species_bismark_summary_report=alignTrimmedSample.bismark_summary,
+    species_bismark_summary_report=quantifyMethylationSample.bismark_summary_report,
     bismark_bt2_pe_report=alignTrimmedSample.bismark_report,
     deduplication_report=markDuplicatesSample.dedupLog,
     multiQC_report=multiQC.multiQC_report,
-    lambda_bismark_summary_report=alignTrimmedSpikeIn.bismark_summary,
+    lambda_bismark_summary_report=quantifyMethylationSpikeIn.bismark_summary_report,
     dedup_report_lambda=markDuplicatesSpikeIn.dedupLog,
     trim_galore_report=trimGalore.trimLog,
     trim_diversity_report=trimDiversityAdapt.trim_diversity_log,
     phix_report=bowtie2_phix.bowtie2_report,
     mapping_report=chrinfo.report
   }
-
+  
   output {
     trimGalore.trimLog
     trimGalore.trim_summary
@@ -245,14 +276,14 @@ workflow rrbs_pipeline{
     alignTrimmedSample.bismark_align_log
     alignTrimmedSample.bismark_report
     alignTrimmedSample.bismark_reads
-    alignTrimmedSample.bismark_summary
+    quantifyMethylationSample.bismark_summary_report
     alignTrimmedSpikeIn.bismark_align_log
     alignTrimmedSpikeIn.bismark_report
     alignTrimmedSpikeIn.bismark_reads
-    alignTrimmedSpikeIn.bismark_summary
-    markDuplicatesSample.deduped
+    quantifyMethylationSpikeIn.bismark_summary_report
+    markDuplicatesSample.deduped_bam
     markDuplicatesSample.dedupLog
-    markDuplicatesSpikeIn.deduped
+    markDuplicatesSpikeIn.deduped_bam
     markDuplicatesSpikeIn.dedupLog
     quantifyMethylationSample.CpG_context
     quantifyMethylationSample.CHG_context
@@ -261,6 +292,8 @@ workflow rrbs_pipeline{
     quantifyMethylationSample.bedgraph
     quantifyMethylationSample.bismark_cov
     quantifyMethylationSample.splitting_report
+    quantifyMethylationSample.bismark_summary_html
+    quantifyMethylationSample.bismark_report_html
     quantifyMethylationSpikeIn.CpG_context
     quantifyMethylationSpikeIn.CHG_context
     quantifyMethylationSpikeIn.CHH_context
@@ -268,6 +301,9 @@ workflow rrbs_pipeline{
     quantifyMethylationSpikeIn.bedgraph
     quantifyMethylationSpikeIn.bismark_cov
     quantifyMethylationSpikeIn.splitting_report
+    quantifyMethylationSpikeIn.bismark_summary_html
+    quantifyMethylationSpikeIn.bismark_report_html
     collectQCMetrics.qc_metrics
   }
 }
+
