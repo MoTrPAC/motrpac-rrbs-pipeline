@@ -1,3 +1,4 @@
+#Docker image uses bismark 0.20.0 , gcr.io/motrpac-portal/motrpac_rrbs:araja_06_17_2019
 FROM ubuntu:18.04
 
 # Steps to hopefully force apt-get update to work
@@ -26,13 +27,13 @@ RUN apt-get install -y libtbb-dev && \
   rm bowtie2.zip && \
 	ln -s /src/bowtie2-2.3.4.3-linux-x86_64/bowtie2* /usr/local/bin
 
-# Install Bismark-0.20.1
+# Install Bismark-0.20.0
 RUN cd /src && \
-	wget https://github.com/FelixKrueger/Bismark/archive/0.20.1.tar.gz && \
-	tar zxf 0.20.1.tar.gz && \
-  rm 0.20.1.tar.gz && \
-	ln -s /src/Bismark-0.20.1/bismark* /usr/local/bin/ && \
-	ln -s /src/Bismark-0.20.1/dedup* /usr/local/bin/
+	wget https://github.com/FelixKrueger/Bismark/archive/0.20.0.tar.gz && \
+	tar zxf 0.20.0.tar.gz && \
+  rm 0.20.0.tar.gz && \
+	ln -s /src/Bismark-0.20.0/bismark* /usr/local/bin/ && \
+	ln -s /src/Bismark-0.20.0/dedup* /usr/local/bin/
 
 # Install samtools-1.3.1
 RUN cd /src && \
