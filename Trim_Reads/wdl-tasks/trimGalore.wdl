@@ -15,7 +15,7 @@ task trimGalore {
     trim_galore --paired \
       --adapter AGATCGGAAGAGC \
       --adapter2 AAATCAAAAAAAC \
-      --length 20 ${r1} ${r2} \
+      ${r1} ${r2} \
       --fastqc_args "-o fastqc" \
       >& ${SID}_trim.log
     ls
