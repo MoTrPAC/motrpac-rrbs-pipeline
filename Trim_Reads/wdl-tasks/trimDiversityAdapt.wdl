@@ -11,17 +11,19 @@ task trimDiversityAdapt {
 
   command {
     set -ueo pipefail
-    python2 /src/trimRRBSdiversityAdaptCustomers.py -1 ${r1_trimmed} -2 ${r2_trimmed}
+    python2 /src/trimRRBSdiversityAdaptCustomers.py -1 ${r1_trimmed} -2 ${r2_trimmed} >${SID}_trimDiversityAdapt.log
     mv $(dirname "${r1_trimmed}")/${SID}_attached_R1_val_1.fq_trimmed.fq.gz ./
     mv $(dirname "${r2_trimmed}")/${SID}_attached_R2_val_2.fq_trimmed.fq.gz ./
     ls
-    touch trimDiversityAdapt.log
-#    cp ./trimDiversityAdapt.log ${SID}_trimDiversityAdapt.log
+#    touch trimDiversityAdapt.log
+    touch ${SID}_trimDiversityAdapt.log
   }
   output {
     File r1_diversity_trimmed = '${SID}_attached_R1_val_1.fq_trimmed.fq.gz'
     File r2_diversity_trimmed = '${SID}_attached_R2_val_2.fq_trimmed.fq.gz'
-    File trim_diversity_log = 'trimDiversityAdapt.log'
+#    File trim_diversity_log = 'trimDiversityAdapt.log'
+#    File trim_diversity_log = glob("trimDiversityAdapt-*.log")[0]
+    File trim_diversity_log = '${SID}_trimDiversityAdapt.log'
   }
   runtime {
     docker: "${docker}"

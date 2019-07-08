@@ -5,7 +5,7 @@
 #   writes csv file: '${SID}_qcmetrics.csv' where ${SID} is based on the sample ID sent as input with -u or --sid
 
 #Usage : python3 collect_qc_metrics.py --summary bismark_summary_report.txt --bt2 Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt --lambda_summary spikeIn/bismark_summary_report.txt --multiqc multiqc/multiqc_data/multiqc_general_stats.txt --dedup Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt --dedup_lambda spikeIn/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt --tg Rat_Muscle_trim.log --td trimDiversityAdapt.log --phix_report Rat_Muscle_phix_report.txt --mapped_report Rat_Muscle_mapped_report.txt
-
+#Notes : Any of the function can throw an error on the script like a variable is used before it's being declared , if the report it reads is empty , have to add a check to throw exceptions on empty file.
 import argparse
 import csv
 import re
