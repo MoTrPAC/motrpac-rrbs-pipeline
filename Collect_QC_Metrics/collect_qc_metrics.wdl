@@ -23,7 +23,7 @@ task collectQCMetrics {
     set -ueo pipefail
     tar -xzvf ${multiQC_report}
     ls
-    python3 /src/collect_qc_metrics.py \
+    /usr/bin/python3 /src/collect_qc_metrics.py \
       --summary ${species_bismark_summary_report} \
       --lambda_summary ${lambda_bismark_summary_report} \
       --bt2 ${bismark_bt2_pe_report} \
@@ -40,8 +40,8 @@ task collectQCMetrics {
   }
 
   output {
-#    File qc_metrics = '${SID}_qcmetrics.csv'
-    File qc_metrics = 'Rat_qcmetrics.csv'
+    File qc_metrics = '${SID}_qcmetrics.csv'
+#    File qc_metrics = 'Rat_qcmetrics.csv'
   }
 
   runtime {
