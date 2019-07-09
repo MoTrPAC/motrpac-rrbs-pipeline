@@ -207,7 +207,7 @@ if __name__ == "__main__":
 	'pct_CHG': round(sampleSummary['pct_CHG'],2),
 	'pct_CHH': round(sampleSummary['pct_CHH'],2),
         'lambda_pct_Uniq': round(spikeInSummary['pct_Uniq'],2),
-        'lambda_pct_Ambi': spikeInSummary['pct_Ambi'],
+        'lambda_pct_Ambi': round(spikeInSummary['pct_Ambi'],2),
         'lambda_pct_umi_dup': dedupReport_lambda['pct_umi_dup'],
         'lambda_pct_CpG': round(spikeInSummary['pct_CpG'],2),
         'lambda_pct_CHG': round(spikeInSummary['pct_CHG'],2),

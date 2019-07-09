@@ -9,4 +9,10 @@ docker build . -t gcr.io/motrpac-portal/motrpac_rrbs:araja_05_20_2019
 docker push gcr.io/motrpac-portal/motrpac_rrbs:araja_05_20_2019
 
 Fixed a typo in the Docker file
-Latest docker image : gcr.io/motrpac-portal/motrpac_rrbs:araja_05_24_2019
+Older docker image : gcr.io/motrpac-portal/motrpac_rrbs:araja_05_24_2019
+
+#Previous well tested docker image : gcr.io/motrpac-portal/motrpac_rrbs:araja_06_17_2019 
+
+#Updated ubuntu version , fixed the qc script to round a metric , removed bismark as the source install had the wrong version of bismark methylation extractor
+Latest docker image : gcr.io/motrpac-portal/motrpac_rrbs:araja_07_09_2019
+Bismark docker : gcr.io/motrpac-portal/bismark:0.20.0
