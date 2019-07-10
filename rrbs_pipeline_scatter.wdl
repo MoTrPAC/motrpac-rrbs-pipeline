@@ -49,7 +49,7 @@ workflow rrbs_pipeline{
       input: 
       memory=40,
       disk_space=disk_space,
-      num_threads=1,
+      num_threads=8,
       num_preempt=num_preempt, 
       docker=docker,
       SID=sample_prefix[i],
@@ -250,7 +250,7 @@ workflow rrbs_pipeline{
        input:
        memory=20,
        disk_space=50,
-       num_threads=1,
+       num_threads=4,
        num_preempt=0,
        docker=docker,
        SID=sample_prefix[i],
