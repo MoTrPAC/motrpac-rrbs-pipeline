@@ -27,3 +27,7 @@ condaEnv.yml
 # Test Data
 sampleData
 sampleOutput
+
+sample_list
+compare_results
+
