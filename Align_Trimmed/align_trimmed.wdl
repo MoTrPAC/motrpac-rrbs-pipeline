@@ -49,7 +49,7 @@ task alignTrimmed{
     preemptible: "${num_preempt}"
   }
   meta {
-    author: "Samir Akre,Archana Raja"
+    author: "Samir Akre"
   }
 }
 
