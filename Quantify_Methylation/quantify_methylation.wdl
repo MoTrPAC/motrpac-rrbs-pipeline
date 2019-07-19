@@ -57,7 +57,7 @@ task quantifyMethylation{
     preemptible: "${num_preempt}"
   }
   meta {
-    author: "Archana Raja,Samir Akre"
+    author: "Samir Akre"
   }
 }
 
