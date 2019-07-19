@@ -31,3 +31,5 @@ sampleOutput
 sample_list
 compare_results
 
+pipeline_wdl
+input_json
