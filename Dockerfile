@@ -1,4 +1,4 @@
-#Docker image uses bismark 0.20.0 , gcr.io/***REMOVED***/motrpac_rrbs:araja_06_17_2019
+#Dockerfile for gcr.io/***REMOVED***/motrpac_rrbs:araja_07_09_2019
 FROM ubuntu:18.10
 
 # Steps to hopefully force apt-get update to work
