@@ -22,10 +22,10 @@ This docker image is based on ubuntu:18.04
   - fastqc/0.11.8
   - cutadapt/1.18
   - trim_galore/0.5.0
-  - samtools/1.9
+  - samtools/1.3.1  
   - bowtie2/2.3.4.3
-  - multiqc/1.7
-  - bismark/0.20.1
+  - multiqc/1.6
+  - bismark/0.20.0
   - pandas/0.24.1
   - [trimRRBSDiversityAdaptCustomers.py/1.11](https://github.com/nugentechnologies/NuMetRRBS/blob/master/trimRRBSdiversityAdaptCustomers.py)
       - Requires python 2

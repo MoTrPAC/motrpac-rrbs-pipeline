@@ -1,0 +1,9 @@
+{
+  "mapped_workflow.samtools_mapped.input_bam": "gs://***REMOVED***-transfer-sinai/rrbs_rn_2019_06_03/bismark/Rat_Muscle_R1_bismark_bt2_pe.deduplicated.bam",
+  "mapped_workflow.samtools_mapped.disk_space": "50",
+  "mapped_workflow.samtools_mapped.memory": "20",
+  "mapped_workflow.samtools_mapped.docker": "gcr.io/***REMOVED***/motrpac_rrbs:araja_05_24_2019",
+  "mapped_workflow.samtools_mapped.num_preempt": "0",
+  "mapped_workflow.samtools_mapped.num_threads": "8",
+  "mapped_workflow.samtools_mapped.SID": "Rat_Muscle"
+}

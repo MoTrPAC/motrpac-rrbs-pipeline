@@ -1,0 +1,10 @@
+{
+  "mark_duplicates.memory": "30",
+  "mark_duplicates.disk_space": "50",
+  "mark_duplicates.num_preempt": "0",
+  "mark_duplicates.num_threads": "1",
+  "mark_duplicates.docker": "gcr.io/***REMOVED***/motrpac_rrbs:araja_06_17_2019",
+  "mark_duplicates.markDuplicates.SID": "Rat_Muscle",
+  "mark_duplicates.markDuplicates.bismark_reads": "gs://***REMOVED***/rrbs/pipeline_test/pilot/align_trimmed/d978a9a6-9332-4642-8740-af808efc8736/call-alignTrimmed/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam"
+}
+
