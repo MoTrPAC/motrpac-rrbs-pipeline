@@ -6,6 +6,7 @@ task multiQC{
   Int num_threads
   Int num_preempt
   String docker
+  File trimGalore_report
 
   String basedir="fastqc_report"
 
@@ -29,7 +30,7 @@ task multiQC{
       -d \
       -f \
       -o multiQC_report \
-      reports/*
+      reports/* ${trimGalore_report}
     tar -czvf multiqc_report.tar.gz ./multiQC_report
   }
   output {

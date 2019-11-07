@@ -34,20 +34,12 @@ task alignTrimmed{
     echo "Running: ls"
     ls
     echo "--- End ls ---"
-
-    echo "--- Running: bismark2summary"
-    bismark2summary
-    echo "--- End bismark2summary"
-
-    echo "Running: ls"
-    ls
-    echo "--- End ls ---"
+  
   }
   output {
     File bismark_align_log = '${SID}_bismarkAlign.log'
     File bismark_report = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt'
     File bismark_reads = '${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam'
-    File bismark_summary = 'bismark_summary_report.txt'
   }
   runtime {
     docker: "${docker}"
@@ -80,10 +72,8 @@ workflow align_trimmed{
     SID=SID
   }
   output {
-    #TODO: Add bismark alignment and samtools ouput to outputs
     alignTrimmed.bismark_align_log
     alignTrimmed.bismark_report
     alignTrimmed.bismark_reads
-    alignTrimmed.bismark_summary
   }
 }
