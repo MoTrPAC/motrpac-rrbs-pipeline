@@ -61,7 +61,7 @@ workflow rrbs_pipeline{
     # Trim Galore removes regular adapters
      call TG.trimGalore as trimGalore {
        input:
-       memory=50,
+       memory=40,
        disk_space=disk_space,
        num_threads=1,
        num_preempt=num_preempt,
@@ -112,13 +112,13 @@ workflow rrbs_pipeline{
      call AT.alignTrimmed as alignTrimmedSample{
        # NOT PREEMPTIBLE INSTANCE
        input:
-       memory=50,
+       memory=40,
        disk_space=200,
-       num_threads=24,
+       num_threads=12,
        num_preempt=0,
        docker=bismark_docker,
        SID=sample_prefix[i],
-       bismark_multicore=6,
+       bismark_multicore=3,
        r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
        r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
        genome_dir=genome_dir,
@@ -129,13 +129,13 @@ workflow rrbs_pipeline{
     call AT.alignTrimmed as alignTrimmedSpikeIn{
     # NOT PREEMPTIBLE INSTANCE
       input:
-      memory=50,
+      memory=40,
       disk_space=200,
-      num_threads=24,
+      num_threads=12,
       num_preempt=0,
       docker=bismark_docker,
       SID=sample_prefix[i],
-      bismark_multicore=6,
+      bismark_multicore=3,
       r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
       r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
       genome_dir=spike_in_genome_dir,
@@ -256,10 +256,8 @@ workflow rrbs_pipeline{
        SID=sample_prefix[i],
        species_bismark_summary_report=quantifyMethylationSample.bismark_summary_report,
        bismark_bt2_pe_report=alignTrimmedSample.bismark_report,
-       deduplication_report=markDuplicatesSample.dedupLog,
        multiQC_report=multiQC.multiQC_report,
        lambda_bismark_summary_report=quantifyMethylationSpikeIn.bismark_summary_report,
-       dedup_report_lambda=markDuplicatesSpikeIn.dedupLog,
        trim_galore_report=trimGalore.trimLog,
        trim_diversity_report=trimDiversityAdapt.trim_diversity_log,
        phix_report=bowtie2_phix.bowtie2_report,
