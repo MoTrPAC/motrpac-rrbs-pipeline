@@ -5,3 +5,6 @@
 gcp_loc=$1
 destination_folder=$2
 gcloud compute scp --recurse $gcp_loc $destination_folder
+
+#ssh into a gcp instance
+#gcloud compute ssh araja7@ubuntu1904-nopreempt-rnaseq-8cpu-30gb-1

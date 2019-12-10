@@ -4,8 +4,8 @@ task alignTrimmed{
   File genome_dir_tar
   String genome_dir # Name of the genome folder that has been tar balled 
   String SID
-  Int bismark_multicore = 1 # Multiply by ~4 to get number of cores required
-
+  Int bismark_multicore # Multiply by ~4 to get number of cores required
+  #If you increase the multicore to 6 make sure to double up the memory to 80, otherwise you will loose 20-30% of the reads
   Int memory
   Int disk_space
   Int num_threads
@@ -34,6 +34,15 @@ task alignTrimmed{
     echo "Running: ls"
     ls
     echo "--- End ls ---"
+    sam=${SID}.sam
+
+#Fix inconsistencies while using different multticore setting by sorting sam by mapping quality and then by read name
+    echo "Runnning Samtools"
+    samtools view -@ ${num_threads} -H ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam >$sam
+    samtools view -@ ${num_threads} ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam |sort -k5,5nr -k1,1 -s -S${memory}G  >>$sam
+    echo "Finished sorting"
+    samtools view -@ ${num_threads} -b $sam -o ${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam
+    echo "Finished running samtools"
   
   }
   output {

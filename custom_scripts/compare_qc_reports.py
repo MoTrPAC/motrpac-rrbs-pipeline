@@ -1,0 +1,32 @@
+import pandas as pd
+#Usage : python compare_qc_reports.py >compare_sinai_vs_bic_rrbs_qc_metrics.txt
+sinai=pd.read_csv("bismark_qc_sinai.csv",sep=",",header=0)
+bic=pd.read_csv("core6/rrbs_qc_metrics_core6.csv",sep=",",header=0)
+bicc3=pd.read_csv("core3/rrbs_qc_metrics_core3.csv",sep=",",header=0)
+bicc2=pd.read_csv("core2/rrbs_qc_metrics_core2.csv",sep=",",header=0)
+print(sinai.shape)
+print(bic.shape)
+#look at the correlations across columns in two data frames
+print ("Sinai vs bic core 6 correlation")
+print ("Mean correlation")
+print(bic.corrwith(sinai, axis = 0).mean())
+print ("Median correlation")
+print(bic.corrwith(sinai, axis = 0).median())
+print ("Correlation of sinai core 3 vs bic core 6")
+print(bic.corrwith(sinai, axis = 0))
+print ("Sinai vs bic core 3 correlation")
+print ("Mean correlation")
+print(bicc3.corrwith(sinai, axis = 0).mean())
+print ("Median correlation")
+print (bicc3.corrwith(sinai, axis = 0).median())
+print ("Correlation of sinai core 3 vs bic core 3")
+print(bicc3.corrwith(sinai, axis = 0))
+print ("Sinai vs bic core 2 correlation")
+print ("Mean correlation")
+print(bicc2.corrwith(sinai, axis = 0).mean())
+print ("Median correlation")
+print(bicc2.corrwith(sinai, axis = 0).median())
+print ("Correlation of sinai core 3 vs bic core 2")
+print(bicc2.corrwith(sinai, axis = 0))
+
+
