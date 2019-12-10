@@ -35,7 +35,7 @@ for i in filelist:
   "rrbs_pipeline.num_threads" : "6",\
   "rrbs_pipeline.num_preempt" : "0",\
   "rrbs_pipeline.memory" : "40",\
-  "rrbs_pipeline.docker" : "gcr.io/motrpac-portal/motrpac_rrbs:araja_07_09_2019",\
+  "rrbs_pipeline.docker" : "gcr.io/motrpac-portal/motrpac_rrbs:araja_08_05_2019",\
   "rrbs_pipeline.bismark_docker": "gcr.io/motrpac-portal/bismark:0.20.0",\
   "rrbs_pipeline.disk_space" : "150"}
 
