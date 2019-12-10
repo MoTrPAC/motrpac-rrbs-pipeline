@@ -1,4 +1,5 @@
-#Dockerfile for gcr.io/***REMOVED***/motrpac_rrbs:araja_07_09_2019
+#Current version of post external release1 docker gcr.io/***REMOVED***/motrpac_rrbs:araja_08_05_2019
+#Dockerfile for external release 1 gcr.io/***REMOVED***/motrpac_rrbs:araja_07_09_2019
 FROM ubuntu:18.10
 
 # Steps to hopefully force apt-get update to work
