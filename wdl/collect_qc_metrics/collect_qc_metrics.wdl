@@ -32,9 +32,6 @@ task collectQCMetrics {
       --td ${trim_diversity_report} \
       --phix_report ${phix_report} \
       --mapped_report ${mapping_report}
-
-#    touch ${SID}_qcmetrics.csv 
-    ls
   }
 
   output {
@@ -55,7 +52,7 @@ task collectQCMetrics {
   }
 }
 
-workflow collect_qc_metrics{  
+workflow collect_qc_metrics{
   Int memory
   Int disk_space
   Int num_threads

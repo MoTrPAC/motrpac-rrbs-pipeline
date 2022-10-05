@@ -4,4 +4,4 @@ cd $LOCALDIR
 java -Dconfig.file=../google.conf -jar ~/cromwell/cromwell-36.jar run ../wdl-tasks/multiQC.wdl -i ../inputs/multiQC_inputs_GCloud.json
 
 ## Run locally (test)
-#java -jar ~/cromwell/cromwell-36.jar run ../wdl-tasks/multiQC.wdl -i ../inputs/multiQC_inputs_Local.json
+#java -jar ~/cromwell/cromwell-36.jar run ../tasks/multiQC.wdl -i ../inputs/multiQC_inputs_Local.json
