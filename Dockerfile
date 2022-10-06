@@ -73,7 +73,7 @@ RUN pip install multiQC==1.6
 RUN rm -rf tmp
 
 # Install motrpac UMI_attach script
-COPY external_scripts/motrpac_rnaseq/bin/UMI_attach.awk /src/
+COPY external_scripts/motrpac_rnaseq/wdl/umi_attach/UMI_attach.awk /src/
 RUN cd /src && \
     chmod 755 UMI_attach.awk && \
     ln -s /src/UMI_attach.awk /usr/local/bin
@@ -88,14 +88,13 @@ COPY external_scripts/NuMetRRBS/trimRRBSdiversityAdaptCustomers.py /src/
 RUN cd /src && \
     ln -s /src/trimRRBSdiversityAdaptCustomers.py /usr/local/bin
 
-
 # Bismark_bam_UMI_format files from end of January 2019
-COPY external_scripts/motrpac_rrbs/bin/bismark_bam_UMI_format.awk /src/
+COPY wdl/mark_umi_dup/bismark_bam_UMI_format.awk /src/
 RUN cd /src && \
     chmod 755 bismark_bam_UMI_format.awk && \
     ln -s /src/bismark_bam_UMI_format.awk /usr/local/bin
 
-COPY external_scripts/motrpac_rrbs/bin/bismark_bam_UMI_format.sh /src/
+COPY wdl/mark_umi_dup/bismark_bam_UMI_format.sh /src/
 RUN cd /src && \
     chmod 755 bismark_bam_UMI_format.sh && \
     ln -s /src/bismark_bam_UMI_format.sh /usr/local/bin
@@ -106,4 +105,4 @@ RUN pip3 install pandas==0.24.1
 ## Adding items from context to docker image
 
 # Script for collecting QC metrics from logs created during pipeline execution
-COPY custom_scripts/collect_qc_metrics.py /src/
+COPY wdl/collect_qc_metrics/collect_qc_metrics.py /src/
