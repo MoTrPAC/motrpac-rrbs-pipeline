@@ -34,7 +34,7 @@ compare_results
 bismark_qc.csv
 checksum_compare/
 copy_from_gcp.sh
-custom_scripts/collect_qc_metrics.pyc
+bin/collect_qc_metrics.pyc
 logs/
 metadata_sinai/
 pipeline_diffs.txt
