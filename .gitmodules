@@ -1,15 +1,11 @@
-[submodule "external_scripts/NuMetRRBS"]
-    path = external_scripts/NuMetRRBS 
+[submodule "vendor/NuMetRRBS"]
+	path = vendor/NuMetRRBS
     url = https://github.com/nugentechnologies/NuMetRRBS.git 
 
-[submodule "external_scripts/motrpac_rrbs"]
-    path = external_scripts/motrpac_rrbs
-    url = https://github.com/yongchao/motrpac_rrbs.git
-
-[submodule "external_scripts/nudup"]
-    path = external_scripts/nudup
+[submodule "vendor/nudup"]
+	path = vendor/nudup
     url = https://github.com/nugentechnologies/nudup.git
 
-[submodule "external_scripts/motrpac_rnaseq"]
-	path = external_scripts/motrpac_rnaseq
+[submodule "vendor/motrpac_rnaseq"]
+	path = vendor/motrpac_rnaseq
 	url = git@github.com:MoTrPAC/motrpac-rna-seq-pipeline.git

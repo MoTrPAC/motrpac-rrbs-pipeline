@@ -1,5 +1,5 @@
-#Usage: python custom_scripts/make_json_rrbs.py [comma separated sample list] path_to_output_json
-#Usage: python custom_scripts/make_json_rrbs.py /Users/archanaraja/work/repo/motrpac-rrbs-pipeline/sample_list/pilot_list1,/Users/archanaraja/work/repo/motrpac-rrbs-pipeline/sample_list/pilot_list2 /Users/archanaraja/work/repo/motrpac-rrbs-pipeline/sample_list/
+#Usage: python bin/make_json_rrbs.py [comma separated sample list] path_to_output_json
+#Usage: python bin/make_json_rrbs.py /Users/archanaraja/work/repo/motrpac-rrbs-pipeline/sample_list/pilot_list1,/Users/archanaraja/work/repo/motrpac-rrbs-pipeline/sample_list/pilot_list2 /Users/archanaraja/work/repo/motrpac-rrbs-pipeline/sample_list/
 import simplejson
 import sys
 import os
