@@ -15,6 +15,21 @@ task attachUMI {
         Int num_preempt
     }
 
+    parameter_meta {
+        SID: {
+            type: "id"
+        }
+        r1: {
+            label: "Forward End Read FASTQ File"
+        }
+        r2: {
+            label: "Reverse End Read FASTQ File"
+        }
+        i1: {
+            label: "UMI Read FASTQ File"
+        }
+    }
+
     command <<<
         set -ueo pipefail
         zcat ~{r1} | UMI_attach.awk -v Ifq=~{i1} |
@@ -36,6 +51,7 @@ task attachUMI {
         cpu: "${num_threads}"
         preemptible: "${num_preempt}"
     }
+
     meta {
         author: "Samir Akre"
     }

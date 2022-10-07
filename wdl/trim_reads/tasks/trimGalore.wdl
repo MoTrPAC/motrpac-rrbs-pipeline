@@ -14,6 +14,18 @@ task trimGalore {
         String docker
     }
 
+    parameter_meta {
+        SID: {
+            type: "id"
+        }
+        r1: {
+            label: "Forward End Read FASTQ File"
+        }
+        r2: {
+            label: "Reverse End Read FASTQ File"
+        }
+    }
+
     command <<<
         set -ueo pipefail
         trim_galore --paired \

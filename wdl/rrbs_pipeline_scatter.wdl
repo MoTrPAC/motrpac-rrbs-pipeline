@@ -29,17 +29,91 @@ workflow rrbs_pipeline {
         Array [String] sample_prefix=[]
 
         File genome_dir_tar
-        String genome_dir # Name of the genome folder that has been tar balled
-
         File spike_in_genome_tar
-        String spike_in_genome_dir
 
         String output_report_name
     }
 
+    meta {
+        task_labels: {
+            pretrim_fastqc: {
+                task_name: "Pre-Trim FastQC",
+                description: "Run FastQC on raw reads before adapter trimming to assess how the sequencing quality changes with the actual run cycle number"
+            },
+            aumi: {
+                task_name: "AttachUMI",
+                description: "Append the UMI index from I1 file to the read names of R1 and R2 FASTQ files so that the UMI info for each read can be tracked for downstream analysis"
+            },
+            trim_reg_adapt: {
+                task_name: "Trim Galore",
+                description: "Adapter trimming of regular adapters"
+            },
+            trim_diversity_adapt: {
+                task_name: "Trim Diversity Adaptors",
+                description: "Adapter trimming of NuGen-specific adapters"
+            },
+            posttrim_fastqc: {
+                task_name: "Post-Trim FastQC",
+                description: "Post-Trim FastQC to collect metrics related to the library quality such as GC content and duplicated sequences"
+            },
+            mqc: {
+                task_name: "MultiQC",
+                description: "MultiQC consolidates logs from Trim Galore, Pre-Trim, and Post-Trim FASTQC steps"
+            },
+            align_trim_sample: {
+                task_name: "Align Trimmed Reads - Sample",
+                description: "Align each pair of trimmed FastQ files from each sample to species of interest"
+            },
+            align_trim_spike_in: {
+                task_name: "Align Trimmed Reads - Spike In",
+                description: "Align each pair of trimmed FastQ files from each sample to lambda for control"
+            },
+            tag_udup_sample: {
+                task_name: "Tag UMI Duplications - Sample",
+                description: "Tag UMI duplications in the aligned BAM files from each sample"
+            },
+            tag_udup_spike_in: {
+                task_name: "Tag UMI Duplications - Spike In",
+                description: "Tag UMI duplications in the aligned BAM files of each sample's spike in"
+            },
+            mark_dup_sample: {
+                task_name: "Mark Duplicates - Sample",
+                description: "Run MarkDuplicates function from Picard tools on STAR-aligned BAM files to assess PCR duplication in sample based on position of the mapped reads"
+            },
+            mark_dup_spike_in: {
+                task_name: "Mark Duplicates - Spike In",
+                description: "Run MarkDuplicates function from Picard tools on STAR-aligned BAM files to assess PCR duplication in spike in based on position of the mapped reads"
+            },
+            quant_methyl_sample: {
+                task_name: "Quantify Methylation - Sample",
+                description: "Quantify Methylation for sample"
+            },
+            quant_methyl_spike_in: {
+                task_name: "Quantify Methylation - Spike In",
+                description: "Quantify Methylation for Lambda control spike in"
+            },
+            bowtie2_phix: {
+                task_name: "Bowtie2 PHIX",
+                description: "Map reads to phix using bowtie2 to compute percentage of phix"
+            },
+            chrinfo: {
+                task_name: "SAMTools Mapped",
+                description: "Compute mapping percentages to different chromosomes using SAMTools"
+            },
+            rnaqc: {
+                task_name: "Collect RNAseq Metrics",
+                description: "Run CollectRnaSeqMetrics function from Picard tools to capture RNA-seq QC metrics like % reads mapped to coding, intron, inter-genic, UTR, % correct strand, and 5’ to 3’ bias "
+            },
+            merge_results: {
+                task_name: "Merge Results",
+                description: "Merges reports and QC metrics files of all the steps from all samples run by the pipeline"
+            }
+        }
+    }
+
     scatter (i in range(length(r1))) {
         ## Runs FastQC pre-trimming
-        call fastqc.fastQC as preTrimFastQC {
+        call fastqc.fastQC as pretrim_fastqc {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -51,7 +125,7 @@ workflow rrbs_pipeline {
         }
 
         # Attach UMI Information
-        call attach_umi.attachUMI as attachUMI {
+        call attach_umi.attachUMI as aumi {
             input:
                 memory=40,
                 disk_space=disk_space,
@@ -65,57 +139,57 @@ workflow rrbs_pipeline {
         }
 
         # Trim Galore removes regular adapters
-        call trim_galore.trimGalore as trimGalore {
+        call trim_galore.trimGalore as trim_reg_adapt {
             input:
                 memory=40,
                 disk_space=disk_space,
                 num_threads=1,
                 num_preempt=num_preempt,
                 docker=docker,
-                r1=attachUMI.r1_umi_attached,
-                r2=attachUMI.r2_umi_attached,
+                r1=aumi.r1_umi_attached,
+                r2=aumi.r2_umi_attached,
                 SID=sample_prefix[i]
         }
 
         # NuGen specific diversity adapaters trimmed
-        call trim_da.trimDiversityAdapt as trimDiversityAdapt {
+        call trim_da.trimDiversityAdapt as trim_diversity_adapt {
             input:
                 memory=memory,
                 disk_space=disk_space,
                 num_threads=1,
                 num_preempt=num_preempt,
                 docker=docker,
-                r1_trimmed=trimGalore.r1_trimmed,
-                r2_trimmed=trimGalore.r2_trimmed,
+                r1_trimmed=trim_reg_adapt.r1_trimmed,
+                r2_trimmed=trim_reg_adapt.r2_trimmed,
                 SID=sample_prefix[i]
         }
 
         # FastQC ran on post trimming reads
-        call fastqc.fastQC as postTrimFastQC {
+        call fastqc.fastQC as posttrim_fastqc {
             input:
                 memory=memory,
                 disk_space=disk_space,
                 num_threads=1,
                 num_preempt=num_preempt,
                 docker=docker,
-                r1=trimDiversityAdapt.r1_diversity_trimmed,
-                r2=trimDiversityAdapt.r2_diversity_trimmed
+                r1=trim_diversity_adapt.r1_diversity_trimmed,
+                r2=trim_diversity_adapt.r2_diversity_trimmed
         }
 
         # MultiQC on all FastQCs
-        call multiqc.multiQC as multiQC {
+        call multiqc.multiQC as mqc {
             input:
                 memory=memory,
                 disk_space=disk_space,
                 num_threads=1,
                 num_preempt=num_preempt,
                 docker=docker,
-                fastQCReports=[preTrimFastQC.fastQC_report,postTrimFastQC.fastQC_report],
-                trimGalore_report=trimGalore.trim_log
+                fastQCReports=[pretrim_fastqc.fastQC_report,posttrim_fastqc.fastQC_report],
+                trimGalore_report=trim_reg_adapt.trim_log
         }
 
         # Align trimmed reads to species of interest
-        call align_trimmed.alignTrimmed as alignTrimmedSample {
+        call align_trimmed.alignTrimmed as align_trim_sample {
             # NOT PREEMPTIBLE INSTANCE
             input:
                 memory=40,
@@ -125,14 +199,13 @@ workflow rrbs_pipeline {
                 docker=bismark_docker,
                 SID=sample_prefix[i],
                 bismark_multicore=3,
-                r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
-                r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
-                genome_dir=genome_dir,
+                r1_trimmed=trim_diversity_adapt.r1_diversity_trimmed,
+                r2_trimmed=trim_diversity_adapt.r2_diversity_trimmed,
                 genome_dir_tar=genome_dir_tar
         }
 
         # Align trimmed reads to lambda for control
-        call align_trimmed.alignTrimmed as alignTrimmedSpikeIn {
+        call align_trimmed.alignTrimmed as align_trim_spike_in {
             # NOT PREEMPTIBLE INSTANCE
             input:
                 memory=40,
@@ -142,14 +215,13 @@ workflow rrbs_pipeline {
                 docker=bismark_docker,
                 SID=sample_prefix[i],
                 bismark_multicore=3,
-                r1_trimmed=trimDiversityAdapt.r1_diversity_trimmed,
-                r2_trimmed=trimDiversityAdapt.r2_diversity_trimmed,
-                genome_dir=spike_in_genome_dir,
+                r1_trimmed=trim_diversity_adapt.r1_diversity_trimmed,
+                r2_trimmed=trim_diversity_adapt.r2_diversity_trimmed,
                 genome_dir_tar=spike_in_genome_tar
         }
 
         #Tag UMI duplications in sample
-        call mark_udup.tag_udup as tagUMIdupSample {
+        call mark_udup.tag_udup as tag_udup_sample {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -157,11 +229,11 @@ workflow rrbs_pipeline {
                 num_preempt=num_preempt,
                 docker=docker,
                 SID=sample_prefix[i],
-                bismark_reads=alignTrimmedSample.bismark_reads
+                bismark_reads=align_trim_sample.bismark_reads
         }
 
         #Tag UMI duplications in spike-in
-        call mark_udup.tag_udup as tagUMIdupSpikeIn {
+        call mark_udup.tag_udup as tag_udup_spike_in {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -169,11 +241,11 @@ workflow rrbs_pipeline {
                 num_preempt=num_preempt,
                 docker=docker,
                 SID=sample_prefix[i],
-                bismark_reads=alignTrimmedSpikeIn.bismark_reads
+                bismark_reads=align_trim_spike_in.bismark_reads
         }
 
         # Remove PCR Duplicates from sample
-        call mark_dup.markDuplicates as markDuplicatesSample {
+        call mark_dup.markDuplicates as mark_dup_sample {
             input:
                 memory=30,
                 disk_space=200,
@@ -181,11 +253,11 @@ workflow rrbs_pipeline {
                 num_preempt=num_preempt,
                 docker=bismark_docker,
                 SID=sample_prefix[i],
-                bismark_reads=tagUMIdupSample.umi_dup_marked
+                bismark_reads=tag_udup_sample.umi_dup_marked
         }
 
         # Remove PCR Duplicates from Lambda phage spike in
-        call mark_dup.markDuplicates as markDuplicatesSpikeIn {
+        call mark_dup.markDuplicates as mark_dup_spike_in {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -193,37 +265,37 @@ workflow rrbs_pipeline {
                 num_preempt=num_preempt,
                 docker=bismark_docker,
                 SID=sample_prefix[i],
-                bismark_reads=tagUMIdupSpikeIn.umi_dup_marked
+                bismark_reads=tag_udup_spike_in.umi_dup_marked
         }
 
         # Quantify Methylation for sample
-        call quant_methyl.quantifyMethylation as quantifyMethylationSample {
+        call quant_methyl.quantifyMethylation as quant_methyl_sample {
             input:
                 memory=60,
                 disk_space=200,
                 num_threads=16,
                 num_preempt=num_preempt,
                 docker=bismark_docker,
-                bismark_umi_marked_reads=tagUMIdupSample.umi_dup_marked,
-                bismark_deduplicated_reads=markDuplicatesSample.deduped_bam,
-                bismark_dedup_report=markDuplicatesSample.dedupLog,
-                bismark_alignment_report=alignTrimmedSample.bismark_report,
+                bismark_umi_marked_reads=tag_udup_sample.umi_dup_marked,
+                bismark_deduplicated_reads=mark_dup_sample.deduped_bam,
+                bismark_dedup_report=mark_dup_sample.dedupLog,
+                bismark_alignment_report=align_trim_sample.bismark_report,
                 SID=sample_prefix[i]
         }
 
         # Quantify Methylation for Lambda control spike in
-        call quant_methyl.quantifyMethylation as quantifyMethylationSpikeIn {
+        call quant_methyl.quantifyMethylation as quant_methyl_spike_in {
             input:
                 memory=60,
                 disk_space=200,
                 num_threads=16,
                 num_preempt=num_preempt,
                 docker=bismark_docker,
-                bismark_deduplicated_reads=markDuplicatesSpikeIn.deduped_bam,
+                bismark_deduplicated_reads=mark_dup_spike_in.deduped_bam,
                 SID=sample_prefix[i],
-                bismark_umi_marked_reads=tagUMIdupSpikeIn.umi_dup_marked,
-                bismark_dedup_report=markDuplicatesSpikeIn.dedupLog,
-                bismark_alignment_report=alignTrimmedSpikeIn.bismark_report
+                bismark_umi_marked_reads=tag_udup_spike_in.umi_dup_marked,
+                bismark_dedup_report=mark_dup_spike_in.dedupLog,
+                bismark_alignment_report=align_trim_spike_in.bismark_report
         }
 
         # Align trimGalore trimmed reads to phix genome using bowtie
@@ -235,8 +307,8 @@ workflow rrbs_pipeline {
                 num_preempt=0,
                 docker=docker,
                 SID=sample_prefix[i],
-                fastqr1=trimGalore.r1_trimmed,
-                fastqr2=trimGalore.r2_trimmed
+                fastqr1=trim_reg_adapt.r1_trimmed,
+                fastqr2=trim_reg_adapt.r2_trimmed
         }
 
         # Compute % mapped to chromosomes and contigs
@@ -248,11 +320,11 @@ workflow rrbs_pipeline {
                 num_preempt=0,
                 docker=docker,
                 SID=sample_prefix[i],
-                input_bam=markDuplicatesSample.deduped_bam
+                input_bam=mark_dup_sample.deduped_bam
         }
 
         # Collect required QC Metrics from reports
-        call collect_qc.collectQCMetrics as collectQCMetrics {
+        call collect_qc.collectQCMetrics as rnaqc {
             input:
                 memory=20,
                 disk_space=50,
@@ -260,12 +332,12 @@ workflow rrbs_pipeline {
                 num_preempt=0,
                 docker=docker,
                 SID=sample_prefix[i],
-                species_bismark_summary_report=quantifyMethylationSample.bismark_summary_report,
-                bismark_bt2_pe_report=alignTrimmedSample.bismark_report,
-                multiQC_report=multiQC.multiQC_report,
-                lambda_bismark_summary_report=quantifyMethylationSpikeIn.bismark_summary_report,
-                trim_galore_report=trimGalore.trim_log,
-                trim_diversity_report=trimDiversityAdapt.trim_diversity_log,
+                species_bismark_summary_report=quant_methyl_sample.bismark_summary_report,
+                bismark_bt2_pe_report=align_trim_sample.bismark_report,
+                multiQC_report=mqc.multiQC_report,
+                lambda_bismark_summary_report=quant_methyl_spike_in.bismark_summary_report,
+                trim_galore_report=trim_reg_adapt.trim_log,
+                trim_diversity_report=trim_diversity_adapt.trim_diversity_log,
                 phix_report=bowtie2_phix.bowtie2_report,
                 mapping_report=chrinfo.report
         }
@@ -276,7 +348,7 @@ workflow rrbs_pipeline {
         input:
         # Inputs
             output_report_name=output_report_name,
-            qc_report_files=collectQCMetrics.qc_metrics,
+            qc_report_files=rnaqc.qc_metrics,
         # Runtime Parameters
             ncpu=2,
             memory=8,

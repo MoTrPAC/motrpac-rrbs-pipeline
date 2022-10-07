@@ -20,6 +20,39 @@ task collectQCMetrics {
         String docker
     }
 
+    parameter_meta {
+        SID: {
+            type: "id"
+        }
+        lambda_bismark_summary_report: {
+            label: "Spike In Methylation Summary Report"
+        }
+        species_bismark_summary_report: {
+            label: "Sample Methylation Summary Report"
+        }
+        bismark_bt2_pe_report: {
+            label: "Aligned Sample Bismark Summary Report"
+        }
+        species_bismark_summary_report: {
+            label: "Trimmed/Aligned Sample Summary Report"
+        }
+        multiQC_report: {
+            label: "MultiQC Report"
+        }
+        trim_galore_report: {
+            label: "Regular Adapter Trimming Report"
+        }
+        trim_diversity_report: {
+            label: "NuGen-specific Adapter Trimming Report"
+        }
+        phix_report: {
+            label: "Bowtie2 Phix Mapping Report"
+        }
+        mapping_report: {
+            label: "Chromosomal/Contig Mapping Report"
+        }
+    }
+
     command {
         set -ueo pipefail
 
@@ -48,6 +81,7 @@ task collectQCMetrics {
         cpu: "${num_threads}"
         preemptible: "${num_preempt}"
     }
+
     meta {
         author: "Samir Akre,Archana Raja"
     }

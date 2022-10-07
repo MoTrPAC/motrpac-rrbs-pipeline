@@ -3,17 +3,34 @@ version 1.0
 task bowtie2_align {
 
     input {
+        String SID
         File fastqr1
         File fastqr2
         File genome_dir_tar
-        String genome_dir # name of the directory when uncompressed
         String index_prefix="bowtie2_index"
-        String SID
+
         Int memory
         Int disk_space
         Int num_threads
         Int num_preempt
         String docker
+    }
+
+    String genome_dir = basename(genome_dir_tar, ".tar.gz")
+
+    parameter_meta {
+        SID: {
+            type: "id"
+        }
+        fastqr1: {
+            label: "Forward End Read FASTQ File"
+        }
+        fastqr2: {
+            label: "Reverse End Read FASTQ File"
+        }
+        genome_dir_tar: {
+            label: "Bowtie2 Reference Tarball File"
+        }
     }
 
     command <<<

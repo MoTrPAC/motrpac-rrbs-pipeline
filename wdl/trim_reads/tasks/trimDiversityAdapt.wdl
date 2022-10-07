@@ -13,6 +13,18 @@ task trimDiversityAdapt {
         String docker
     }
 
+    parameter_meta {
+        SID: {
+            type: "id"
+        }
+        r1_trimmed: {
+            label: "Trimmed Forward-End Read FASTQ File"
+        }
+        r2_trimmed: {
+            label: "Trimmed Reverse-End Read FASTQ File"
+        }
+    }
+
     command <<<
         set -ueo pipefail
         python2 /src/trimRRBSdiversityAdaptCustomers.py -1 ~{r1_trimmed} -2 ~{r2_trimmed} >~{SID}_trimDiversityAdapt.log
