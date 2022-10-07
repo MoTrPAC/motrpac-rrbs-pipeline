@@ -1,41 +1,45 @@
-import "trim_reads/tasks/trimGalore.wdl" as TG
-import "trim_reads/tasks/trimDiversityAdapt.wdl" as TDA
-import "trim_reads/tasks/fastQC.wdl" as FQC
-import "trim_reads/tasks/multiQC.wdl" as MQC
-import "trim_reads/tasks/attachUMI.wdl" as AUMI
-import "align_trimmed/align_trimmed.wdl" as AT
-import "mark_duplicates/mark_duplicates.wdl" as MD
-import "mark_umi_dup/mark_udup.wdl" as MU
-import "quantify_methylation/quantify_methylation.wdl" as QM
-import "bowtie2_align/bowtie2_align.wdl" as BA
-import "compute_mapped/chr_info.wdl" as SM
-import "collect_qc_metrics/collect_qc_metrics.wdl" as CQCM
+version 1.0
+
+import "trim_reads/tasks/trimGalore.wdl" as trim_galore
+import "trim_reads/tasks/trimDiversityAdapt.wdl" as trim_da
+import "trim_reads/tasks/fastQC.wdl" as fastqc
+import "trim_reads/tasks/multiQC.wdl" as multiqc
+import "trim_reads/tasks/attachUMI.wdl" as attach_umi
+import "align_trimmed/align_trimmed.wdl" as align_trimmed
+import "mark_duplicates/mark_duplicates.wdl" as mark_dup
+import "mark_umi_dup/mark_udup.wdl" as mark_udup
+import "quantify_methylation/quantify_methylation.wdl" as quant_methyl
+import "bowtie2_align/bowtie2_align.wdl" as bowtie2_align
+import "compute_mapped/chr_info.wdl" as mapped
+import "collect_qc_metrics/collect_qc_metrics.wdl" as collect_qc
+import "merge_results/merge_results.wdl" as final_merge
 
 workflow rrbs_pipeline {
-    # Default values for runtime, changed in individual calls according to requirements
-    Int memory
-    Int disk_space
-    Int num_threads
-    Int num_preempt
-    String docker
-    String bismark_docker
-    Array[File] r1
-    Array[File] r2
-    Array[File] i1
-    Array [String] sample_prefix=[]
-    #  String SID
+    input {
+        # Default values for runtime, changed in individual calls according to requirements
+        Int memory
+        Int disk_space
+        Int num_threads
+        Int num_preempt
+        String docker
+        String bismark_docker
+        Array[File] r1
+        Array[File] r2
+        Array[File] i1
+        Array [String] sample_prefix=[]
 
-    File genome_dir_tar
-    String genome_dir # Name of the genome folder that has been tar balled
+        File genome_dir_tar
+        String genome_dir # Name of the genome folder that has been tar balled
 
-    File spike_in_genome_tar
-    String spike_in_genome_dir
+        File spike_in_genome_tar
+        String spike_in_genome_dir
 
-    String output_report_name
+        String output_report_name
+    }
 
     scatter (i in range(length(r1))) {
         ## Runs FastQC pre-trimming
-        call FQC.fastQC as preTrimFastQC {
+        call fastqc.fastQC as preTrimFastQC {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -47,7 +51,7 @@ workflow rrbs_pipeline {
         }
 
         # Attach UMI Information
-        call AUMI.attachUMI as attachUMI {
+        call attach_umi.attachUMI as attachUMI {
             input:
                 memory=40,
                 disk_space=disk_space,
@@ -61,7 +65,7 @@ workflow rrbs_pipeline {
         }
 
         # Trim Galore removes regular adapters
-        call TG.trimGalore as trimGalore {
+        call trim_galore.trimGalore as trimGalore {
             input:
                 memory=40,
                 disk_space=disk_space,
@@ -74,7 +78,7 @@ workflow rrbs_pipeline {
         }
 
         # NuGen specific diversity adapaters trimmed
-        call TDA.trimDiversityAdapt as trimDiversityAdapt {
+        call trim_da.trimDiversityAdapt as trimDiversityAdapt {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -87,7 +91,7 @@ workflow rrbs_pipeline {
         }
 
         # FastQC ran on post trimming reads
-        call FQC.fastQC as postTrimFastQC {
+        call fastqc.fastQC as postTrimFastQC {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -99,7 +103,7 @@ workflow rrbs_pipeline {
         }
 
         # MultiQC on all FastQCs
-        call MQC.multiQC as multiQC {
+        call multiqc.multiQC as multiQC {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -107,11 +111,11 @@ workflow rrbs_pipeline {
                 num_preempt=num_preempt,
                 docker=docker,
                 fastQCReports=[preTrimFastQC.fastQC_report,postTrimFastQC.fastQC_report],
-                trimGalore_report=trimGalore.trimLog
+                trimGalore_report=trimGalore.trim_log
         }
 
         # Align trimmed reads to species of interest
-        call AT.alignTrimmed as alignTrimmedSample {
+        call align_trimmed.alignTrimmed as alignTrimmedSample {
             # NOT PREEMPTIBLE INSTANCE
             input:
                 memory=40,
@@ -128,7 +132,7 @@ workflow rrbs_pipeline {
         }
 
         # Align trimmed reads to lambda for control
-        call AT.alignTrimmed as alignTrimmedSpikeIn {
+        call align_trimmed.alignTrimmed as alignTrimmedSpikeIn {
             # NOT PREEMPTIBLE INSTANCE
             input:
                 memory=40,
@@ -145,7 +149,7 @@ workflow rrbs_pipeline {
         }
 
         #Tag UMI duplications in sample
-        call MU.tag_udup as tagUMIdupSample {
+        call mark_udup.tag_udup as tagUMIdupSample {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -157,7 +161,7 @@ workflow rrbs_pipeline {
         }
 
         #Tag UMI duplications in spike-in
-        call MU.tag_udup as tagUMIdupSpikeIn {
+        call mark_udup.tag_udup as tagUMIdupSpikeIn {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -169,7 +173,7 @@ workflow rrbs_pipeline {
         }
 
         # Remove PCR Duplicates from sample
-        call MD.markDuplicates as markDuplicatesSample {
+        call mark_dup.markDuplicates as markDuplicatesSample {
             input:
                 memory=30,
                 disk_space=200,
@@ -181,7 +185,7 @@ workflow rrbs_pipeline {
         }
 
         # Remove PCR Duplicates from Lambda phage spike in
-        call MD.markDuplicates as markDuplicatesSpikeIn {
+        call mark_dup.markDuplicates as markDuplicatesSpikeIn {
             input:
                 memory=memory,
                 disk_space=disk_space,
@@ -193,7 +197,7 @@ workflow rrbs_pipeline {
         }
 
         # Quantify Methylation for sample
-        call QM.quantifyMethylation as quantifyMethylationSample {
+        call quant_methyl.quantifyMethylation as quantifyMethylationSample {
             input:
                 memory=60,
                 disk_space=200,
@@ -208,7 +212,7 @@ workflow rrbs_pipeline {
         }
 
         # Quantify Methylation for Lambda control spike in
-        call QM.quantifyMethylation as quantifyMethylationSpikeIn {
+        call quant_methyl.quantifyMethylation as quantifyMethylationSpikeIn {
             input:
                 memory=60,
                 disk_space=200,
@@ -223,7 +227,7 @@ workflow rrbs_pipeline {
         }
 
         # Align trimGalore trimmed reads to phix genome using bowtie
-        call BA.bowtie2_align as bowtie2_phix {
+        call bowtie2_align.bowtie2_align as bowtie2_phix {
             input :
                 memory=40,
                 disk_space=200,
@@ -236,7 +240,7 @@ workflow rrbs_pipeline {
         }
 
         # Compute % mapped to chromosomes and contigs
-        call SM.samtools_mapped as chrinfo {
+        call mapped.samtools_mapped as chrinfo {
             input:
                 num_threads=8,
                 memory=30,
@@ -248,7 +252,7 @@ workflow rrbs_pipeline {
         }
 
         # Collect required QC Metrics from reports
-        call CQCM.collectQCMetrics as collectQCMetrics {
+        call collect_qc.collectQCMetrics as collectQCMetrics {
             input:
                 memory=20,
                 disk_space=50,
@@ -260,7 +264,7 @@ workflow rrbs_pipeline {
                 bismark_bt2_pe_report=alignTrimmedSample.bismark_report,
                 multiQC_report=multiQC.multiQC_report,
                 lambda_bismark_summary_report=quantifyMethylationSpikeIn.bismark_summary_report,
-                trim_galore_report=trimGalore.trimLog,
+                trim_galore_report=trimGalore.trim_log,
                 trim_diversity_report=trimDiversityAdapt.trim_diversity_log,
                 phix_report=bowtie2_phix.bowtie2_report,
                 mapping_report=chrinfo.report
