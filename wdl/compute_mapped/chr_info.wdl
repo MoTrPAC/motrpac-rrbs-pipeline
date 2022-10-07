@@ -13,6 +13,15 @@ task samtools_mapped {
         String docker
     }
 
+    parameter_meta {
+        SID: {
+            type: "id"
+        }
+        input_bam: {
+            label: "Aligned BAM File"
+        }
+    }
+
     command <<<
         set -euo pipefail
         samtools view ~{input_bam}|cut -f 3|sort |uniq -c > ~{SID}_chr_info.txt

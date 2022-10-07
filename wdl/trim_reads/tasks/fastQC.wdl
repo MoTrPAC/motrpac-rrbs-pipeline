@@ -12,6 +12,15 @@ task fastQC {
         String docker
     }
 
+    parameter_meta {
+        r1: {
+            label: "Forward-End Read FASTQ File"
+        }
+        r2: {
+            label: "Reverse-End Read FASTQ File"
+        }
+    }
+
     command <<<
         set -ueo pipefail
         mkdir fastqc_report
@@ -24,6 +33,7 @@ task fastQC {
     output {
         File fastQC_report = 'fastqc_report.tar.gz'
     }
+
     runtime {
         docker: "${docker}"
         memory: "${memory}GB"

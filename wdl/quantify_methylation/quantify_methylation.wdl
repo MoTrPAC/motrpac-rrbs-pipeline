@@ -15,6 +15,24 @@ task quantifyMethylation {
         String docker
     }
 
+    parameter_meta {
+        SID: {
+            type: "id"
+        }
+        bismark_umi_marked_reads: {
+            label: "Bismark UMI-Marked BAM File"
+        }
+        bismark_umi_marked_reads: {
+            label: "Bismark De-duplicated BAM File"
+        }
+        bismark_alignment_report: {
+            label: "Bismark Alignment Report"
+        }
+        bismark_dedup_report: {
+            label: "Bismark De-duplication Report"
+        }
+    }
+
     command <<<
         set -ueo pipefail
         cp ~{bismark_umi_marked_reads} ./

@@ -12,6 +12,15 @@ task tag_udup {
         String docker
     }
 
+    parameter_meta {
+        SID: {
+            type: "id"
+        }
+        bismark_reads: {
+            label: "Bismark Reads BAM File"
+        }
+    }
+
     command <<<
         set -ueo pipefail
         mkdir -p mark_udup/
