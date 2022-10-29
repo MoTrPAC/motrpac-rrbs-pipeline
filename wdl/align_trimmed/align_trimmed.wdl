@@ -11,9 +11,8 @@ task alignTrimmed {
         # Multiply by ~4 to get number of cores required
         #If you increase the multicore to 6 make sure to double up the memory to 80, otherwise you will loose 20-30% of the reads
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
     }
 
@@ -63,10 +62,10 @@ task alignTrimmed {
 
         #Fix inconsistencies while using different multticore setting by sorting sam by mapping quality and then by read name
         echo "Runnning Samtools"
-        samtools view -@ ~{num_threads} -H ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam >$sam
-        samtools view -@ ~{num_threads} ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam |sort -k5,5nr -k1,1 -s -S~{memory}G  >>$sam
+        samtools view -@ ~{ncpu} -H ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam >$sam
+        samtools view -@ ~{ncpu} ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam |sort -k5,5nr -k1,1 -s -S~{memory}G  >>$sam
         echo "Finished sorting"
-        samtools view -@ ~{num_threads} -b $sam -o ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam
+        samtools view -@ ~{ncpu} -b $sam -o ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam
         echo "Finished running samtools"
     >>>
 
@@ -79,9 +78,8 @@ task alignTrimmed {
     runtime {
         docker: "${docker}"
         memory: "${memory}GB"
-        disks: "local-disk ${disk_space} HDD"
-        cpu: "${num_threads}"
-        preemptible: "${num_preempt}"
+        disks: "local-disk ${disk} HDD"
+        cpu: "${ncpu}"
     }
 
     meta {
@@ -92,9 +90,8 @@ task alignTrimmed {
 workflow align_trimmed {
     input {
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
 
         String SID
@@ -103,9 +100,8 @@ workflow align_trimmed {
     call alignTrimmed {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker,
             SID=SID
     }

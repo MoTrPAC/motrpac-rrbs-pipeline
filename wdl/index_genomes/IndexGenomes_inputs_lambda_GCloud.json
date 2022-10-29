@@ -3,7 +3,7 @@
   "Bismark_Index_Generation.indexGenome.genome_dir": "lambda",
   "Bismark_Index_Generation.memory": "64",
   "Bismark_Index_Generation.docker": "gcr.io/***REMOVED***/motrpac_rrbs:araja_05_20_2019",
-  "Bismark_Index_Generation.disk_space": "150",
-  "Bismark_Index_Generation.num_threads": "10",
+  "Bismark_Index_Generation.disk": "150",
+  "Bismark_Index_Generation.ncpu": "10",
   "Bismark_Index_Generation.num_preempt": "0"
 }

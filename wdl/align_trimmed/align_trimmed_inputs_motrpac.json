@@ -8,7 +8,7 @@
   "align_trimmed.memory": "60",
   "align_trimmed.docker": "gcr.io/***REMOVED***/bismark:0.20.0",
   "align_trimmed.num_preempt": "0",
-  "align_trimmed.disk_space": "200",
-  "align_trimmed.num_threads": "16"
+  "align_trimmed.disk": "200",
+  "align_trimmed.ncpu": "16"
 }
 

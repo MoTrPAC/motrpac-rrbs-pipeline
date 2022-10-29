@@ -7,9 +7,8 @@ task indexGenome {
         File refGenome
         String genome_dir # Name of folder in which to place bisulfite genome
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
     }
 
@@ -59,9 +58,8 @@ task indexGenome {
     runtime {
         docker: "${docker}"
         memory: "${memory}GB"
-        disks: "local-disk ${disk_space} HDD"
-        cpu: "${num_threads}"
-        preemptible: "${num_preempt}"
+        disks: "local-disk ${disk} HDD"
+        cpu: "${ncpu}"
     }
     meta {
         author: "Samir Akre"
@@ -72,18 +70,16 @@ task indexGenome {
 workflow Bismark_Index_Generation {
     input {
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
     }
 
     call indexGenome {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker
     }
 

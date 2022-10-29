@@ -5,7 +5,7 @@
   "trim_reads.SID": "Muscle2_100ksub",
   "trim_reads.memory": "20",
   "trim_reads.docker": "gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_04_07_2019",
-  "trim_reads.disk_space": "30",
-  "trim_reads.num_threads": "4",
+  "trim_reads.disk": "30",
+  "trim_reads.ncpu": "4",
   "trim_reads.num_preempt": "25"
 }

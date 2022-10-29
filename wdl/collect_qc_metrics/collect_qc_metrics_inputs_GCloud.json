@@ -1,6 +1,6 @@
 {
-  "collect_qc_metrics.num_threads": "1",
-  "collect_qc_metrics.disk_space": "5",
+  "collect_qc_metrics.ncpu": "1",
+  "collect_qc_metrics.disk": "5",
   "collect_qc_metrics.memory": "10",
   "collect_qc_metrics.collectQCMetrics.SID": "Rat_Muscle",
   "collect_qc_metrics.collectQCMetrics.deduplication_report": "gs://sa-rrbs-pipeline/cromwell-execution/rrbs_pipeline/d725689f-9e58-47a7-a225-f4cc0ab1aef7/call-markDuplicatesSample/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt",

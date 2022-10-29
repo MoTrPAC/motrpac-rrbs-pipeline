@@ -1,7 +1,7 @@
 {
   "collect_qc_metrics.collectQCMetrics.phix_report": "gs://***REMOVED***/rrbs/pipeline_test/pilot/rrbs_pipeline/3ed27b39-6783-4126-8d8b-8ad8fb18a0fc/call-bowtie2_phix/Rat_Muscle_phix_report.txt",
-  "collect_qc_metrics.num_threads": "1",
-  "collect_qc_metrics.disk_space": "10",
+  "collect_qc_metrics.ncpu": "1",
+  "collect_qc_metrics.disk": "10",
   "collect_qc_metrics.memory": "10",
   "collect_qc_metrics.collectQCMetrics.SID": "Rat",
   "collect_qc_metrics.collectQCMetrics.trim_galore_report": "gs://***REMOVED***/rrbs/pipeline_test/pilot/rrbs_pipeline/3ed27b39-6783-4126-8d8b-8ad8fb18a0fc/call-trimGalore/Rat_Muscle_trim.log",

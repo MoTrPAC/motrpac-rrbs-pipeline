@@ -1,6 +1,6 @@
 {
-  "collect_qc_metrics.num_threads": "1",
-  "collect_qc_metrics.disk_space": "5",
+  "collect_qc_metrics.ncpu": "1",
+  "collect_qc_metrics.disk": "5",
   "collect_qc_metrics.memory": "10",
   "collect_qc_metrics.collectQCMetrics.SID": "Muscle2",
   "collect_qc_metrics.collectQCMetrics.deduplication_report": "/Users/akre96/Documents/github/rrbs_bismark/sampleOutput/Muscle2_Outputs/sample/Muscle2_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt",
