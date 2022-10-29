@@ -16,20 +16,106 @@ import "merge_results/merge_results.wdl" as final_merge
 
 workflow rrbs_pipeline {
     input {
-        # Default values for runtime, changed in individual calls according to requirements
-        Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
-        String docker
-        String bismark_docker
         Array[File] r1
         Array[File] r2
         Array[File] i1
         Array [String] sample_prefix=[]
 
-        File genome_dir_tar
-        File spike_in_genome_tar
+        # Pre-Trim FastQC Parameters
+        Int pretrim_fastqc_ncpu
+        Int pretrim_fastqc_ramGB
+        Int pretrim_fastqc_disk
+
+        # Attach UMI Parameters
+        Int attach_umi_ncpu
+        Int attach_umi_ramGB
+        Int attach_umi_disk
+
+        # Regular Adapter Trim Galore Parameters
+        Int trim_reg_adapt_ncpu
+        Int trim_reg_adapt_ramGB
+        Int trim_reg_adapt_disk
+
+        # Diversity Adapter Trim Galore Parameters
+        Int trim_diversity_adapt_ncpu
+        Int trim_diversity_adapt_ramGB
+        Int trim_diversity_adapt_disk
+
+        # Post-Trim FastQC Parameters
+        Int posttrim_fastqc_ncpu
+        Int posttrim_fastqc_ramGB
+        Int posttrim_fastqc_disk
+
+        # MultiQC Parameters
+        Int multiqc_ncpu
+        Int multiqc_ramGB
+        Int multiqc_disk
+
+        # Align Trim Sample Parameters
+        File sample_genome_dir_tar
+        Int align_trim_sample_ncpu
+        Int align_trim_sample_ramGB
+        Int align_trim_sample_disk
+
+        # Align Trim Spike In Parameters
+        File spike_in_genome_dir_tar
+        Int align_trim_spike_in_ncpu
+        Int align_trim_spike_in_ramGB
+        Int align_trim_spike_in_disk
+
+        # Mark UMI Duplicate Sample Parameters
+        Int tag_udup_sample_ncpu
+        Int tag_udup_sample_ramGB
+        Int tag_udup_sample_disk
+
+        # Mark UMI Duplicate Spike In Parameters
+        Int tag_udup_spike_in_ncpu
+        Int tag_udup_spike_in_ramGB
+        Int tag_udup_spike_in_disk
+
+        # Mark PCR Duplicate Sample Parameters
+        Int mark_dup_sample_ncpu
+        Int mark_dup_sample_ramGB
+        Int mark_dup_sample_disk
+
+        # Mark PCR Duplicate Spike In Parameters
+        Int mark_dup_spike_in_ncpu
+        Int mark_dup_spike_in_ramGB
+        Int mark_dup_spike_in_disk
+
+        # Quantify Methylation Sample Parameters
+        Int quant_methyl_sample_ncpu
+        Int quant_methyl_sample_ramGB
+        Int quant_methyl_sample_disk
+
+        # Quantify Methylation Spike In Parameters
+        Int quant_methyl_spike_in_ncpu
+        Int quant_methyl_spike_in_ramGB
+        Int quant_methyl_spike_in_disk
+
+        # Bowtie2 Align Parameters
+        File phix_genome_dir_tar
+        Int bowtie2_phix_ncpu
+        Int bowtie2_phix_ramGB
+        Int bowtie2_phix_disk
+
+        # SAMTools Parameters
+        Int chrinfo_ncpu
+        Int chrinfo_ramGB
+        Int chrinfo_disk
+
+        # Collect QC Metrics Parameters
+        Int collect_qc_ncpu
+        Int collect_qc_ramGB
+        Int collect_qc_disk
+
+        # Merge Results Parameters
+        Int merge_results_ncpu
+        Int merge_results_ramGB
+        Int merge_results_disk
+
+        String docker
+        String bismark_docker
 
         String output_report_name
     }
@@ -115,222 +201,235 @@ workflow rrbs_pipeline {
         ## Runs FastQC pre-trimming
         call fastqc.fastQC as pretrim_fastqc {
             input:
-                memory=memory,
-                disk_space=disk_space,
-                num_threads=1,
-                num_preempt=num_preempt,
-                docker=docker,
+                # Inputs
                 r1=r1[i],
-                r2=r2[i]
+                r2=r2[i],
+                # Runtime Parameters
+                ncpu=pretrim_fastqc_ncpu,
+                memory=pretrim_fastqc_ramGB,
+                disk=pretrim_fastqc_disk,
+                docker=docker,
         }
 
         # Attach UMI Information
         call attach_umi.attachUMI as aumi {
             input:
-                memory=40,
-                disk_space=disk_space,
-                num_threads=8,
-                num_preempt=num_preempt,
-                docker=docker,
+                # Inputs
                 SID=sample_prefix[i],
                 r1=r1[i],
                 r2=r2[i],
-                i1=i1[i]
+                i1=i1[i],
+                # Runtime Parameters
+                ncpu=attach_umi_ncpu,
+                memory=attach_umi_ramGB,
+                disk=attach_umi_disk,
+                docker=docker,
         }
 
         # Trim Galore removes regular adapters
         call trim_galore.trimGalore as trim_reg_adapt {
             input:
-                memory=40,
-                disk_space=disk_space,
-                num_threads=1,
-                num_preempt=num_preempt,
-                docker=docker,
+                # Inputs
+                SID=sample_prefix[i],
                 r1=aumi.r1_umi_attached,
                 r2=aumi.r2_umi_attached,
-                SID=sample_prefix[i]
+                # Runtime Parameters
+                ncpu=trim_reg_adapt_ncpu,
+                memory=trim_reg_adapt_ramGB,
+                disk=trim_reg_adapt_disk,
+                docker=docker,
         }
 
         # NuGen specific diversity adapaters trimmed
         call trim_da.trimDiversityAdapt as trim_diversity_adapt {
             input:
-                memory=memory,
-                disk_space=disk_space,
-                num_threads=1,
-                num_preempt=num_preempt,
-                docker=docker,
+                # Inputs
+                SID=sample_prefix[i],
                 r1_trimmed=trim_reg_adapt.r1_trimmed,
                 r2_trimmed=trim_reg_adapt.r2_trimmed,
-                SID=sample_prefix[i]
+                # Runtime Parameters
+                ncpu=trim_diversity_adapt_ncpu,
+                memory=trim_diversity_adapt_ramGB,
+                disk=trim_diversity_adapt_disk,
+                docker=docker,
         }
 
         # FastQC ran on post trimming reads
         call fastqc.fastQC as posttrim_fastqc {
             input:
-                memory=memory,
-                disk_space=disk_space,
-                num_threads=1,
-                num_preempt=num_preempt,
-                docker=docker,
+                # Inputs
                 r1=trim_diversity_adapt.r1_diversity_trimmed,
-                r2=trim_diversity_adapt.r2_diversity_trimmed
+                r2=trim_diversity_adapt.r2_diversity_trimmed,
+                # Runtime Parameters
+                ncpu=posttrim_fastqc_ncpu,
+                memory=posttrim_fastqc_ramGB,
+                disk=posttrim_fastqc_disk,
+                docker=docker
         }
 
         # MultiQC on all FastQCs
         call multiqc.multiQC as mqc {
             input:
-                memory=memory,
-                disk_space=disk_space,
-                num_threads=1,
-                num_preempt=num_preempt,
-                docker=docker,
+                # Inputs
                 fastQCReports=[pretrim_fastqc.fastQC_report,posttrim_fastqc.fastQC_report],
-                trimGalore_report=trim_reg_adapt.trim_log
+                trimGalore_report=trim_reg_adapt.trim_log,
+                # Runtime Parameters
+                ncpu=multiqc_ncpu,
+                memory=multiqc_ramGB,
+                disk=multiqc_disk,
+                docker=docker
         }
 
         # Align trimmed reads to species of interest
         call align_trimmed.alignTrimmed as align_trim_sample {
             # NOT PREEMPTIBLE INSTANCE
             input:
-                memory=40,
-                disk_space=200,
-                num_threads=12,
-                num_preempt=0,
-                docker=bismark_docker,
+                # Inputs
                 SID=sample_prefix[i],
                 bismark_multicore=3,
                 r1_trimmed=trim_diversity_adapt.r1_diversity_trimmed,
                 r2_trimmed=trim_diversity_adapt.r2_diversity_trimmed,
-                genome_dir_tar=genome_dir_tar
+                genome_dir_tar=sample_genome_dir_tar,
+                # Runtime Parameters
+                ncpu=align_trim_sample_ncpu,
+                memory=align_trim_sample_ramGB,
+                disk=align_trim_sample_disk,
+                docker=bismark_docker,
+
         }
 
         # Align trimmed reads to lambda for control
         call align_trimmed.alignTrimmed as align_trim_spike_in {
             # NOT PREEMPTIBLE INSTANCE
             input:
-                memory=40,
-                disk_space=200,
-                num_threads=12,
-                num_preempt=0,
-                docker=bismark_docker,
+                # Inputs
                 SID=sample_prefix[i],
                 bismark_multicore=3,
                 r1_trimmed=trim_diversity_adapt.r1_diversity_trimmed,
                 r2_trimmed=trim_diversity_adapt.r2_diversity_trimmed,
-                genome_dir_tar=spike_in_genome_tar
+                genome_dir_tar=spike_in_genome_dir_tar,
+                # Inputs
+                ncpu=align_trim_spike_in_ncpu,
+                memory=align_trim_spike_in_ramGB,
+                disk=align_trim_spike_in_disk,
+                docker=bismark_docker
         }
 
         #Tag UMI duplications in sample
         call mark_udup.tag_udup as tag_udup_sample {
             input:
-                memory=memory,
-                disk_space=disk_space,
-                num_threads=6,
-                num_preempt=num_preempt,
-                docker=docker,
+                # Inputs
                 SID=sample_prefix[i],
-                bismark_reads=align_trim_sample.bismark_reads
+                bismark_reads=align_trim_sample.bismark_reads,
+                # Runtime Parameters
+                ncpu=tag_udup_sample_ncpu,
+                memory=tag_udup_sample_ramGB,
+                disk=tag_udup_sample_disk,
+                docker=docker
         }
 
         #Tag UMI duplications in spike-in
         call mark_udup.tag_udup as tag_udup_spike_in {
             input:
-                memory=memory,
-                disk_space=disk_space,
-                num_threads=6,
-                num_preempt=num_preempt,
-                docker=docker,
+                # Inputs
                 SID=sample_prefix[i],
-                bismark_reads=align_trim_spike_in.bismark_reads
+                bismark_reads=align_trim_spike_in.bismark_reads,
+                # Runtime Parameters
+                ncpu=tag_udup_spike_in_ncpu,
+                memory=tag_udup_spike_in_ramGB,
+                disk=tag_udup_spike_in_disk,
+                docker=docker
         }
 
         # Remove PCR Duplicates from sample
         call mark_dup.markDuplicates as mark_dup_sample {
             input:
-                memory=30,
-                disk_space=200,
-                num_threads=1,
-                num_preempt=num_preempt,
-                docker=bismark_docker,
+                # Inputs
                 SID=sample_prefix[i],
-                bismark_reads=tag_udup_sample.umi_dup_marked
+                bismark_reads=tag_udup_sample.umi_dup_marked,
+                # Runtime Parameters
+                ncpu=mark_dup_sample_ncpu,
+                memory=mark_dup_sample_ramGB,
+                disk=mark_dup_sample_disk,
+                docker=bismark_docker
         }
 
         # Remove PCR Duplicates from Lambda phage spike in
         call mark_dup.markDuplicates as mark_dup_spike_in {
             input:
-                memory=memory,
-                disk_space=disk_space,
-                num_threads=1,
-                num_preempt=num_preempt,
-                docker=bismark_docker,
+                # Inputs
                 SID=sample_prefix[i],
-                bismark_reads=tag_udup_spike_in.umi_dup_marked
+                bismark_reads=tag_udup_spike_in.umi_dup_marked,
+                # Runtime Parameters
+                ncpu=mark_dup_spike_in_ncpu,
+                memory=mark_dup_spike_in_ramGB,
+                disk=mark_dup_spike_in_disk,
+                docker=bismark_docker
         }
 
         # Quantify Methylation for sample
         call quant_methyl.quantifyMethylation as quant_methyl_sample {
             input:
-                memory=60,
-                disk_space=200,
-                num_threads=16,
-                num_preempt=num_preempt,
-                docker=bismark_docker,
+                # Inputs
+                SID=sample_prefix[i],
                 bismark_umi_marked_reads=tag_udup_sample.umi_dup_marked,
                 bismark_deduplicated_reads=mark_dup_sample.deduped_bam,
                 bismark_dedup_report=mark_dup_sample.dedupLog,
                 bismark_alignment_report=align_trim_sample.bismark_report,
-                SID=sample_prefix[i]
+                # Runtime Parameters
+                ncpu=quant_methyl_sample_ncpu,
+                memory=quant_methyl_sample_ramGB,
+                disk=quant_methyl_sample_disk,
+                docker=bismark_docker
         }
 
         # Quantify Methylation for Lambda control spike in
         call quant_methyl.quantifyMethylation as quant_methyl_spike_in {
             input:
-                memory=60,
-                disk_space=200,
-                num_threads=16,
-                num_preempt=num_preempt,
-                docker=bismark_docker,
-                bismark_deduplicated_reads=mark_dup_spike_in.deduped_bam,
                 SID=sample_prefix[i],
                 bismark_umi_marked_reads=tag_udup_spike_in.umi_dup_marked,
                 bismark_dedup_report=mark_dup_spike_in.dedupLog,
-                bismark_alignment_report=align_trim_spike_in.bismark_report
+                bismark_alignment_report=align_trim_spike_in.bismark_report,
+                bismark_deduplicated_reads=mark_dup_spike_in.deduped_bam,
+                # Runtime Parameters
+                ncpu=quant_methyl_spike_in_ncpu,
+                memory=quant_methyl_spike_in_ramGB,
+                disk=quant_methyl_spike_in_disk,
+                docker=bismark_docker
         }
 
         # Align trimGalore trimmed reads to phix genome using bowtie
         call bowtie2_align.bowtie2_align as bowtie2_phix {
-            input :
-                memory=40,
-                disk_space=200,
-                num_threads=10,
-                num_preempt=0,
-                docker=docker,
+            input:
+                # Inputs
                 SID=sample_prefix[i],
                 fastqr1=trim_reg_adapt.r1_trimmed,
-                fastqr2=trim_reg_adapt.r2_trimmed
+                fastqr2=trim_reg_adapt.r2_trimmed,
+                genome_dir_tar=phix_genome_dir_tar,
+                # Runtime Parameters
+                ncpu=bowtie2_phix_ncpu,
+                memory=bowtie2_phix_ramGB,
+                disk=bowtie2_phix_disk,
+                docker=docker
         }
 
         # Compute % mapped to chromosomes and contigs
         call mapped.samtools_mapped as chrinfo {
             input:
-                num_threads=8,
-                memory=30,
-                disk_space=200,
-                num_preempt=0,
-                docker=docker,
+                # Inputs
                 SID=sample_prefix[i],
-                input_bam=mark_dup_sample.deduped_bam
+                input_bam=mark_dup_sample.deduped_bam,
+                # Runtime Parameters
+                ncpu=chrinfo_ncpu,
+                memory=chrinfo_ramGB,
+                disk=chrinfo_disk,
+                docker=docker
         }
 
         # Collect required QC Metrics from reports
         call collect_qc.collectQCMetrics as rnaqc {
             input:
-                memory=20,
-                disk_space=50,
-                num_threads=4,
-                num_preempt=0,
-                docker=docker,
+                # Inputs
                 SID=sample_prefix[i],
                 species_bismark_summary_report=quant_methyl_sample.bismark_summary_report,
                 bismark_bt2_pe_report=align_trim_sample.bismark_report,
@@ -339,22 +438,26 @@ workflow rrbs_pipeline {
                 trim_galore_report=trim_reg_adapt.trim_log,
                 trim_diversity_report=trim_diversity_adapt.trim_diversity_log,
                 phix_report=bowtie2_phix.bowtie2_report,
-                mapping_report=chrinfo.report
+                mapping_report=chrinfo.report,
+                # Runtime Parameters
+                ncpu=collect_qc_ncpu,
+                memory=collect_qc_ramGB,
+                disk=collect_qc_disk,
+                docker=docker
         }
 
     }
 
     call final_merge.merge_results as merge_results {
         input:
-        # Inputs
+            # Inputs
             output_report_name=output_report_name,
             qc_report_files=rnaqc.qc_metrics,
-        # Runtime Parameters
-            ncpu=2,
-            memory=8,
-            disk_space=10,
-
-            docker=docker,
+            # Runtime Parameters
+            ncpu=merge_results_ncpu,
+            memory=merge_results_ramGB,
+            disk=merge_results_disk,
+            docker=docker
     }
 
     output {

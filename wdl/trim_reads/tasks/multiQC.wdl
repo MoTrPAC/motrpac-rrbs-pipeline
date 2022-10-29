@@ -6,13 +6,12 @@ task multiQC {
         File trimGalore_report
 
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
-
-        String basedir="fastqc_report"
     }
+
+    String basedir = "fastqc_report"
 
     parameter_meta {
         fastQCReports: {
@@ -49,27 +48,24 @@ task multiQC {
     runtime {
         docker: "${docker}"
         memory: "${memory}GB"
-        disks: "local-disk ${disk_space} HDD"
-        cpu: "${num_threads}"
-        preemptible: "${num_preempt}"
+        disks: "local-disk ${disk} HDD"
+        cpu: "${ncpu}"
     }
 }
 
 workflow multiqc_report {
     input {
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
     }
 
     call multiQC {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker
     }
 

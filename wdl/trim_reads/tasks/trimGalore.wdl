@@ -8,9 +8,8 @@ task trimGalore {
 
         # Runtime Attributes
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
     }
 
@@ -47,9 +46,8 @@ task trimGalore {
     runtime {
         docker: "${docker}"
         memory: "${memory}GB"
-        disks: "local-disk ${disk_space} HDD"
-        cpu: "${num_threads}"
-        preemptible: "${num_preempt}"
+        disks: "local-disk ${disk} HDD"
+        cpu: "${ncpu}"
     }
 
     meta {
@@ -60,17 +58,15 @@ task trimGalore {
 workflow trim_galore {
     input {
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
     }
 
     call trimGalore {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt
+            disk=disk,
+            ncpu=ncpu
     }
 
     output {

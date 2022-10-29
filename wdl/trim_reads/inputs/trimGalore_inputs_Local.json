@@ -3,8 +3,8 @@
   "trim_galore.trimGalore.r2": "/Users/akre96/Documents/MoTrPAC/rrbs_bismark/sampleData/Muscle2_sub_R2.fastq.gz",
   "trim_galore.trimGalore.SID": "Muscle2_sub",
   "trim_galore.memory": "20",
-  "trim_galore.disk_space": "30",
-  "trim_galore.num_threads": "5",
+  "trim_galore.disk": "30",
+  "trim_galore.ncpu": "5",
   "trim_galore.num_preempt": "25",
   "trim_galore.docker": "gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_04_07_2019"
 }

@@ -1,6 +1,6 @@
 {
-  "fastqc_report.num_threads": "5",
-  "fastqc_report.disk_space": "10",
+  "fastqc_report.ncpu": "5",
+  "fastqc_report.disk": "10",
   "fastqc_report.memory": "10",
   "fastqc_report.num_preempt": "5",
   "fastqc_report.docker": "gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_04_07_2019",

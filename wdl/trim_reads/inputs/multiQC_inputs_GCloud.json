@@ -1,6 +1,6 @@
 {
-  "multiqc_report.num_threads": "1",
-  "multiqc_report.disk_space": "10",
+  "multiqc_report.ncpu": "1",
+  "multiqc_report.disk": "10",
   "multiqc_report.memory": "10",
   "multiqc_report.num_preempt": "5",
   "multiqc_report.docker": "gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_03_08_2019",

@@ -1,6 +1,6 @@
 {
-  "attach_umi.num_threads": "5",
-  "attach_umi.disk_space": "10",
+  "attach_umi.ncpu": "5",
+  "attach_umi.disk": "10",
   "attach_umi.memory": "10",
   "attach_umi.num_preempt": "5",
   "attach_umi.docker": "gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_04_07_2019",

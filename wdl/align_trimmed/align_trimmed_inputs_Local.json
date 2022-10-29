@@ -8,6 +8,6 @@
   "align_trimmed.memory": "20",
   "align_trimmed.docker": "akre96/motrpac_rrbs:v0.1",
   "align_trimmed.num_preempt": "25",
-  "align_trimmed.disk_space": "30",
-  "align_trimmed.num_threads": "5"
+  "align_trimmed.disk": "30",
+  "align_trimmed.ncpu": "5"
 }

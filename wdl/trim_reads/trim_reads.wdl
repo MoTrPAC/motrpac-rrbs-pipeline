@@ -9,9 +9,8 @@ import "wdl-tasks/attachUMI.wdl" as AUMI
 workflow trim_reads {
     input {
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         File r1
         File r2
         File i1
@@ -23,9 +22,8 @@ workflow trim_reads {
     call FQC.fastQC as preTrimFastQC {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker,
             r1=r1,
             r2=r2
@@ -35,9 +33,8 @@ workflow trim_reads {
     call AUMI.attachUMI as attachUMI {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker,
             SID=SID,
             r1=r1,
@@ -49,9 +46,8 @@ workflow trim_reads {
     call TG.trimGalore as trimGalore {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker,
             r1=attachUMI.r1_umi_attached,
             r2=attachUMI.r2_umi_attached,
@@ -62,9 +58,8 @@ workflow trim_reads {
     call TDA.trimDiversityAdapt as trimDiversityAdapt {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker,
             r1_trimmed=trimGalore.r1_trimmed,
             r2_trimmed=trimGalore.r2_trimmed,
@@ -75,9 +70,8 @@ workflow trim_reads {
     call FQC.fastQC as postTrimFastQC {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker,
             r1=trimDiversityAdapt.r1_diversity_trimmed,
             r2=trimDiversityAdapt.r2_diversity_trimmed
@@ -85,9 +79,8 @@ workflow trim_reads {
     call MQC.multiQC as multiQC {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker,
             fastQCReports=[preTrimFastQC.fastQC_report,postTrimFastQC.fastQC_report]
     }

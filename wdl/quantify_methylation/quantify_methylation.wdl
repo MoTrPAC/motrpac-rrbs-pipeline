@@ -9,9 +9,8 @@ task quantifyMethylation {
         String SID
 
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
     }
 
@@ -44,9 +43,9 @@ task quantifyMethylation {
 
         echo "--- Running: bismark_methylation_extractor ---"
         bismark_methylation_extractor ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bam \
-        --multicore ~{num_threads} \
-        --comprehensive \
-        --bedgraph
+            --multicore ~{ncpu} \
+            --comprehensive \
+            --bedgraph
         echo "--- Finished: bismark_methylation_extractor ---"
 
         echo "------ Running : bismark2summary-------"
@@ -74,9 +73,8 @@ task quantifyMethylation {
     runtime {
         docker: "${docker}"
         memory: "${memory}GB"
-        disks: "local-disk ${disk_space} HDD"
-        cpu: "${num_threads}"
-        preemptible: "${num_preempt}"
+        disks: "local-disk ${disk} HDD"
+        cpu: "${ncpu}"
     }
     meta {
         author: "Samir Akre"
@@ -87,18 +85,16 @@ workflow quantify_methylation {
     input {
         String SID
         Int memory
-        Int disk_space
-        Int num_threads
-        Int num_preempt
+        Int disk
+        Int ncpu
         String docker
     }
 
     call quantifyMethylation {
         input:
             memory=memory,
-            disk_space=disk_space,
-            num_threads=num_threads,
-            num_preempt=num_preempt,
+            disk=disk,
+            ncpu=ncpu,
             docker=docker,
             SID=SID
     }

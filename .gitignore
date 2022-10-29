@@ -42,4 +42,3 @@ pipeline_wdl/
 qc_report_sinai/
 rrbs-WDL-workflow.png
 verify_checksums/
-input_json/

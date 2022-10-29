@@ -4,7 +4,7 @@
   "Bismark_Index_Generation.indexGenome.genome_dir": "chr_x",
   "Bismark_Index_Generation.memory": "20",
   "Bismark_Index_Generation.docker": "akre96/motrpac_rrbs:v0.1",
-  "Bismark_Index_Generation.disk_space": "30",
-  "Bismark_Index_Generation.num_threads": "5",
+  "Bismark_Index_Generation.disk": "30",
+  "Bismark_Index_Generation.ncpu": "5",
   "Bismark_Index_Generation.num_preempt": "25"
 }

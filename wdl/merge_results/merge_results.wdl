@@ -6,7 +6,7 @@ task merge_results {
         String output_report_name
 
         Int memory
-        Int disk_space
+        Int disk
         Int ncpu
         String docker
     }
@@ -26,7 +26,7 @@ task merge_results {
 
         mkdir -p qc_report_files
 
-        cp ~{sep=" ", qc_report_files} qc_report_files/
+        cp ~{sep=" " qc_report_files} qc_report_files/
 
         echo "--- $(date "+[%b %d %H:%M:%S]") Finished merging RSEM results, consolidating QC reports ---"
         python3 /usr/local/src/consolidate_qc_report.py --qc_dir qc_report_files --output_name ~{output_report_name}.csv
@@ -41,7 +41,7 @@ task merge_results {
     runtime {
         docker: "${docker}"
         memory: "${memory}GB"
-        disks: "local-disk ${disk_space} HDD"
+        disks: "local-disk ${disk} HDD"
         cpu: "${ncpu}"
     }
 }
