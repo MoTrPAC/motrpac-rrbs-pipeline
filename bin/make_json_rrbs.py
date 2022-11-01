@@ -5,7 +5,6 @@ path_to_output_json Usage: python bin/make_json_rrbs.py \
 /Users/archanaraja/work/repo/motrpac-rrbs-pipeline/sample_list/
 """
 import json
-import sys
 import os
 import argparse
 from typing import List
@@ -35,6 +34,7 @@ def main(filelist: List[str], output_path: str) -> None:
             "rrbs_pipeline.phix_genome_dir_tar": "gs://***REMOVED***/references/rn/bowtie2_index/phix.tar.gz",
             "rrbs_pipeline.spike_in_genome_dir_tar": "gs://***REMOVED***/rrbs/genomes/lambda/lambda_Bisulfite_Genome.tar.gz",
             "rrbs_pipeline.docker": "gcr.io/***REMOVED***/motrpac_rrbs:araja_08_05_2019",
+            "rrbs_pipeline.output_report_name": "String",
             "rrbs_pipeline.bismark_docker": "gcr.io/***REMOVED***/bismark:0.20.0",
             "rrbs_pipeline.align_trim_sample_disk": 200,
             "rrbs_pipeline.align_trim_sample_ncpu": 12,
@@ -97,6 +97,9 @@ def main(filelist: List[str], output_path: str) -> None:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Create a JSON file for the RRBS pipeline"
+    )
     parser.add_argument("--filelist", help="File list to process")
     parser.add_argument("--output", help="Output path basename")
     args = parser.parse_args()
