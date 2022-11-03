@@ -1,0 +1,14 @@
+{
+  "align_trimmed.alignTrimmed.r2_trimmed": "gs://sa-rrbs-pipeline/cromwell-execution/rrbs_pipeline/6cf445cc-6ce3-490b-8b1d-d05b66529206/call-trimDiversityAdapt/attempt-4/Muscle2_attached_R2_val_2.fq_trimmed.fq.gz",
+  "align_trimmed.alignTrimmed.r1_trimmed": "gs://sa-rrbs-pipeline/cromwell-execution/rrbs_pipeline/6cf445cc-6ce3-490b-8b1d-d05b66529206/call-trimDiversityAdapt/attempt-4/Muscle2_attached_R1_val_1.fq_trimmed.fq.gz",
+  "align_trimmed.alignTrimmed.genome_dir_tar": "gs://sa-rrbs-pipeline/genomes/human/Bisulfite_Indexed_Genome.tar.gz",
+  "align_trimmed.alignTrimmed.genome_dir": "human",
+  "align_trimmed.alignTrimmed.bismark_multicore": "4",
+  "align_trimmed.SID": "Muscle2",
+  "align_trimmed.memory": "60",
+  "align_trimmed.docker": "gcr.io/***REMOVED***-dev/bismark:0.20.0",
+  "align_trimmed.num_preempt": "0",
+  "align_trimmed.disk": "100",
+  "align_trimmed.ncpu": "16"
+}
+

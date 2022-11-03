@@ -1,0 +1,14 @@
+{
+  "collect_qc_metrics.ncpu": "1",
+  "collect_qc_metrics.disk": "5",
+  "collect_qc_metrics.memory": "10",
+  "collect_qc_metrics.collectQCMetrics.SID": "Rat_Muscle",
+  "collect_qc_metrics.collectQCMetrics.deduplication_report": "gs://sa-rrbs-pipeline/cromwell-execution/rrbs_pipeline/d725689f-9e58-47a7-a225-f4cc0ab1aef7/call-markDuplicatesSample/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt",
+  "collect_qc_metrics.collectQCMetrics.bismark_bt2_pe_report": "gs://sa-rrbs-pipeline/cromwell-execution/rrbs_pipeline/d725689f-9e58-47a7-a225-f4cc0ab1aef7/call-alignTrimmedSample/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt",
+  "collect_qc_metrics.collectQCMetrics.docker": "gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_04_07_2019",
+  "collect_qc_metrics.num_preempt": "0",
+  "collect_qc_metrics.collectQCMetrics.species_bismark_summary_report": "gs://sa-rrbs-pipeline/cromwell-execution/rrbs_pipeline/d725689f-9e58-47a7-a225-f4cc0ab1aef7/call-alignTrimmedSample/bismark_summary_report.txt",
+  "collect_qc_metrics.collectQCMetrics.multiQC_report": "gs://sa-rrbs-pipeline/cromwell-execution/rrbs_pipeline/d725689f-9e58-47a7-a225-f4cc0ab1aef7/call-multiQC/multiqc_report.tar.gz",
+  "collect_qc_metrics.collectQCMetrics.lambda_bismark_summary_report": "gs://sa-rrbs-pipeline/cromwell-execution/rrbs_pipeline/d725689f-9e58-47a7-a225-f4cc0ab1aef7/call-alignTrimmedSpikeIn/bismark_summary_report.txt"
+}
+

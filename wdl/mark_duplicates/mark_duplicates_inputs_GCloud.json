@@ -1,0 +1,10 @@
+{
+  "mark_duplicates.memory": "30",
+  "mark_duplicates.disk": "50",
+  "mark_duplicates.num_preempt": "0",
+  "mark_duplicates.ncpu": "1",
+  "mark_duplicates.docker": "gcr.io/***REMOVED***/bismark:0.20.0",
+  "mark_duplicates.markDuplicates.SID": "Rat_Muscle",
+  "mark_duplicates.markDuplicates.bismark_reads": "gs://***REMOVED***/rrbs/pipeline_test/pilot/mark_duplicates/090a4c20-ca61-4586-b60a-51dd41cb97eb/call-markDuplicates/mark_udup/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam"
+}
+
