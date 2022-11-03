@@ -1,0 +1,13 @@
+{
+  "quantify_methylation.quantifyMethylation.bismark_deduplicated_reads": "gs://rna-seq_araja/rrbs/pipeline_test/pilot/mark_duplicates/bf54d50f-1815-4d09-aab7-24cd37cec91c/call-markDuplicates/dedup/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bam",
+  "quantify_methylation.memory": "60",
+  "quantify_methylation.docker": "gcr.io/motrpac-portal/bismark:0.20.0",
+  "quantify_methylation.SID": "Rat_Muscle",
+  "quantify_methylation.num_preempt": "25",
+  "quantify_methylation.disk": "100",
+  "quantify_methylation.ncpu": "16",
+  "quantify_methylation.quantifyMethylation.bismark_alignment_report": "gs://rna-seq_araja/rrbs/pipeline_test/pilot/align_trimmed/d978a9a6-9332-4642-8740-af808efc8736/call-alignTrimmed/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_PE_report.txt",
+  "quantify_methylation.quantifyMethylation.bismark_dedup_report": "gs://rna-seq_araja/rrbs/pipeline_test/pilot/mark_duplicates/bf54d50f-1815-4d09-aab7-24cd37cec91c/call-markDuplicates/dedup/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt",
+  "quantify_methylation.quantifyMethylation.bismark_umi_marked_reads":"gs://rna-seq_araja/rrbs/pipeline_test/pilot/mark_duplicates/090a4c20-ca61-4586-b60a-51dd41cb97eb/call-markDuplicates/mark_udup/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam"
+}
+
