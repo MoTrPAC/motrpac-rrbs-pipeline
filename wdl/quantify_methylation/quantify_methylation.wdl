@@ -21,7 +21,7 @@ task quantifyMethylation {
         bismark_umi_marked_reads: {
             label: "Bismark UMI-Marked BAM File"
         }
-        bismark_umi_marked_reads: {
+        bismark_deduplicated_reads: {
             label: "Bismark De-duplicated BAM File"
         }
         bismark_alignment_report: {

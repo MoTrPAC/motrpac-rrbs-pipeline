@@ -27,13 +27,10 @@ task collectQCMetrics {
             label: "Spike In Methylation Summary Report"
         }
         species_bismark_summary_report: {
-            label: "Sample Methylation Summary Report"
+            label: "Trimmed/Aligned Sample Methylation Summary Report"
         }
         bismark_bt2_pe_report: {
             label: "Aligned Sample Bismark Summary Report"
-        }
-        species_bismark_summary_report: {
-            label: "Trimmed/Aligned Sample Summary Report"
         }
         multiQC_report: {
             label: "MultiQC Report"
