@@ -51,6 +51,9 @@ workflow rrbs_pipeline {
         Int multiqc_ramGB
         Int multiqc_disk
 
+        # Align Trimmed Parameters
+        Int bismark_multicore
+
         # Align Trim Sample Parameters
         File sample_genome_dir_tar
         Int align_trim_sample_ncpu
@@ -286,7 +289,7 @@ workflow rrbs_pipeline {
             input:
                 # Inputs
                 SID=sample_prefix[i],
-                bismark_multicore=3,
+                bismark_multicore=bismark_multicore,
                 r1_trimmed=trim_diversity_adapt.r1_diversity_trimmed,
                 r2_trimmed=trim_diversity_adapt.r2_diversity_trimmed,
                 genome_dir_tar=sample_genome_dir_tar,
@@ -304,7 +307,7 @@ workflow rrbs_pipeline {
             input:
                 # Inputs
                 SID=sample_prefix[i],
-                bismark_multicore=3,
+                bismark_multicore=bismark_multicore,
                 r1_trimmed=trim_diversity_adapt.r1_diversity_trimmed,
                 r2_trimmed=trim_diversity_adapt.r2_diversity_trimmed,
                 genome_dir_tar=spike_in_genome_dir_tar,
@@ -464,4 +467,3 @@ workflow rrbs_pipeline {
         File qc_report = merge_results.qc_report
     }
 }
-

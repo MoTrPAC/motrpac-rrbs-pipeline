@@ -11,6 +11,7 @@
     "rrbs_pipeline.sample_prefix": [
         "Rat_Muscle"
     ],
+    "rrbs_pipeline.bismark_multicore": 3,
     "rrbs_pipeline.sample_genome_dir_tar": "gs://***REMOVED***/rrbs/genomes/rat/rat_Bisulfite_Genome.tar.gz",
     "rrbs_pipeline.align_trim_sample_disk": 200,
     "rrbs_pipeline.align_trim_sample_ncpu": 12,
