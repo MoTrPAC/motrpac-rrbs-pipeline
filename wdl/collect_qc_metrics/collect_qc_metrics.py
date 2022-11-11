@@ -22,7 +22,6 @@ Notes :
     exceptions on empty file.
 """
 import argparse
-import csv
 import re
 import pandas as pd
 from statistics import mean
@@ -120,7 +119,7 @@ def get4_strand_map_data(bismark_report):
     Parse information related to the 4 types of strands in RRBS data.
 
     :param bismark_report: path to file containing bismark_bt2_PE_report.txt style output
-    :return: 
+    :return:
     """
     data = {}
     with open(bismark_report, "r") as report:
@@ -231,7 +230,7 @@ if __name__ == "__main__":
     trimData = parse_trim_galore_log(args.tg)
     mspiData = parse_trim_diversity_log(args.td)[0]
     name = os.path.basename(args.tg)
-    SID = (name).split("_")[0]
+    SID = name.split("_")[0]
     print(SID)
     print("Parsed all arguments successfully")
     total = parse_trim_diversity_log(args.td)[1]

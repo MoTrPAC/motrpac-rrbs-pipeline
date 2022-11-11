@@ -32,6 +32,7 @@ task alignTrimmed {
             type: "id"
         }
         bismark_multicore: {
+            type: "runtime",
             label: "Number of cores to use for bismark"
         }
     }
@@ -50,10 +51,10 @@ task alignTrimmed {
 
         echo "Running: bismark"
         bismark genome/~{genome_dir} --multicore ~{bismark_multicore} \
-        -1 ~{r1_trimmed} \
-        -2 ~{r2_trimmed} \
-        >& ~{SID}_bismarkAlign.log
-        echo "--- End bismark ---"
+            -1 ~{r1_trimmed} \
+            -2 ~{r2_trimmed} \
+            >& ~{SID}_bismarkAlign.log
+            echo "--- End bismark ---"
 
         echo "Running: ls"
         ls
@@ -112,3 +113,4 @@ workflow align_trimmed {
         File bismark_reads = alignTrimmed.bismark_reads
     }
 }
+
