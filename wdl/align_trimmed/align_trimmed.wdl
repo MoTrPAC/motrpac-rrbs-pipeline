@@ -40,34 +40,37 @@ task alignTrimmed {
     # Assumes reference genome with bisulfite conversion reference is a tar file,
     #  genome_dir is the name of the directory that was tar balled
     command <<<
-        set -ueo pipefail
-        mkdir genome
+        echo "--- $(date "+[%b %d %H:%M:%S]") Beginning task, making output directories ---"
+        mkdir -p genome/~{genome_dir}
         mkdir tmp
-        tar -zxvf ~{genome_dir_tar} -C ./genome
 
-        echo "Running: ls"
+        echo "--- $(date "+[%b %d %H:%M:%S]") Extracting genome tarball into ./genome/~{genome_dir} ---"
+        tar -zxvf ~{genome_dir_tar} -C ./genome/~{genome_dir} --strip-components 1
+
+        echo "--- $(date "+[%b %d %H:%M:%S]") Listing folder ---"
         ls
-        echo "--- End ls ---"
 
-        echo "Running: bismark"
+        echo "--- $(date "+[%b %d %H:%M:%S]") Running bismark ---"
         bismark genome/~{genome_dir} --multicore ~{bismark_multicore} \
             -1 ~{r1_trimmed} \
             -2 ~{r2_trimmed} \
             >& ~{SID}_bismarkAlign.log
             echo "--- End bismark ---"
 
-        echo "Running: ls"
+        echo "--- $(date "+[%b %d %H:%M:%S]") Listing folder ---"
         ls
-        echo "--- End ls ---"
-        sam=~{SID}.sam
 
+        sam=~{SID}.sam
         #Fix inconsistencies while using different multticore setting by sorting sam by mapping quality and then by read name
-        echo "Runnning Samtools"
+
+        echo "--- $(date "+[%b %d %H:%M:%S]") Running samtools ---"
         samtools view -@ ~{ncpu} -H ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam >$sam
         samtools view -@ ~{ncpu} ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam |sort -k5,5nr -k1,1 -s -S~{memory}G  >>$sam
-        echo "Finished sorting"
+
+        echo "--- $(date "+[%b %d %H:%M:%S]") Finished sorting ---"
         samtools view -@ ~{ncpu} -b $sam -o ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam
-        echo "Finished running samtools"
+
+        echo "--- $(date "+[%b %d %H:%M:%S]") Finished task ---"
     >>>
 
     output {
