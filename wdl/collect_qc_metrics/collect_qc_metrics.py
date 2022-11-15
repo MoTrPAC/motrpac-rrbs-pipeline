@@ -221,6 +221,7 @@ if __name__ == "__main__":
     parser.add_argument("--td", help="path to Trim Diversity Adapter trimming report")
     parser.add_argument("--phix_report", help="phix alignment report")
     parser.add_argument("--mapped_report", help="chr info report")
+    parser.add_argument("--sid", help="Sample ID")
     args = parser.parse_args()
 
     sampleSummary = parse_bismark_summary(args.summary)
@@ -230,8 +231,7 @@ if __name__ == "__main__":
     trimData = parse_trim_galore_log(args.tg)
     mspiData = parse_trim_diversity_log(args.td)[0]
     name = os.path.basename(args.tg)
-    SID = name.split("_")[0]
-    print(SID)
+    sid = args.sid
     print("Parsed all arguments successfully")
     total = parse_trim_diversity_log(args.td)[1]
     # Compute pct_trimmed
@@ -247,7 +247,7 @@ if __name__ == "__main__":
 
     # Dictionary of RRBS QC Metrics
     qcData = {
-        "SID": [SID],
+        "SID": [sid],
         "reads_raw": multiQCData["reads_raw"],
         "pct_adapter_detected": trimData["pct_adapter_detected"],
         "pct_trimmed": round(pct_trimmed, 3),
@@ -285,5 +285,5 @@ if __name__ == "__main__":
     # Save qc metrics to ${SID}_qcmetrics.csv file
     qcDataFrame = pd.DataFrame(qcData)
     print(qcDataFrame)
-    print(SID + "_qcmetrics.csv")
-    qcDataFrame.to_csv(SID + "_qcmetrics.csv", index=False)
+    print(sid + "_qcmetrics.csv")
+    qcDataFrame.to_csv(sid + "_qcmetrics.csv", index=False)

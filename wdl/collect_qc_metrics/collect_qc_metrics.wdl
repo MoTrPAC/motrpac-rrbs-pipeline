@@ -55,7 +55,7 @@ task collectQCMetrics {
         tar -xzvf ~{multiQC_report}
         ls
 
-        /usr/bin/python3 /src/collect_qc_metrics.py \
+        python3 /src/collect_qc_metrics.py \
             --summary ~{species_bismark_summary_report} \
             --lambda_summary ~{lambda_bismark_summary_report} \
             --bt2 ~{bismark_bt2_pe_report} \
@@ -63,7 +63,8 @@ task collectQCMetrics {
             --tg ~{trim_galore_report} \
             --td ~{trim_diversity_report} \
             --phix_report ~{phix_report} \
-            --mapped_report ~{mapping_report}
+            --mapped_report ~{mapping_report} \
+            --sid ~{SID}
     }
 
     output {

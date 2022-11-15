@@ -25,3 +25,8 @@ condaEnv.yml
 # Test Data
 sampleData
 sampleOutput
+
+bin/
+config/
+examples/
+schemas/

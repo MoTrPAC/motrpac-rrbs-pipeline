@@ -29,7 +29,7 @@ task merge_results {
         cp ~{sep=" " qc_report_files} qc_report_files/
 
         echo "--- $(date "+[%b %d %H:%M:%S]") Finished merging RSEM results, consolidating QC reports ---"
-        python3 /usr/local/src/consolidate_qc_report.py --qc_dir qc_report_files --output_name ~{output_report_name}.csv
+        python3 /src/consolidate_qc_report.py --qc_dir qc_report_files --output_name ~{output_report_name}.csv
 
         echo "--- $(date "+[%b %d %H:%M:%S]") Finished merging consolidating QC reports, finished task  ---"
     >>>
