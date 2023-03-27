@@ -1,8 +1,8 @@
 {
-  "Bismark_Index_Generation.indexGenome.refGenome": "gs://***REMOVED***/rrbs/genomes/lambda/lambda.fasta",
+  "Bismark_Index_Generation.indexGenome.refGenome": "gs://my-bucket/rrbs/genomes/lambda/lambda.fasta",
   "Bismark_Index_Generation.indexGenome.genome_dir": "lambda",
   "Bismark_Index_Generation.memory": "64",
-  "Bismark_Index_Generation.docker": "gcr.io/***REMOVED***/motrpac_rrbs:araja_05_20_2019",
+  "Bismark_Index_Generation.docker": "gcr.io/my-project/motrpac_rrbs:araja_05_20_2019",
   "Bismark_Index_Generation.disk": "150",
   "Bismark_Index_Generation.ncpu": "10",
   "Bismark_Index_Generation.num_preempt": "0"

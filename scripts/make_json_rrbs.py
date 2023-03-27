@@ -221,13 +221,13 @@ if __name__ == "__main__":
         "--docker_repo",
         help="Docker repository prefix containing the images used in the workflow",
         type=str,
-        default="us-docker.pkg.dev/***REMOVED***",
+        default="us-docker.pkg.dev/my-project/rrbs",
     )
     parser.add_argument(
-    "-p",
-    "--project",
-    help="Project name on the google cloud platform",
-    type=str
+        "-p",
+        "--project",
+        help="Project name on the google cloud platform",
+        type=str
     )
     args = parser.parse_args()
     main(args)

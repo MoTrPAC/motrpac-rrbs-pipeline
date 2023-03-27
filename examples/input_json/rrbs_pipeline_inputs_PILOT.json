@@ -1,19 +1,19 @@
 {
     "rrbs_pipeline.r1": [
-        "gs://***REMOVED***-transfer-sinai/rrbs_rn_2019_06_03/fastq_raw/Rat_Brown_fat_R1.fastq.gz"
+        "gs://my-project-transfer-sinai/rrbs_rn_2019_06_03/fastq_raw/Rat_Brown_fat_R1.fastq.gz"
     ],
     "rrbs_pipeline.r2": [
-        "gs://***REMOVED***-transfer-sinai/rrbs_rn_2019_06_03/fastq_raw/Rat_Brown_fat_R2.fastq.gz"
+        "gs://my-project-transfer-sinai/rrbs_rn_2019_06_03/fastq_raw/Rat_Brown_fat_R2.fastq.gz"
     ],
     "rrbs_pipeline.i1": [
-        "gs://***REMOVED***-transfer-sinai/rrbs_rn_2019_06_03/fastq_raw/Rat_Brown_fat_I1.fastq.gz"
+        "gs://my-project-transfer-sinai/rrbs_rn_2019_06_03/fastq_raw/Rat_Brown_fat_I1.fastq.gz"
     ],
     "rrbs_pipeline.sample_prefix": [
         "Rat_Brown_fat"
     ],
-    "rrbs_pipeline.sample_genome_dir_tar": "gs://***REMOVED***/rrbs/genomes/rat/rat_Bisulfite_Genome.tar.gz",
-    "rrbs_pipeline.spike_in_genome_dir_tar": "gs://***REMOVED***/rrbs/genomes/lambda/lambda_Bisulfite_Genome.tar.gz",
-    "rrbs_pipeline.phix_genome_dir_tar": "gs://***REMOVED***/references/rn/bowtie2_index/phix.tar.gz",
+    "rrbs_pipeline.sample_genome_dir_tar": "gs://my-bucket/rrbs/genomes/rat/rat_Bisulfite_Genome.tar.gz",
+    "rrbs_pipeline.spike_in_genome_dir_tar": "gs://my-bucket/rrbs/genomes/lambda/lambda_Bisulfite_Genome.tar.gz",
+    "rrbs_pipeline.phix_genome_dir_tar": "gs://my-bucket/references/rn/bowtie2_index/phix.tar.gz",
     "rrbs_pipeline.align_trim_sample_disk": 200,
     "rrbs_pipeline.align_trim_sample_ncpu": 12,
     "rrbs_pipeline.align_trim_sample_ramGB": 40,
@@ -68,8 +68,8 @@
     "rrbs_pipeline.trim_reg_adapt_disk": 150,
     "rrbs_pipeline.trim_reg_adapt_ncpu": 1,
     "rrbs_pipeline.trim_reg_adapt_ramGB": 40,
-    "rrbs_pipeline.docker": "gcr.io/***REMOVED***/motrpac_rrbs:araja_06_17_2019",
-    "rrbs_pipeline.bismark_docker": "gcr.io/***REMOVED***/bismark:0.20.0",
+    "rrbs_pipeline.docker": "gcr.io/my-project/motrpac_rrbs:araja_06_17_2019",
+    "rrbs_pipeline.bismark_docker": "gcr.io/my-project/bismark:0.20.0",
     "rrbs_pipeline.output_report_name": "Rat_Brown_fat_rrbs_rn_2019_06_03_report"
 }
 

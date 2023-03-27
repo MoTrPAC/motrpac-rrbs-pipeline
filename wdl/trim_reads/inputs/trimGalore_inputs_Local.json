@@ -6,5 +6,5 @@
   "trim_galore.disk": "30",
   "trim_galore.ncpu": "5",
   "trim_galore.num_preempt": "25",
-  "trim_galore.docker": "gcr.io/***REMOVED***-dev/motrpac_rrbs:SA_04_07_2019"
+  "trim_galore.docker": "gcr.io/my-project-dev/motrpac_rrbs:SA_04_07_2019"
 }

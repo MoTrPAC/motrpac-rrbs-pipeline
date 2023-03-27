@@ -1,18 +1,18 @@
 only the bismark version used was 0.20.1 , rest matches the MOP i believe we should use 0.22.1 , but needs clarification from Yongchao
 
-docker build . -t gcr.io/***REMOVED***-dev/motrpac_rrbs:araja_05_20_2019
-docker push gcr.io/***REMOVED***-dev/motrpac_rrbs:araja_05_20_2019
+docker build . -t gcr.io/my-project-dev/motrpac_rrbs:araja_05_20_2019
+docker push gcr.io/my-project-dev/motrpac_rrbs:araja_05_20_2019
 
 #Pushing the image to the production environment
 
-docker build . -t gcr.io/***REMOVED***/motrpac_rrbs:araja_05_20_2019
-docker push gcr.io/***REMOVED***/motrpac_rrbs:araja_05_20_2019
+docker build . -t gcr.io/my-project/motrpac_rrbs:araja_05_20_2019
+docker push gcr.io/my-project/motrpac_rrbs:araja_05_20_2019
 
 Fixed a typo in the Docker file
-Older docker image : gcr.io/***REMOVED***/motrpac_rrbs:araja_05_24_2019
+Older docker image : gcr.io/my-project/motrpac_rrbs:araja_05_24_2019
 
-#Previous well tested docker image : gcr.io/***REMOVED***/motrpac_rrbs:araja_06_17_2019 
+#Previous well tested docker image : gcr.io/my-project/motrpac_rrbs:araja_06_17_2019 
 
 #Updated ubuntu version , fixed the qc script to round a metric , removed bismark as the source install had the wrong version of bismark methylation extractor
-Latest docker image : gcr.io/***REMOVED***/motrpac_rrbs:araja_07_09_2019
-Bismark docker : gcr.io/***REMOVED***/bismark:0.20.0
+Latest docker image : gcr.io/my-project/motrpac_rrbs:araja_07_09_2019
+Bismark docker : gcr.io/my-project/bismark:0.20.0
