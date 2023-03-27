@@ -1,5 +1,4 @@
-#Current version of post external release1 docker gcr.io/my-project/motrpac_rrbs:araja_08_05_2019
-#Dockerfile for external release 1 gcr.io/my-project/motrpac_rrbs:araja_07_09_2019
+#Current version of post external release1 docker us-docker.pkg.dev/my-project/rrbs/rrbs:msamdars_11_14_2022
 FROM python:3.8-slim-bullseye as compile-image
 
 # Install essentials, python3, python, libraries used for installing other packges, pip, pip3
