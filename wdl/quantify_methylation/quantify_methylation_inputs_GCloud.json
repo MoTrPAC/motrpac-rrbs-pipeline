@@ -1,7 +1,7 @@
 {
   "quantify_methylation.quantifyMethylation.bismark_deduplicated_reads": "gs://my-bucket/rrbs/pipeline_test/pilot/mark_duplicates/bf54d50f-1815-4d09-aab7-24cd37cec91c/call-markDuplicates/dedup/Rat_Muscle_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bam",
   "quantify_methylation.memory": "60",
-  "quantify_methylation.docker": "gcr.io/my-project/bismark:0.20.0",
+  "quantify_methylation.docker": "gcr.io/motrpac-portal/bismark:0.20.0",
   "quantify_methylation.SID": "Rat_Muscle",
   "quantify_methylation.num_preempt": "25",
   "quantify_methylation.disk": "100",

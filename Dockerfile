@@ -1,4 +1,4 @@
-#Current version of post external release1 docker us-docker.pkg.dev/my-project/rrbs/rrbs:msamdars_11_14_2022
+#Current version of post external release1 docker us-docker.pkg.dev/motrpac-portal/rrbs/rrbs:msamdars_11_14_2022
 FROM python:3.8-slim-bullseye as compile-image
 
 # Install essentials, python3, python, libraries used for installing other packges, pip, pip3

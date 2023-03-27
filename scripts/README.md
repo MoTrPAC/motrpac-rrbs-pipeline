@@ -51,6 +51,6 @@ python3 make_json_rrbs.py -g gs://my-bucket/rrbs/test/fastq_raw \
 -r rrbs-test \
 -a rat-rn6 \
 -n 1 \
--d us-docker.pkg.dev/my-project \
+-d us-docker.pkg.dev/motrpac-portal \
 -p my-project
 ```

@@ -6,7 +6,7 @@
   "align_trimmed.alignTrimmed.bismark_multicore": "4",
   "align_trimmed.SID": "Muscle2",
   "align_trimmed.memory": "60",
-  "align_trimmed.docker": "gcr.io/my-project-dev/bismark:0.20.0",
+  "align_trimmed.docker": "gcr.io/motrpac-portal-dev/bismark:0.20.0",
   "align_trimmed.num_preempt": "0",
   "align_trimmed.disk": "100",
   "align_trimmed.ncpu": "16"

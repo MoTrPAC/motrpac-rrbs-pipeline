@@ -6,7 +6,7 @@
   "bowtie2_align_workflow.bowtie2_align.memory": "40",
   "bowtie2_align_workflow.bowtie2_align.num_preempt": "0",
   "bowtie2_align_workflow.bowtie2_align.fastqr2": "gs://my-bucket/rrbs/pipeline_test/rrbs_pipeline/7e9293eb-d5da-4bbd-92b8-5290adceb0b9/call-trimGalore/Rat_Muscle_attached_R2_val_2.fq.gz",
-  "bowtie2_align_workflow.bowtie2_align.docker": "gcr.io/my-project/motrpac_rrbs:araja_05_24_2019",
+  "bowtie2_align_workflow.bowtie2_align.docker": "gcr.io/motrpac-portal/motrpac_rrbs:araja_05_24_2019",
   "bowtie2_align_workflow.bowtie2_align.genome_dir_tar": "gs://my-bucket/references/rn/bowtie2_index/phix.tar.gz",
   "bowtie2_align_workflow.bowtie2_align.genome_dir": "phix"
 }

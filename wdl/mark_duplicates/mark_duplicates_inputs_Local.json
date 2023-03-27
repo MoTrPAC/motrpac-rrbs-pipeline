@@ -3,7 +3,7 @@
   "mark_duplicates.disk": "30",
   "mark_duplicates.num_preempt": "25",
   "mark_duplicates.ncpu": "5",
-  "mark_duplicates.docker": "gcr.io/my-project-dev/motrpac_rrbs:SA_04_07_2019",
+  "mark_duplicates.docker": "gcr.io/motrpac-portal-dev/motrpac_rrbs:SA_04_07_2019",
   "mark_duplicates.markDuplicates.SID": "Muscle2_1000ksub",
   "mark_duplicates.markDuplicates.bismarkReads": "/Users/akre96/Documents/github/rrbs_bismark/sampleData/Muscle2_1000ksub_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam"
 }

@@ -221,7 +221,7 @@ if __name__ == "__main__":
         "--docker_repo",
         help="Docker repository prefix containing the images used in the workflow",
         type=str,
-        default="us-docker.pkg.dev/my-project/rrbs",
+        default="us-docker.pkg.dev/motrpac-portal/rrbs",
     )
     parser.add_argument(
         "-p",
