@@ -1,5 +1,8 @@
 MoTrPAC RRBS Pipeline
 =================================================
+
+[![DOI](https://zenodo.org/badge/161703075.svg)](https://zenodo.org/badge/latestdoi/161703075)
+
 Overview
 -------------------------------------------------
 
