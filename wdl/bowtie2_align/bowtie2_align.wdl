@@ -33,6 +33,7 @@ task bowtie2_align {
     }
 
     command <<<
+        set -ueo pipefail
         echo "--- $(date "+[%b %d %H:%M:%S]") Beginning task, making output directories ---"
         mkdir -p ./genome/~{genome_dir}
 
