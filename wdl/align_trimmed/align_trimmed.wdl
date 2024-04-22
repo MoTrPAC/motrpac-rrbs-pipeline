@@ -40,6 +40,7 @@ task alignTrimmed {
     # Assumes reference genome with bisulfite conversion reference is a tar file,
     #  genome_dir is the name of the directory that was tar balled
     command <<<
+        set -ueo pipefail
         echo "--- $(date "+[%b %d %H:%M:%S]") Beginning task, making output directories ---"
         mkdir -p genome/~{genome_dir}
         mkdir tmp

@@ -95,6 +95,12 @@ def make_json_dict(
             "rrbs_pipeline.phix_genome_dir_tar": "gs://omicspipelines/rnaseq/references/rat/phix.tar.gz",
             "rrbs_pipeline.spike_in_genome_dir_tar": "gs://omicspipelines/rrbs/references/lambda/lambda_Bisulfite_Genome.tar.gz",
         }
+    elif organism == "rat-rn7":
+          organism_references = {
+            "rrbs_pipeline.sample_genome_dir_tar": "gs://omicspipelines-public-resources/rrbs/references/rat/rn7/rat_Bisulfite_Genome.tar.gz",
+            "rrbs_pipeline.phix_genome_dir_tar": "gs://omicspipelines-public-resources/rnaseq/references/rat/phix.tar.gz",
+            "rrbs_pipeline.spike_in_genome_dir_tar": "gs://omicspipelines-public-resources/rrbs/references/lambda/lambda_Bisulfite_Genome.tar.gz",
+        }
     else:
         print("Invalid organism")
         sys.exit(1)
@@ -107,6 +113,7 @@ def make_json_dict(
         "rrbs_pipeline.docker": f"{docker_repo}/rrbs:msamdars_11_14_2022",
         "rrbs_pipeline.output_report_name":  output_report_name,
         "rrbs_pipeline.bismark_docker": f"{docker_repo}/bismark:0.20.0",
+        "rrbs_pipeline.bismark_multicore": "3",
         "rrbs_pipeline.align_trim_sample_disk": 200,
         "rrbs_pipeline.align_trim_sample_ncpu": 12,
         "rrbs_pipeline.align_trim_sample_ramGB": 40,
@@ -206,8 +213,8 @@ if __name__ == "__main__":
         "-a",
         "--organism",
         help="organism name, e.g. rat or human",
-        choices=["rat-rn6"],
-        default="rat-rn6",
+        choices=["rat-rn6","rat-rn7"],
+        default="rat-rn7",
     )
     parser.add_argument(
         "-n",

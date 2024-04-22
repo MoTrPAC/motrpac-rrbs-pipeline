@@ -33,6 +33,7 @@ task bowtie2_align {
     }
 
     command <<<
+        set -ueo pipefail
         echo "--- $(date "+[%b %d %H:%M:%S]") Beginning task, making output directories ---"
         mkdir -p ./genome/~{genome_dir}
 
@@ -52,7 +53,7 @@ task bowtie2_align {
     >>>
 
     output {
-        File bowtie2_output = "{SID}.sam"
+        File bowtie2_output = "${SID}.sam"
         File bowtie2_log = "${SID}.log"
         File bowtie2_report="${SID}_${genome_dir}_report.txt"
     }

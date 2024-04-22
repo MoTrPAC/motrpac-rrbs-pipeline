@@ -189,9 +189,9 @@ workflow rrbs_pipeline {
                 task_name: "SAMTools Mapped",
                 description: "Compute mapping percentages to different chromosomes using SAMTools"
             },
-            rnaqc: {
+            rrbsqc: {
                 task_name: "Collect RNAseq Metrics",
-                description: "Run CollectRnaSeqMetrics function from Picard tools to capture RNA-seq QC metrics like % reads mapped to coding, intron, inter-genic, UTR, % correct strand, and 5’ to 3’ bias "
+                description: "Gathers all the pipeline qc metrics like pct_aligned, pct_trimmed, pct_auto etc from various tasks"
             },
             merge_results: {
                 task_name: "Merge Results",
@@ -430,7 +430,7 @@ workflow rrbs_pipeline {
         }
 
         # Collect required QC Metrics from reports
-        call collect_qc.collectQCMetrics as rnaqc {
+        call collect_qc.collectQCMetrics as rrbsqc {
             input:
                 # Inputs
                 SID=sample_prefix[i],
@@ -455,7 +455,7 @@ workflow rrbs_pipeline {
         input:
             # Inputs
             output_report_name=output_report_name,
-            qc_report_files=rnaqc.qc_metrics,
+            qc_report_files=rrbsqc.qc_metrics,
             # Runtime Parameters
             ncpu=merge_results_ncpu,
             memory=merge_results_ramGB,
