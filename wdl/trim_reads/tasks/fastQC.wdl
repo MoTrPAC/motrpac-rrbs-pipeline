@@ -9,6 +9,7 @@ task fastQC {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -34,28 +35,10 @@ task fastQC {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
-    }
-}
-
-workflow fastqc_report {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-    }
-
-    call fastQC {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-    }
-
-    output {
-        File fastQC_report = fastQC.fastQC_report
+        preemptible: preemptible
     }
 }

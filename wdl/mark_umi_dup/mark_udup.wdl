@@ -9,6 +9,7 @@ task tag_udup {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -35,30 +36,14 @@ task tag_udup {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {
         author: "Samir Akre"
-    }
-}
-
-workflow mark_udup {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-        String docker
-    }
-
-    call tag_udup {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-            docker=docker
     }
 }

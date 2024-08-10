@@ -9,6 +9,7 @@ task markDuplicates {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -37,30 +38,14 @@ task markDuplicates {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {
         author: "Samir Akre"
-    }
-}
-
-workflow mark_duplicates {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-        String docker
-    }
-
-    call markDuplicates {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-            docker=docker
     }
 }

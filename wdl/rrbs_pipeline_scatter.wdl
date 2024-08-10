@@ -20,6 +20,7 @@ workflow rrbs_pipeline {
         Array[File] r2
         Array[File] i1
         Array [String] sample_prefix=[]
+        Int num_preemptible_attempts = 2
 
         # Pre-Trim FastQC Parameters
         Int pretrim_fastqc_ncpu
@@ -212,6 +213,7 @@ workflow rrbs_pipeline {
                 memory=pretrim_fastqc_ramGB,
                 disk=pretrim_fastqc_disk,
                 docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Attach UMI Information
@@ -227,6 +229,7 @@ workflow rrbs_pipeline {
                 memory=attach_umi_ramGB,
                 disk=attach_umi_disk,
                 docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Trim Galore removes regular adapters
@@ -241,6 +244,7 @@ workflow rrbs_pipeline {
                 memory=trim_reg_adapt_ramGB,
                 disk=trim_reg_adapt_disk,
                 docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # NuGen specific diversity adapaters trimmed
@@ -255,6 +259,7 @@ workflow rrbs_pipeline {
                 memory=trim_diversity_adapt_ramGB,
                 disk=trim_diversity_adapt_disk,
                 docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # FastQC ran on post trimming reads
@@ -267,7 +272,8 @@ workflow rrbs_pipeline {
                 ncpu=posttrim_fastqc_ncpu,
                 memory=posttrim_fastqc_ramGB,
                 disk=posttrim_fastqc_disk,
-                docker=docker
+                docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # MultiQC on all FastQCs
@@ -280,7 +286,8 @@ workflow rrbs_pipeline {
                 ncpu=multiqc_ncpu,
                 memory=multiqc_ramGB,
                 disk=multiqc_disk,
-                docker=docker
+                docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Align trimmed reads to species of interest
@@ -328,7 +335,8 @@ workflow rrbs_pipeline {
                 ncpu=tag_udup_sample_ncpu,
                 memory=tag_udup_sample_ramGB,
                 disk=tag_udup_sample_disk,
-                docker=docker
+                docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         #Tag UMI duplications in spike-in
@@ -341,7 +349,8 @@ workflow rrbs_pipeline {
                 ncpu=tag_udup_spike_in_ncpu,
                 memory=tag_udup_spike_in_ramGB,
                 disk=tag_udup_spike_in_disk,
-                docker=docker
+                docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Remove PCR Duplicates from sample
@@ -354,7 +363,8 @@ workflow rrbs_pipeline {
                 ncpu=mark_dup_sample_ncpu,
                 memory=mark_dup_sample_ramGB,
                 disk=mark_dup_sample_disk,
-                docker=bismark_docker
+                docker=bismark_docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Remove PCR Duplicates from Lambda phage spike in
@@ -367,7 +377,8 @@ workflow rrbs_pipeline {
                 ncpu=mark_dup_spike_in_ncpu,
                 memory=mark_dup_spike_in_ramGB,
                 disk=mark_dup_spike_in_disk,
-                docker=bismark_docker
+                docker=bismark_docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Quantify Methylation for sample
@@ -383,7 +394,8 @@ workflow rrbs_pipeline {
                 ncpu=quant_methyl_sample_ncpu,
                 memory=quant_methyl_sample_ramGB,
                 disk=quant_methyl_sample_disk,
-                docker=bismark_docker
+                docker=bismark_docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Quantify Methylation for Lambda control spike in
@@ -398,7 +410,8 @@ workflow rrbs_pipeline {
                 ncpu=quant_methyl_spike_in_ncpu,
                 memory=quant_methyl_spike_in_ramGB,
                 disk=quant_methyl_spike_in_disk,
-                docker=bismark_docker
+                docker=bismark_docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Align trimGalore trimmed reads to phix genome using bowtie
@@ -413,7 +426,8 @@ workflow rrbs_pipeline {
                 ncpu=bowtie2_phix_ncpu,
                 memory=bowtie2_phix_ramGB,
                 disk=bowtie2_phix_disk,
-                docker=docker
+                docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Compute % mapped to chromosomes and contigs
@@ -426,7 +440,8 @@ workflow rrbs_pipeline {
                 ncpu=chrinfo_ncpu,
                 memory=chrinfo_ramGB,
                 disk=chrinfo_disk,
-                docker=docker
+                docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
         # Collect required QC Metrics from reports
@@ -446,7 +461,8 @@ workflow rrbs_pipeline {
                 ncpu=collect_qc_ncpu,
                 memory=collect_qc_ramGB,
                 disk=collect_qc_disk,
-                docker=docker
+                docker=docker,
+                preemptible=num_preemptible_attempts
         }
 
     }
@@ -460,7 +476,8 @@ workflow rrbs_pipeline {
             ncpu=merge_results_ncpu,
             memory=merge_results_ramGB,
             disk=merge_results_disk,
-            docker=docker
+            docker=docker,
+            preemptible=num_preemptible_attempts
     }
 
     output {

@@ -10,6 +10,7 @@ task trimDiversityAdapt {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -41,36 +42,14 @@ task trimDiversityAdapt {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {
         author: "Samir Akre"
-    }
-}
-
-workflow trim_diversity_adapters {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-        String SID
-    }
-
-    call trimDiversityAdapt {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-            SID=SID
-    }
-
-    output {
-        File r1_diversity_trimmed = trimDiversityAdapt.r1_diversity_trimmed
-        File r2_diversity_trimmed = trimDiversityAdapt.r2_diversity_trimmed
-        File trim_diversity_log = trimDiversityAdapt.trim_diversity_log
     }
 }

@@ -12,6 +12,7 @@ task quantifyMethylation {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -68,46 +69,17 @@ task quantifyMethylation {
         File bismark_summary_report = "bismark_summary_report.txt"
         File bismark_summary_html = "bismark_summary_report.html"
         File bismark_report_html = "${SID}.html"
-
     }
+
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
+
     meta {
         author: "Samir Akre"
-    }
-}
-
-workflow quantify_methylation {
-    input {
-        String SID
-        Int memory
-        Int disk
-        Int ncpu
-        String docker
-    }
-
-    call quantifyMethylation {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-            docker=docker,
-            SID=SID
-    }
-    output {
-        File CpG_context=quantifyMethylation.CpG_context
-        File CHG_context=quantifyMethylation.CHG_context
-        File CHH_context=quantifyMethylation.CHH_context
-        File M_Bias=quantifyMethylation.M_Bias
-        File bedgraph=quantifyMethylation.bedgraph
-        File bismark_cov=quantifyMethylation.bismark_cov
-        File splitting_report=quantifyMethylation.splitting_report
-        File bismark_summary_report =quantifyMethylation.bismark_summary_report
-        File bismark_summary_html =quantifyMethylation.bismark_summary_html
-        File bismark_report_html =quantifyMethylation.bismark_report_html
     }
 }

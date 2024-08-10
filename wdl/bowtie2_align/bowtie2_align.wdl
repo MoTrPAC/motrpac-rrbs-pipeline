@@ -12,6 +12,7 @@ task bowtie2_align {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     String genome_dir = basename(genome_dir_tar, ".tar.gz")
@@ -59,17 +60,14 @@ task bowtie2_align {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {
         author: "Archana Raja"
     }
-}
-
-workflow bowtie2_align_workflow {
-    call bowtie2_align
 }
