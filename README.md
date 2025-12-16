@@ -23,7 +23,7 @@ MoTrPAC RRBS Pipeline
 
 ## Overview
 
-This repo contains the Reduced Representation Bisulfite Sequencing (RRBS) data processing pipeline implemented in Workflow Description Language (WDL) based on harmonized [MOP](http://study-docs.motrpac-data.org/Animal_GET_MOP.pdf). This pipeline uses [caper](https://github.com/ENCODE-DCC/caper), a wrapper python package for the workflow management system [Cromwell](https://cromwell.readthedocs.io/en/stable/). All the data was processed on the Google Cloud Platform (GCP).
+This repo contains the Reduced Representation Bisulfite Sequencing (RRBS) data processing pipeline implemented in Workflow Description Language (WDL) based on harmonized [MOP](http://study-docs.motrpac-data.org/Animal_GET_MOP.pdf). This pipeline uses [caper](https://github.com/MoTrPAC/caper), a wrapper python package for the workflow management system [Cromwell](https://cromwell.readthedocs.io/en/stable/). All the data was processed on the Google Cloud Platform (GCP).
 
 ### RRBS Method Overview
 
@@ -136,7 +136,7 @@ Ensure the following APIs are enabled in your GCP project:
 
 The WDL/Cromwell framework is optimized to run pipelines in high-performance computing environments. The MoTrPAC Bioinformatics Center runs pipelines on Google Cloud Platform (GCP). We used a number of wrapper tools developed by our colleagues from the [ENCODE project](https://github.com/ENCODE-DCC) to run pipelines on GCP (and other HPC platforms).
 
-A brief summary of the steps to set-up a VM to run the Motrpac pipelines on GCP (**for details, please, check the [caper repo](https://github.com/ENCODE-DCC/caper/blob/master/scripts/gcp_caper_server/README.md)**):
+A brief summary of the steps to set-up a VM to run the Motrpac pipelines on GCP (**for details, please, check the [caper repo](https://github.com/MoTrPAC/caper/blob/master/scripts/gcp_caper_server/README.md)**):
 
 ### Step-by-Step Setup
 
@@ -160,7 +160,7 @@ A brief summary of the steps to set-up a VM to run the Motrpac pipelines on GCP 
 
 **6. Set up a VM instance**
 - Create a Virtual Machine (VM) instance from where pipelines will be run
-- Use the script available in the [caper repo](https://github.com/ENCODE-DCC/caper)
+- Use the script available in the [caper repo](https://github.com/MoTrPAC/caper/)
 - Clone the caper repo on your local machine and run:
 
 ```bash
@@ -585,7 +585,7 @@ cd cromwell-executions/rrbs_pipeline/[WORKFLOW_ID]/
 
 If issues persist:
 1. Check the Cromwell documentation: https://cromwell.readthedocs.io/
-2. Review the Caper documentation: https://github.com/ENCODE-DCC/caper
+2. Review the Caper documentation: https://github.com/MoTrPAC/caper/
 3. Check Bismark documentation: https://www.bioinformatics.babraham.ac.uk/projects/bismark/
 4. Open an issue on the GitHub repository with:
    - Workflow ID
@@ -646,7 +646,7 @@ For more details, see the [scripts README](scripts/README.md).
 
 ### Workflow Management
 - [Cromwell](https://cromwell.readthedocs.io/en/stable/) - Workflow management system
-- [Caper](https://github.com/ENCODE-DCC/caper) - Cromwell wrapper for easy workflow execution
+- [Caper](https://github.com/MoTrPAC/caper/) - Cromwell wrapper for easy workflow execution
 - [WDL](https://openwdl.org/) - Workflow Description Language specification
 
 ### Analysis Tools
