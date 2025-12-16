@@ -239,7 +239,7 @@ python3 scripts/make_json_rrbs.py \
   -n NUM_CHUNKS \           # Number of batches to split samples into
   -d DOCKER_REPO \          # Docker repository prefix (optional)
   -p PROJECT \              # GCP project name
-  [-u]                      # Include undetermined reads (optional)
+  -u                        # Include undetermined reads (optional)
 ```
 
 **Parameters:**
