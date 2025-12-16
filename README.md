@@ -720,11 +720,11 @@ If you use this pipeline in your research, please cite:
 
 Current versions (see Dockerfile for details):
 - Bismark: v0.20.0
-- Trim Galore: Check Dockerfile
-- FastQC: Check Dockerfile
-- MultiQC: Check Dockerfile
-- Bowtie2: Bundled with Bismark
-- SAMtools: Check Dockerfile
+- Trim Galore: v0.5.0
+- FastQC: v0.11.8
+- MultiQC: v1.6
+- Bowtie2: v2.3.4.3 (also bundled with Bismark)
+- SAMtools: v1.3.1
 
 ### Compatibility Notes
 
