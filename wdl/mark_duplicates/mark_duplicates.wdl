@@ -31,7 +31,6 @@ task markDuplicates {
     >>>
 
     output {
-        File umi_tagged_bam = 'dedup/${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.bam'
         File deduped_bam = 'dedup/${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bam'
         File dedupLog= 'dedup/${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplication_report.txt'
     }

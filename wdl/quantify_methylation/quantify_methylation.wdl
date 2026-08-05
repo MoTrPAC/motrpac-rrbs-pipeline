@@ -45,7 +45,8 @@ task quantifyMethylation {
         bismark_methylation_extractor ~{SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bam \
             --multicore ~{ncpu} \
             --comprehensive \
-            --bedgraph
+            --bedgraph \
+            --gzip
         echo "--- Finished: bismark_methylation_extractor ---"
 
         echo "------ Running : bismark2summary-------"
@@ -58,9 +59,6 @@ task quantifyMethylation {
     >>>
 
     output {
-        File CpG_context="CpG_context_${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.txt"
-        File CHG_context="CHG_context_${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.txt"
-        File CHH_context="CHH_context_${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.txt"
         File M_Bias="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.M-bias.txt"
         File bedgraph="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bedGraph.gz"
         File bismark_cov="${SID}_attached_R1_val_1.fq_trimmed_bismark_bt2_pe.deduplicated.bismark.cov.gz"
