@@ -97,9 +97,6 @@ workflow quantify_methylation {
             SID=SID
     }
     output {
-        File CpG_context=quantifyMethylation.CpG_context
-        File CHG_context=quantifyMethylation.CHG_context
-        File CHH_context=quantifyMethylation.CHH_context
         File M_Bias=quantifyMethylation.M_Bias
         File bedgraph=quantifyMethylation.bedgraph
         File bismark_cov=quantifyMethylation.bismark_cov
