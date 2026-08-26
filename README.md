@@ -20,6 +20,7 @@ MoTrPAC RRBS Pipeline
 - [Citations and References](#citations-and-references)
 - [Contributing and Support](#contributing-and-support)
 - [Version Information](#version-information)
+- [License](#license)
 
 ## Overview
 
@@ -751,3 +752,11 @@ Check the [commit history](https://github.com/MoTrPAC/motrpac-rrbs-pipeline/comm
 - RRBS covers ~5-10% of genome (CpG-rich regions)
 - Large disk and memory requirements for bisulfite alignment
 - Lambda spike-in required for accurate conversion efficiency assessment
+
+## License
+
+This project is licensed under the terms of the MIT License. Copyright (c) 2025 MoTrPAC.
+
+The MIT License is a permissive open-source license that allows you to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, provided that the copyright notice and permission notice are included in all copies or substantial portions of the software. The software is provided "as is", without warranty of any kind.
+
+See the [LICENSE.md](LICENSE.md) file for the full license text.
