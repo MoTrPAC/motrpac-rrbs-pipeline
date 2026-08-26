@@ -9,11 +9,12 @@ task alignTrimmed {
         String SID
         Int bismark_multicore
         # Multiply by ~4 to get number of cores required
-        #If you increase the multicore to 6 make sure to double up the memory to 80, otherwise you will loose 20-30% of the reads
+        #If you increase the multicore to 6 make sure to double up the memory to 80, otherwise you will lose 20-30% of the reads
+        Int ncpu
         Int memory
         Int disk
-        Int ncpu
         String docker
+        Int preemptible = 0
     }
 
     String genome_dir = basename(genome_dir_tar, ".tar.gz")
@@ -81,40 +82,14 @@ task alignTrimmed {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {
         author: "Samir Akre"
     }
 }
-
-workflow align_trimmed {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-        String docker
-
-        String SID
-    }
-
-    call alignTrimmed {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-            docker=docker,
-            SID=SID
-    }
-
-    output {
-        File bismark_align_log = alignTrimmed.bismark_align_log
-        File bismark_report = alignTrimmed.bismark_report
-        File bismark_reads = alignTrimmed.bismark_reads
-    }
-}
-

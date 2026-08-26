@@ -17,6 +17,7 @@ task collectQCMetrics {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -72,28 +73,14 @@ task collectQCMetrics {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {
         author: "Samir Akre,Archana Raja"
-    }
-}
-
-workflow collect_qc_metrics {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-    }
-
-    call collectQCMetrics {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu
     }
 }

@@ -10,6 +10,7 @@ task indexGenome {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     # Makes genome directory with input files for use with bismark
@@ -56,34 +57,15 @@ task indexGenome {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
+
     meta {
         author: "Samir Akre"
     }
 
-}
-
-workflow Bismark_Index_Generation {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-        String docker
-    }
-
-    call indexGenome {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-            docker=docker
-    }
-
-    output {
-        File bsGenome = indexGenome.bsGenome
-    }
 }

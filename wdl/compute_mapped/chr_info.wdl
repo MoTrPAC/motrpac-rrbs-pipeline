@@ -10,6 +10,7 @@ task samtools_mapped {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -39,10 +40,11 @@ task samtools_mapped {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {

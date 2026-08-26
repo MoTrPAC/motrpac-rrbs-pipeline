@@ -11,6 +11,7 @@ task trimGalore {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -44,35 +45,14 @@ task trimGalore {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {
         author: "Samir Akre"
-    }
-}
-
-workflow trim_galore {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-    }
-
-    call trimGalore {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu
-    }
-
-    output {
-        File trim_log = trimGalore.trim_log
-        File r1_trimmed = trimGalore.r1_trimmed
-        File r2_trimmed = trimGalore.r2_trimmed
-        Array[File] trim_summary = trimGalore.trim_summary
     }
 }

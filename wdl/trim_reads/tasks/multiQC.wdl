@@ -9,6 +9,7 @@ task multiQC {
         Int disk
         Int ncpu
         String docker
+        Int preemptible = 2
     }
 
     String basedir = "fastqc_report"
@@ -46,30 +47,10 @@ task multiQC {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
-    }
-}
-
-workflow multiqc_report {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-        String docker
-    }
-
-    call multiQC {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-            docker=docker
-    }
-
-    output {
-        File multiQC_report = multiQC.multiQC_report
+        preemptible: preemptible
     }
 }

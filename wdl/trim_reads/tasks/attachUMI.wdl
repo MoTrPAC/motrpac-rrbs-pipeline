@@ -12,6 +12,7 @@ task attachUMI {
         Int memory
         Int disk
         Int ncpu
+        Int preemptible = 2
     }
 
     parameter_meta {
@@ -44,35 +45,14 @@ task attachUMI {
     }
 
     runtime {
-        docker: "${docker}"
+        cpu: ncpu
+        docker: docker
         memory: "${memory}GB"
         disks: "local-disk ${disk} HDD"
-        cpu: "${ncpu}"
+        preemptible: preemptible
     }
 
     meta {
         author: "Samir Akre"
-    }
-}
-
-workflow attach_umi {
-    input {
-        Int memory
-        Int disk
-        Int ncpu
-        String docker
-    }
-
-    call attachUMI {
-        input:
-            memory=memory,
-            disk=disk,
-            ncpu=ncpu,
-            docker=docker
-    }
-
-    output {
-        File r1_umi_attached = attachUMI.r1_umi_attached
-        File r2_umi_attached = attachUMI.r2_umi_attached
     }
 }
