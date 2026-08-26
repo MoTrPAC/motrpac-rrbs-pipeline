@@ -2,6 +2,9 @@
 # Hidden files
 .*
 
+*code-workspace
+
+
 # Cromwell execution logs and such
 cromwell-executions
 cromwell-workflow-logs
